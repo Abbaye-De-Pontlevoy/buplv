@@ -27,8 +27,8 @@ model Seller {
   student_name        String  @unique
   class               String
   email               String  @unique
-  telephone           String
-  adress              String
+  phone               String
+  address             String
   password            String
   sellingProducts     SellingProduct[]
 }
