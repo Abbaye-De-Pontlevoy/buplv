@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import prisma from '@/prisma/client';
+import prisma from "@/app/lib/prisma";
 
 const getRandomId = () => {
 	return Math.floor(Math.random() * (999999999 - 1000000 + 1)) + 1000000;

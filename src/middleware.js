@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server'
-import { isUserConnected } from "@/lib";
+import { isUserConnected } from "./app/utils/isUserConnected";
  
-export function middleware( request ) {
+export async function middleware( request ) {
 
-  if(!isUserConnected()) {
-    const restrictedPaths = ['/dashboard'];
-    if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return NextResponse.redirect(process.env.BU_URL + '/login');
-    }
-  }else{
+  const isConnected = await isUserConnected(request);
+
+  if(isConnected) {
     const restrictedPaths = ['/login', '/register'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return NextResponse.redirect(process.env.BU_URL + '/dashboard');
+      return NextResponse.redirect(process.env.ROOT_URL + '/dashboard');
+    }
+  }else{
+    const restrictedPaths = ['/dashboard'];
+    if (restrictedPaths.includes(request.nextUrl.pathname)) {
+      return Response.redirect(process.env.ROOT_URL + '/login');
     }
   }
   

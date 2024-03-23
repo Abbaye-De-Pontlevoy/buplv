@@ -25,7 +25,7 @@ model Article {
 model Seller {
   id                  String  @id @default(uuid())
   student_name        String  @unique
-  class               String
+  grade               String
   email               String  @unique
   phone               String
   address             String

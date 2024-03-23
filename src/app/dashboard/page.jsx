@@ -1,19 +1,6 @@
-"use client"
-
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+import logoutAction from "./logoutAction";
 
 const Dashboard = () => {
-	const router = useRouter();
-
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		setIsLoading(false);		
-	}, []);
-
-
 
 	return (
 		<div>
@@ -24,7 +11,10 @@ const Dashboard = () => {
 			</ul>
 
 			<a href="/">Menu principal</a>
-			<a href="/" onClick={() => {Cookies.remove('buConnectedToken')}}>Logout</a>
+			
+			<form action={logoutAction}>
+				<button type="submit">Logout</button>
+			</form>
 		</div>
 	);
 };

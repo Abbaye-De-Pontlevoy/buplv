@@ -1,26 +1,47 @@
-import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
-import prisma from '@/prisma/client';
+import validateEmail from "@/app/helpers/validateEmail";
+import validatePassword from "@/app/helpers/validatePassword";
+import prisma from "@/app/lib/prisma";
+import bcrypt from "bcryptjs";
 
-export async function POST(req) {
-	const data = await req.json();
+export async function POST(request) {
+  // Read data off req body
+  const body = await request.json();
+  const {
+	student_name,
+	grade,
+	email,
+	phone,
+	address,
+	password
+  } = body;
 
-	try{
-		const response = await prisma.seller.create({
-			data: {
-				student_name: data.student_name,
-				class: data.class,
-				email: data.email,
-				phone: data.phone,
-				address: data.address,
-				password: data.password,
-			},
-		});
+  console.log(body)
 
-		return NextResponse.json(response);
-	}catch(error){
-		console.error("Error parsing JSON:", error);
-		return NextResponse.json({ error: "Invalid JSON input" }, { status: 400 });
-	}
+  // Validate data
+  if (!validateEmail(email) || !validatePassword(password)) {
+    return Response.json(
+      {
+        error: "Invalid email or password",
+      },
+      { status: 400 }
+    );
+  }
 
+  // Hash the password
+  const hash = bcrypt.hashSync(password, 8);
+
+  // Create a user in db
+  await prisma.seller.create({
+	data: {
+		student_name: student_name,
+		grade: grade,
+		email: email,
+		phone: phone,
+		address: address,
+		password: hash,
+	},
+});
+
+  // return something
+  return Response.json({});
 }

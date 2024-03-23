@@ -1,68 +1,27 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import { useFormState } from "react-dom";
+import loginAction from "./loginAction";
 
-import "@/app/globals.css";
-
-const SellerForm = () => {
-  const router = useRouter();
-  const [sellerData, setSellerData] = useState({
-    email: '',
-    password: '',
-  });
-
-  useEffect(() => {
-    if (Cookies.get('buConnectedToken')) {
-      router.push('/dashboard');
-    }
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSellerData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post('/api/user/login/', sellerData);
-      if (response.data.token) {
-        const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-        Cookies.set("buConnectedToken", response.data.token, { expires });
-        router.push('/dashboard');
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'authentification du vendeur:', error);
-    }
-  };
+export default function Login() {
+  const [error, formAction] = useFormState(loginAction, undefined);
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className='formulaire'>
+    <div>
+      <h1>Login</h1>
+      <form action={formAction}>
           <label>
             Email:
-            <input type="email" name="email" value={sellerData.email} onChange={handleChange} required />
+            <input type="email" name="email" required />
           </label>
           <label>
             Password:
-            <input type="password" name="password" value={sellerData.password} onChange={handleChange} required />
+            <input type="password" name="password" required />
           </label>
-          <button type="submit">Connexion Vendeur</button>
-        </div>
+        <button type="submit">Login</button>
       </form>
 
-      <a href="/register">Créer un compte</a>
-      <a href="/">Menu principal</a>
-    </>
+      {error && <p>{error}</p>}
+    </div>
   );
-};
-
-export default SellerForm;
+}
