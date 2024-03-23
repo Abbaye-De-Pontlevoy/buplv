@@ -1,23 +1,30 @@
-import { redirect } from 'next/navigation';
-import { cookies } from 'next/headers'
+"use client"
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const Dashboard = () => {
-	//const router = useRouter();
+	const router = useRouter();
 
-	const cookieStore = cookies();
-	const buConnectedToken = cookieStore.get('buConnectedToken');
+	const [isLoading, setIsLoading] = useState(true);
 
-	// Vérifier si le cookie 'buConnectedToken' est présent
-	if (!buConnectedToken) {
-		// Rediriger vers la page de connexion si le cookie n'est pas présent
-		redirect('/login');
-		return;
-	}
+	useEffect(() => {
+		setIsLoading(false);		
+	}, []);
+
+
 
 	return (
 		<div>
 			<h1>Dashboard</h1>
-			{/* Contenu de votre tableau de bord ici */}
+			<ul>
+				<li><a>Ajouter des vêtements</a></li>
+				<li><a>Modifier des vêtements</a></li>
+			</ul>
+
+			<a href="/">Menu principal</a>
+			<a href="/" onClick={() => {Cookies.remove('buConnectedToken')}}>Logout</a>
 		</div>
 	);
 };

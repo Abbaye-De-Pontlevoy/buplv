@@ -38,6 +38,7 @@ const SellerForm = () => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <div className='formulaire'>
       <label>
@@ -68,6 +69,10 @@ const SellerForm = () => {
 
       </div>
     </form>
+
+    <a href="/login">Se connecter</a>
+    <a href="/">Menu principal</a>
+    </>
   );
 };
 

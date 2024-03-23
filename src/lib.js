@@ -1,8 +1,20 @@
 import { SignJWT, jwtVerify } from "jose";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const key = new TextEncoder().encode(process.env.SECRET_KEY);
+
+export const isUserConnected = () => {
+  const cookie = cookies().get("buConnectedToken");
+  return !!cookie;
+}
+
+export const userLogout = async () => {
+  "use server"
+  cookies().set("buConnectedToken", "", { expires: new Date(0) });
+  redirect('/login');
+}
 
 export async function encrypt(payload) {
   return await new SignJWT(payload)
@@ -20,6 +32,7 @@ export async function decrypt(input) {
 }
 
 export async function login(formData) {
+  
   // Verify credentials && get the user
 
   const user = { email: formData.get("email"), name: "John" };

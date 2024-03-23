@@ -6,14 +6,12 @@ export async function POST(req) {
 	const data = await req.json();
 
 	try{
-		const response = await prisma.seller.create({
+		const response = await prisma.article.create({
 			data: {
-				student_name: data.student_name,
-				class: data.class,
-				email: data.email,
-				phone: data.phone,
-				address: data.address,
-				password: data.password,
+				brand: data.brand,
+				name: data.name,
+				size: data.size,
+				price: data.price,
 			},
 		});
 

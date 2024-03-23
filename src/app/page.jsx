@@ -1,31 +1,30 @@
-import { redirect } from "next/navigation";
-import { getSession, login, logout } from "@/lib";
+"use server"
+
+import { isUserConnected, userLogout } from "@/lib";
 
 export default async function Page() {
-  const session = await getSession();
+  // If connected, display a link to dashboard, else display a link to login
+
+  const links = isUserConnected() ? (
+    <>
+      <form action="/dashboard">
+        <button type="submit">Dashboard</button>
+      </form>
+      <form action={userLogout}>
+          <button type="submit">Déconnexion</button>
+      </form>
+    </>
+  ) : (
+    <form action={"/login"}>
+        <button type="submit">Connexion</button>
+    </form>
+  );
+
   return (
-    <section>
-      <form
-        action={async (formData) => {
-          "use server";
-          await login(formData);
-          redirect("/");
-        }}
-      >
-        <input type="email" placeholder="Email" />
-        <br />
-        <button type="submit">Login</button>
-      </form>
-      <form
-        action={async () => {
-          "use server";
-          await logout();
-          redirect("/");
-        }}
-      >
-        <button type="submit">Logout</button>
-      </form>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-    </section>
+    <div>
+      <h1>Bourse à l'uniforme 2024</h1>
+        <a href="/dashboard">Enregistrer des vêtements</a>
+        {links}
+    </div>
   );
 }

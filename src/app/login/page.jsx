@@ -1,24 +1,23 @@
 "use client"
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import "@/app/globals.css";
 
-// Fonction pour définir un nouveau cookie
-function setCookie(name, value, days) {
-  const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-}
-
 const SellerForm = () => {
   const router = useRouter();
-
   const [sellerData, setSellerData] = useState({
     email: '',
     password: '',
+  });
+
+  useEffect(() => {
+    if (Cookies.get('buConnectedToken')) {
+      router.push('/dashboard');
+    }
   });
 
   const handleChange = (e) => {
@@ -33,36 +32,36 @@ const SellerForm = () => {
     e.preventDefault();
 
     try {
-      // Faites l'appel API POST à "/api/user/"
       const response = await axios.post('/api/user/login/', sellerData);
-
-      if(response){
-        setCookie('buConnectedToken', response.data.token, 7);
+      if (response.data.token) {
+        const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        Cookies.set("buConnectedToken", response.data.token, { expires });
         router.push('/dashboard');
       }
-
-      // Gérez la réponse ou effectuez d'autres actions nécessaires
-      console.log('Vendeur autentifié avec succès:', response.data);
     } catch (error) {
-      console.error('Erreur lors de l\'autentification du vendeur:', error);
+      console.error('Erreur lors de l\'authentification du vendeur:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className='formulaire'>
-      <label>
-        Email:
-        <input type="email" name="email" value={sellerData.email} onChange={handleChange} required />
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" value={sellerData.password} onChange={handleChange} required />
-      </label>
-      <button type="submit">Connexion Vendeur</button>
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className='formulaire'>
+          <label>
+            Email:
+            <input type="email" name="email" value={sellerData.email} onChange={handleChange} required />
+          </label>
+          <label>
+            Password:
+            <input type="password" name="password" value={sellerData.password} onChange={handleChange} required />
+          </label>
+          <button type="submit">Connexion Vendeur</button>
+        </div>
+      </form>
 
-      </div>
-    </form>
+      <a href="/register">Créer un compte</a>
+      <a href="/">Menu principal</a>
+    </>
   );
 };
 

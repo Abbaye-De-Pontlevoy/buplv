@@ -1,7 +1,20 @@
-import { NextResponse } from "next/server";
-import { updateSession } from "./lib";
+import { NextResponse } from 'next/server'
+import { isUserConnected } from "@/lib";
+ 
+export function middleware( request ) {
 
-export async function middleware(request) {
-  //await updateSession(request);
+  if(!isUserConnected()) {
+    const restrictedPaths = ['/dashboard'];
+    if (restrictedPaths.includes(request.nextUrl.pathname)) {
+      return NextResponse.redirect(process.env.BU_URL + '/login');
+    }
+  }else{
+    const restrictedPaths = ['/login', '/register'];
+    if (restrictedPaths.includes(request.nextUrl.pathname)) {
+      return NextResponse.redirect(process.env.BU_URL + '/dashboard');
+    }
+  }
+  
+ 
   return NextResponse.next();
 }

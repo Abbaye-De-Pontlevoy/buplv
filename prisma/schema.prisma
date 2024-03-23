@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Article {
-  id          Int   @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   brand       String
   name        String
   size        Int
@@ -23,7 +23,7 @@ model Article {
 }
 
 model Seller {
-  id                  Int     @id @default(autoincrement())
+  id                  String  @id @default(uuid())
   student_name        String  @unique
   class               String
   email               String  @unique
@@ -34,8 +34,8 @@ model Seller {
 }
 
 model SellingProduct {
-  id          String    @id @default(uuid())
-  seller_id   Int
+  id          Int       @id @default(autoincrement())
+  seller_id   String
   article_id  Int
   quantity    Int
   price       Float
