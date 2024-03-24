@@ -1,9 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import ArticleForm from "../components/Article/ArticleForm";
+import ArticleForm from "../components/Article/ArticleForm/ArticleForm";
 import LogoutButton from "../components/Button/LogoutButton/LogoutButton";
 import MenuButton from "../components/Button/MenuButton/MenuButton";
+import { ArticleList } from "../components/Article/ArticleList/ArticleList";
+
+import { revalidatePath } from "next/cache";
 
 const Dashboard = () => {
 	const [articleList, setArticleList] = useState([]);
@@ -34,14 +37,13 @@ const Dashboard = () => {
 				"Chargement..."
 			: 
 				<>
-					<ul>
-						{Object.keys(articleList).map((index) => (
-							<li key={articleList[index].id}>
-								{articleList[index].name} - {articleList[index].brand} - {articleList[index].size}
-							</li>
-						))}
-					</ul>
+					<ArticleList
+						articleJSON={articleList}
+						callAfterSubmit={updateArticleList}
+					/>
+
 					<h2>Ajouter un article</h2>
+
 					<ArticleForm 
 						callAfterSubmit={updateArticleList}
 					/>
