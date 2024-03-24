@@ -12,7 +12,8 @@ export default async function loginAction(
   const password = formData.get("password");
 
   //  Send to our api route
-  const res = await fetch("/api/user/login", {
+  const apiUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/user/login`;
+  const res = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
