@@ -1,11 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import validateEmail from "@/app/helpers/validateEmail";
+import validatePassword from "@/app/helpers/validatePassword";
+import prisma from "@/app/lib/prisma";
+import bcrypt from "bcryptjs";
 
-export default async function registerAction(
-  currentState,
-  formData
-) {
+export default async function registerAction(currentState, formData) {
   // Get the data off the form
   const student_name = formData.get("student_name");
   const grade = formData.get("grade");
@@ -17,30 +18,27 @@ export default async function registerAction(
   const bic = formData.get("bic");
   const country_code = formData.get("country_code");
 
-  //  Send to our api route
-  const res = await fetch("/api/user/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ 
-      student_name : student_name,
+  // Validate data
+  if (!validateEmail(email) || !validatePassword(password))
+    return "Invalid email or password";
+
+  // Hash the password
+  const hash = bcrypt.hashSync(password, 8);
+
+  // Create a user in db
+  await prisma.seller.create({
+    data: {
+      student_name: student_name,
       grade: grade,
       email: email,
       phone: phone,
       address: address,
-      password: password,
+      password: hash,
       iban: iban,
       bic: bic,
-      country_code: country_code}),
+      country_code: country_code,
+    },
   });
 
-  const json = await res.json();
-
-  // Redirect to login if success
-  if (res.ok) {
-    redirect("/login");
-  } else {
-    return json.error;
-  }
+  redirect("/login");
 }

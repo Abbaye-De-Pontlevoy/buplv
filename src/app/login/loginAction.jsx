@@ -2,31 +2,54 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import validateEmail from "@/app/helpers/validateEmail";
+import validatePassword from "@/app/helpers/validatePassword";
+import bcrypt from "bcryptjs";
+import * as jose from "jose";
+import prisma from "@/app/lib/prisma";
 
-export default async function loginAction(
-  currentState,
-  formData
-){
+export default async function loginAction(currentState, formData) {
   // Get the data off the form
   const email = formData.get("email");
   const password = formData.get("password");
 
-  //  Send to our api route
-  const apiUrl = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/user/login`;
-  const res = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  // Validate data
+  if (!validateEmail(email) || !validatePassword(password))
+    return "Invalid email or password";
+
+  // Lookup the seller
+  const seller = await prisma.seller.findFirst({
+    where: {
+      email,
     },
-    body: JSON.stringify({ 
-      email: email,
-      password: password }),
   });
 
+  if (!seller) return "Invalid email or password";
 
-  const json = await res.json();
+  // Compare password
+  const isCorrectPassword = bcrypt.compareSync(password, seller.password);
+  //const isCorrectPassword = password === seller.password;
 
-  cookies().set("buConnectedToken", json.token, {
+  if (!isCorrectPassword) {
+    return Response.json(
+      {
+        error: "Invalid email or password",
+      },
+      { status: 400 }
+    );
+  }
+
+  // Create jwt token
+  const secret = new TextEncoder().encode(process.env.SECRET_KEY);
+  const alg = "HS256";
+
+  const jwt = await new jose.SignJWT({})
+    .setProtectedHeader({ alg })
+    .setExpirationTime("72h")
+    .setSubject(seller.id)
+    .sign(secret);
+
+  cookies().set("buConnectedToken", jwt, {
     secure: true,
     httpOnly: true,
     expires: Date.now() + 24 * 60 * 60 * 1000 * 3,
@@ -34,10 +57,5 @@ export default async function loginAction(
     sameSite: "strict",
   });
 
-  // Redirect to login if success
-  if (res.ok) {
-    redirect("/dashboard");
-  } else {
-    return json.error;
-  }
+  redirect("/dashboard");
 }
