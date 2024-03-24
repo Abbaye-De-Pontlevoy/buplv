@@ -13,15 +13,6 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
-model Article {
-  id          Int     @id @default(autoincrement())
-  brand       String
-  name        String
-  size        Int
-  price       Float
-  sellingProducts SellingProduct[]
-}
-
 model Seller {
   id                  String  @id @default(uuid())
   student_name        String  @unique
@@ -30,17 +21,20 @@ model Seller {
   phone               String
   address             String
   password            String
+  iban                String
+  bic                 String  
+  code_pays           String
   sellingProducts     SellingProduct[]
 }
 
 model SellingProduct {
   id          Int       @id @default(autoincrement())
   seller_id   String
-  article_id  Int
-  quantity    Int
+  brand       String
+  name        String
+  size        String
   price       Float
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   seller      Seller    @relation(fields: [seller_id], references: [id])
-  article     Article   @relation(fields: [article_id], references: [id])
 }
