@@ -17,11 +17,10 @@ export async function isUserConnected (request){
 
   try {
     const { payload } = await jose.jwtVerify(jwt, secret, {});
+    
   } catch (err) {
     return false;
   }
 
-
-  console.log("logged in");
 	return true;
 }

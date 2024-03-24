@@ -12,7 +12,10 @@ export async function POST(request) {
 	email,
 	phone,
 	address,
-	password
+	password,
+  iban,
+  bic,
+  code_pays
   } = body;
 
   console.log(body)
@@ -39,6 +42,9 @@ export async function POST(request) {
 		phone: phone,
 		address: address,
 		password: hash,
+    iban: iban,
+    bic: bic,
+    code_pays: code_pays
 	},
 });
 

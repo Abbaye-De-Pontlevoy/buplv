@@ -1,21 +1,43 @@
-import logoutAction from "./logoutAction";
+"use client"
+
+import { useEffect, useState } from "react";
+import ArticleForm from "../components/Article/ArticleForm";
+import LogoutButton from "../components/Button/LogoutButton/LogoutButton";
+import MenuButton from "../components/Button/MenuButton/MenuButton";
 
 const Dashboard = () => {
+	const [articleList, setArticleList] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await fetch("/api/selling/get-selling-list/");
+			const data = await response.json();
+			setArticleList(data.sellingProducts);
+			console.log(data.sellingProducts);
+		};
+		fetchData();
+	}, []);
+
 
 	return (
-		<div>
+		<>
 			<h1>Dashboard</h1>
+			<h2>Liste des articles enregistrés</h2>
 			<ul>
-				<li><a>Ajouter des vêtements</a></li>
-				<li><a>Modifier des vêtements</a></li>
+				{Object.keys(articleList).map((index) => (
+					<li key={articleList[index].id}>
+						{articleList[index].name} - {articleList[index].brand} - {articleList[index].size}
+					</li>
+				))}
 			</ul>
 
-			<a href="/">Menu principal</a>
-			
-			<form action={logoutAction}>
-				<button type="submit">Logout</button>
-			</form>
-		</div>
+			<h2>Ajouter un article</h2>
+			<ArticleForm />
+
+			<h2>Actions</h2>
+			<LogoutButton />
+			<MenuButton />
+		</>
 	);
 };
 

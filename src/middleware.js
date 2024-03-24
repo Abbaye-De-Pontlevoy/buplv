@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { isUserConnected } from "./app/utils/isUserConnected";
+import { isUserConnected } from "./app/helpers/isUserConnected";
  
 export async function middleware( request ) {
 

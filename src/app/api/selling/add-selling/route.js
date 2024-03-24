@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
+import { getUserID } from "@/app/helpers/getUserID";
 
 const getRandomId = () => {
 	return Math.floor(Math.random() * (999999999 - 1000000 + 1)) + 1000000;
@@ -26,12 +27,13 @@ export async function POST(req) {
 	const data = await req.json();
 
 	try{
-
+		const userID = await getUserID();
 		const response = await prisma.sellingProduct.create({
 			data: {
-				seller_id: data.seller_id,
-				article_id: data.article_id,
-				quantity: data.quantity,
+				seller_id: userID,
+				name: data.name,
+				brand: data.brand,
+				size: data.size,
 				price: data.price
 			},
 		});

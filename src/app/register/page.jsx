@@ -35,6 +35,18 @@ export default function Signup() {
           Password:
           <input type="password" name="password" required />
         </label>
+        <label>
+          Iban:
+          <input type="text" name="iban" required />
+        </label>
+        <label>
+          Bic:
+          <input type="text" name="bic" required />
+        </label>
+        <label>
+          Code Pays:
+          <input type="text" name="code_pays" required />
+        </label>
         <button type="submit">Signup</button>
       </form>
       {error && <p>{error}</p>}

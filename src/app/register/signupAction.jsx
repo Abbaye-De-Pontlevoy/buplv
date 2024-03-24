@@ -13,9 +13,12 @@ export default async function signupAction(
   const phone = formData.get("phone");
   const address = formData.get("address");
   const password = formData.get("password");
+  const iban = formData.get("iban");
+  const bic = formData.get("bic");
+  const code_pays = formData.get("code_pays");
 
   //  Send to our api route
-  const res = await fetch(process.env.ROOT_URL + "/api/user/add-user", {
+  const res = await fetch(process.env.ROOT_URL + "/api/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +29,10 @@ export default async function signupAction(
       email: email,
       phone: phone,
       address: address,
-      password: password}),
+      password: password,
+      iban: iban,
+      bic: bic,
+      code_pays: code_pays}),
   });
 
   const json = await res.json();
