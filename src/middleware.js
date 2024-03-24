@@ -8,12 +8,12 @@ export async function middleware( request ) {
   if(isConnected) {
     const restrictedPaths = ['/login', '/register'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return NextResponse.redirect(process.env.ROOT_URL + '/dashboard');
+      return NextResponse.redirect(process.env.NEXT_PUBLIC_VERCEL_URL + '/dashboard');
     }
   }else{
     const restrictedPaths = ['/dashboard'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return Response.redirect(process.env.ROOT_URL + '/login');
+      return Response.redirect(process.env.NEXT_PUBLIC_VERCEL_URL + '/login');
     }
   }
   

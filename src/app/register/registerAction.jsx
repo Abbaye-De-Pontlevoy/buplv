@@ -18,7 +18,7 @@ export default async function registerAction(
   const country_code = formData.get("country_code");
 
   //  Send to our api route
-  const res = await fetch(process.env.ROOT_URL + "/api/user/register", {
+  const res = await fetch(process.env.NEXT_PUBLIC_VERCEL_URL + "/api/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

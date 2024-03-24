@@ -12,7 +12,7 @@ export default async function loginAction(
   const password = formData.get("password");
 
   //  Send to our api route
-  const res = await fetch(process.env.ROOT_URL + "/api/user/login", {
+  const res = await fetch(process.env.NEXT_PUBLIC_VERCEL_URL + "/api/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
