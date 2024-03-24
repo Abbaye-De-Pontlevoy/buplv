@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 
-const ArticleForm = () => {
+const ArticleForm = ({callAfterSubmit}) => {
     const [articleData, setArticleData] = useState({});
     const [name, setName] = useState("");
     const [brand, setBrand] = useState("");
     const [size, setSize] = useState("");
     const [quantity, setQuantity] = useState(0);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
+
 			// get article list from the server
             const response = await fetch("/api/clothesJSON");
             const data = await response.json();
             setArticleData(data);
+
+            setIsLoading(false);
         };
+        
         fetchData();
     }, []);
-
 
     useEffect(() => {
 		setSize("");
@@ -29,6 +35,10 @@ const ArticleForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+        setIsLoading(true);
+
+        // add selling to the server
 		const apiURL = "/api/selling/add-selling/";
 		const sellingData = {
 			name: name,
@@ -47,11 +57,19 @@ const ArticleForm = () => {
 			});
 			const data = await response.json();
 		}
+
+        // call the parent function
+        if(callAfterSubmit)
+            await callAfterSubmit();
+
+        setName("");
+
+        setIsLoading(false);
 	}
 
     return (
         <form onSubmit={handleSubmit}>
-            <select name="name" key="name" value={name} onChange={(e) => setName(e.target.value)} disabled={!articleData}>
+            <select name="name" key="name" value={name} onChange={(e) => setName(e.target.value)} disabled={!articleData || isLoading}>
                 <option key="default" value="">Sélectionner un article</option>
                 {
                     Object.keys(articleData).map((articleName) => (
@@ -60,7 +78,7 @@ const ArticleForm = () => {
                 }
             </select>
 
-            <select name="brand" key="brand" value={brand} onChange={(e) => setBrand(e.target.value)} disabled={!name}>
+            <select name="brand" key="brand" value={brand} onChange={(e) => setBrand(e.target.value)} disabled={!name || isLoading}>
                 <option key="default" value="">Sélectionner une marque</option>
                 {
                     name && articleData[name] && Object.keys(articleData[name]).map((article) => (
@@ -69,7 +87,7 @@ const ArticleForm = () => {
                 }
             </select>
 
-            <select name="size" key="size" value={size} onChange={(e) => setSize(e.target.value)} disabled={!brand || !name}>
+            <select name="size" key="size" value={size} onChange={(e) => setSize(e.target.value)} disabled={!brand || !name || isLoading}>
                 <option key="default" value="">Sélectionner une taille</option>
                 {
                     name && brand && articleData[name][brand] && articleData[name][brand]["size"] && articleData[name][brand]["size"].map((article) => (
@@ -78,16 +96,16 @@ const ArticleForm = () => {
                 }
             </select>
         
-            <select name="quantity" key="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} disabled={!size}>
+            <select name="quantity" key="quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} disabled={!size || isLoading}>
 				<option key="default" value="">Sélectionner une quantité</option>
 				{
-					Array.from({ length: 5 }, (_, i) => (
+					name && brand && size && Array.from({ length: 5 }, (_, i) => (
 						<option key={i+1} value={i+1}>{i+1}</option>
 					))
 				}
 			</select>
 
-            <button type="submit" disabled={!quantity}>Ajouter</button>
+            <button type="submit" disabled={!quantity || isLoading}>Ajouter</button>
         </form>
     );
 };
