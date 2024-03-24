@@ -15,10 +15,9 @@ export async function POST(request) {
 	password,
   iban,
   bic,
-  code_pays
+  country_code
   } = body;
 
-  console.log(body)
 
   // Validate data
   if (!validateEmail(email) || !validatePassword(password)) {
@@ -44,7 +43,7 @@ export async function POST(request) {
 		password: hash,
     iban: iban,
     bic: bic,
-    code_pays: code_pays
+    country_code: country_code
 	},
 });
 

@@ -7,7 +7,6 @@ export async function isUserConnected (request){
 	const cookie = cookies(request).get("buConnectedToken");
 
   if(!cookie){
-    console.log("not connected");
     return false;
   }
 

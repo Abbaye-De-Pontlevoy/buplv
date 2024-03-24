@@ -22,7 +22,6 @@ export default async function loginAction(
       password: password }),
   });
 
-  console.log(res);
 
   const json = await res.json();
 

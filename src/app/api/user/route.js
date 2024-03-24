@@ -4,7 +4,6 @@ import prisma from "@/app/lib/prisma";
 export async function GET(req) {
 	try {
 	  const data = await req.json();
-	  console.log(data);
   
 	  if (!data.name) {
 		return NextResponse.json({ message: "Missing name" }, { status: 400 });

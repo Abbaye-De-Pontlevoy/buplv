@@ -8,11 +8,11 @@ export async function GET(request){
     return;
   }
 
-  const sellingProducts = await prisma.sellingProduct.findMany({
+  const articles = await prisma.article.findMany({
     where: {
       seller_id: userID
     }
   });
   
-  return Response.json({ sellingProducts });
+  return Response.json({ articles });
 }

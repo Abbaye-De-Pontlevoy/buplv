@@ -23,18 +23,17 @@ model Seller {
   password            String
   iban                String
   bic                 String  
-  code_pays           String
-  sellingProducts     SellingProduct[]
+  country_code        String
+  articles            Article[]
 }
 
-model SellingProduct {
+model Article {
   id          Int       @id @default(autoincrement())
   seller_id   String
   brand       String
   name        String
   size        String
   price       Float
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  state       Int
   seller      Seller    @relation(fields: [seller_id], references: [id])
 }

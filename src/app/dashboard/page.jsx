@@ -24,9 +24,9 @@ const Dashboard = () => {
 	
 
 	const updateArticleList = async () => {
-		const response = await fetch("/api/selling/get-selling-list/");
+		const response = await fetch("/api/article/get-article-list/");
 		const data = await response.json();
-		setArticleList(data.sellingProducts);
+		setArticleList(data.articles);
 	}
 
 	return (

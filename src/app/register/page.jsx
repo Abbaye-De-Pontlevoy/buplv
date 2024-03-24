@@ -45,7 +45,7 @@ export default function Signup() {
         </label>
         <label>
           Code Pays:
-          <input type="text" name="code_pays" required />
+          <input type="text" name="country_code" required />
         </label>
         <button type="submit">Signup</button>
       </form>

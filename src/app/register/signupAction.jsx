@@ -15,7 +15,7 @@ export default async function signupAction(
   const password = formData.get("password");
   const iban = formData.get("iban");
   const bic = formData.get("bic");
-  const code_pays = formData.get("code_pays");
+  const country_code = formData.get("country_code");
 
   //  Send to our api route
   const res = await fetch(process.env.ROOT_URL + "/api/user/register", {
@@ -32,7 +32,7 @@ export default async function signupAction(
       password: password,
       iban: iban,
       bic: bic,
-      code_pays: code_pays}),
+      country_code: country_code}),
   });
 
   const json = await res.json();
