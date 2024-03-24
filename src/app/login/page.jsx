@@ -2,6 +2,7 @@
 
 import { useFormState } from "react-dom";
 import loginAction from "./loginAction";
+import MenuButton from "../components/Button/MenuButton/MenuButton";
 
 export default function Login() {
   const [error, formAction] = useFormState(loginAction, undefined);
@@ -22,6 +23,7 @@ export default function Login() {
       </form>
 
       {error && <p>{error}</p>}
+      <MenuButton />
     </div>
   );
 }

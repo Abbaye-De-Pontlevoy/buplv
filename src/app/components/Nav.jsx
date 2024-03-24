@@ -14,7 +14,7 @@ export default async function Nav(request) {
         ) : (
           <>
             <li>
-              <Link href="/register">Signup</Link>
+              <Link href="/register">Register</Link>
             </li>
             <li>
               <Link href="/login">Login</Link>

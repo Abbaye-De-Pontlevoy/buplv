@@ -2,14 +2,15 @@
 
 import { redirect } from "next/navigation";
 import { useFormState } from "react-dom";
-import signupAction from "./signupAction";
+import registerAction from "./registerAction";
+import MenuButton from "../components/Button/MenuButton/MenuButton";
 
-export default function Signup() {
-  const [error, formAction] = useFormState(signupAction, undefined);
+export default function register() {
+  const [error, formAction] = useFormState(registerAction, undefined);
 
   return (
     <div>
-      <h1>Signup</h1>
+      <h1>Register</h1>
       <form action={formAction}>
         <label>
           Student Name:
@@ -47,9 +48,10 @@ export default function Signup() {
           Code Pays:
           <input type="text" name="country_code" required />
         </label>
-        <button type="submit">Signup</button>
+        <button type="submit">register</button>
       </form>
       {error && <p>{error}</p>}
+      <MenuButton />
     </div>
   );
 }

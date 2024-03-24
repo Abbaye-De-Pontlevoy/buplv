@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-export default async function signupAction(
+export default async function registerAction(
   currentState,
   formData
 ) {
