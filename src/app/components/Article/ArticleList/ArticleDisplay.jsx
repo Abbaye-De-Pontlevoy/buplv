@@ -14,7 +14,7 @@ export const ArticleDisplay = ({ article, callAfterSubmit }) => {
 
 	return (
 		<form onSubmit={deleteHandler}>
-			<label>{article.name} - {article.brand} - {article.size}</label>
+			<label>{article.name} - {article.brand} - {article.size} {article.state === 1 ? "(Inventorié)" : article.state === 2 ? "(Vendu)": ""}</label>
 			<button type="submit" disabled={isDisabled}>x</button>
 		</form>
 	);
