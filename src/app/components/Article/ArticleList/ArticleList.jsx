@@ -1,6 +1,6 @@
 import { ArticleDisplay } from "./ArticleDisplay";
 
-export const ArticleList = ({articleJSON, callAfterSubmit}) => {
+const ArticleList = ({articleJSON, callAfterSubmit}) => {
 
 	return (
 		<ul>{
@@ -12,3 +12,5 @@ export const ArticleList = ({articleJSON, callAfterSubmit}) => {
 		}</ul>
 	);
 }
+
+export default ArticleList;
