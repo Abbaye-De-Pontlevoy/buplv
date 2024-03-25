@@ -8,6 +8,7 @@ export default async function Page() {
     <>
       <h1>HOME</h1>
       <Nav/>
+      <a href="/qrcode">(temporaire) Scan QR Code</a>
     </>
   )
 }
