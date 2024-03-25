@@ -51,7 +51,7 @@ const QRCodeReader = () => {
       }
     };
 
-    const intervalId = setInterval(checkQRCode, 300); // Vérifier le QR code toutes les 1000 ms
+    const intervalId = !qrCodeData && setInterval(checkQRCode, 300); // Vérifier le QR code toutes les 1000 ms
 
     return () => clearInterval(intervalId); // Nettoyer l'intervalle lors du démontage du composant
   }, []);
@@ -78,6 +78,7 @@ const QRCodeReader = () => {
             onClick={() => {
               updateArticleField(qrCodeData.id, "state", articleState - 1);
               setShowModal(false);
+              setQRCodeData("");
             }}
           >
             {articleState === 1
@@ -93,6 +94,7 @@ const QRCodeReader = () => {
             onClick={() => {
               updateArticleField(qrCodeData.id, "state", articleState + 1);
               setShowModal(false);
+              setQRCodeData("");
             }}
           >
             {articleState === 0
@@ -102,7 +104,14 @@ const QRCodeReader = () => {
               : ""}
           </button>
         )}
-        <button onClick={() => setShowModal(false)}>Annuler</button>
+        <button
+          onClick={() => {
+            setShowModal(false);
+            setQRCodeData("");
+          }}
+        >
+          Annuler
+        </button>
       </Modal>
     </div>
   );
