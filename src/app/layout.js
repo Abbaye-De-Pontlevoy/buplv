@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Next.js Authentication",
-  description: "Example using NextAuth.js",
+  title: "Bourse à l'uniforme",
+  description: "Site de revente des uniformes scolaires de l'abbaye de Pontlevoy",
 };
 
 export default function RootLayout({ children }) {
