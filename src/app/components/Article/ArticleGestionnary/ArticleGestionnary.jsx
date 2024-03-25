@@ -5,6 +5,7 @@ import ArticleForm from "../ArticleForm/ArticleForm";
 import ArticleList from "../ArticleList/ArticleList";
 import { getArticleList } from "../ArticleList/removeArticleAction";
 import { getUserID } from "@/app/helpers/getUserID";
+import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 
 const ArticleGestionnary = () => {
   const [userID, setUserID] = useState("");
@@ -16,10 +17,10 @@ const ArticleGestionnary = () => {
       setIsLoading(true);
 
       const newUserID = await getUserID();
-			const newArticleList = await getArticleList(newUserID);
+      const newArticleList = await getArticleList(newUserID);
 
-			setUserID(newUserID);
-			setArticleList(newArticleList);
+      setUserID(newUserID);
+      setArticleList(newArticleList);
 
       setIsLoading(false);
     };
@@ -28,8 +29,8 @@ const ArticleGestionnary = () => {
   }, []);
 
   const updateArticleList = async () => {
-		const newArticleList = await getArticleList(userID);
-		setArticleList(newArticleList);
+    const newArticleList = await getArticleList(userID);
+    setArticleList(newArticleList);
   };
 
   return (
@@ -43,7 +44,12 @@ const ArticleGestionnary = () => {
             callAfterSubmit={updateArticleList}
           />
 
-          <ArticleForm title={<h2>Ajouter un article</h2>} callAfterSubmit={updateArticleList} />
+          <ArticleForm
+            title={<h2>Ajouter un article</h2>}
+            callAfterSubmit={updateArticleList}
+          />
+
+          {articleList.length != 0 && <QRCodePDFGenerator data={articleList} />}
         </>
       )}
     </>
