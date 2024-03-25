@@ -22,23 +22,28 @@ export default async function registerAction(currentState, formData) {
   if (!validateEmail(email) || !validatePassword(password))
     return "Invalid email or password";
 
-  // Hash the password
-  const hash = bcrypt.hashSync(password, 8);
+  try {
+    // Hash the password
+    const hash = bcrypt.hashSync(password, 8);
 
-  // Create a user in db
-  await prisma.seller.create({
-    data: {
-      student_name: student_name,
-      grade: grade,
-      email: email,
-      phone: phone,
-      address: address,
-      password: hash,
-      iban: iban,
-      bic: bic,
-      country_code: country_code,
-    },
-  });
+    // Create a user in db
+    await prisma.seller.create({
+      data: {
+        student_name: student_name,
+        grade: grade,
+        email: email,
+        phone: phone,
+        address: address,
+        password: hash,
+        iban: iban,
+        bic: bic,
+        country_code: country_code,
+      },
+    });
+  } catch (e){
+    console.log(e);
+    return "Name or email already associated with an account. Please try again or login.";
+  }
 
   redirect("/login");
 }
