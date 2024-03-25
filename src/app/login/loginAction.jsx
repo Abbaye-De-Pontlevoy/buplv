@@ -30,32 +30,29 @@ export default async function loginAction(currentState, formData) {
   const isCorrectPassword = bcrypt.compareSync(password, seller.password);
   //const isCorrectPassword = password === seller.password;
 
-  if (!isCorrectPassword) {
-    return Response.json(
-      {
-        error: "Invalid email or password",
-      },
-      { status: 400 }
-    );
+  if (!isCorrectPassword) return "Invalid email or password";
+
+  try {
+    // Create jwt token
+    const secret = new TextEncoder().encode(process.env.SECRET_KEY);
+    const alg = "HS256";
+
+    const jwt = await new jose.SignJWT({})
+      .setProtectedHeader({ alg })
+      .setExpirationTime("72h")
+      .setSubject(seller.id)
+      .sign(secret);
+
+    cookies().set("buConnectedToken", jwt, {
+      secure: true,
+      httpOnly: true,
+      expires: Date.now() + 24 * 60 * 60 * 1000 * 3,
+      path: "/",
+      sameSite: "strict",
+    });
+  } catch (e) {
+    return "Invalid email or password";
   }
-
-  // Create jwt token
-  const secret = new TextEncoder().encode(process.env.SECRET_KEY);
-  const alg = "HS256";
-
-  const jwt = await new jose.SignJWT({})
-    .setProtectedHeader({ alg })
-    .setExpirationTime("72h")
-    .setSubject(seller.id)
-    .sign(secret);
-
-  cookies().set("buConnectedToken", jwt, {
-    secure: true,
-    httpOnly: true,
-    expires: Date.now() + 24 * 60 * 60 * 1000 * 3,
-    path: "/",
-    sameSite: "strict",
-  });
 
   redirect("/dashboard");
 }
