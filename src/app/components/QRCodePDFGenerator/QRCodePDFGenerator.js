@@ -10,7 +10,7 @@ const QRCodePDFGenerator = ({ data }) => {
 
     // Ajouter le titre du document
     doc.setFontSize(18);
-    doc.text("Liste des QRCode à imprimer", 105, 20, null, null, "center");
+    doc.text("Liste des QRCodes à imprimer", 105, 20, null, null, "center");
 
     // Position initiale pour le premier QR code
     let y = 40;
