@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import { isUserConnected } from "./app/helpers/isUserConnected";
  
 export async function middleware( request ) {
-  return NextResponse.next();
 
   const isConnected = await isUserConnected(request);
 
