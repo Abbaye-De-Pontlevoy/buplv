@@ -2,7 +2,7 @@
 
 import prisma from "@/app/lib/prisma";
 
-export const setArticleAsInventoried = async (articleID) => {
+export const getArticleState = async (articleID) => {
   // get the article from the database
   const article = await prisma.article.findUnique({
     where: {
@@ -10,15 +10,17 @@ export const setArticleAsInventoried = async (articleID) => {
     },
   });
 
-	// if it state is 0 (not inventoried) set it to 1 (inventoried)
-	if (article.state === 0) {
-		await prisma.article.update({
-			where: {
-				id: parseInt(articleID),
-			},
-			data: {
-				state: 1,
-			},
-		});
-	}
+  return article.state;
+};
+
+export const updateArticleField = async (articleID, field, value) => {
+  // update the article in the database
+  await prisma.article.update({
+    where: {
+      id: parseInt(articleID),
+    },
+    data: {
+      [field]: value,
+    },
+  });
 };
