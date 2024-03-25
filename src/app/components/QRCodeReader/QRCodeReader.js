@@ -61,49 +61,47 @@ const QRCodeReader = () => {
       <video ref={videoRef} style={{ width: "100%", maxWidth: "500px" }} />
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
-      <Modal
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-        contentLabel="QR Code Modal"
-      >
-        <h2>Article scanné !</h2>
-        <ul>
-          <li>Article : {qrCodeData.name}</li>
-          <li>Marque : {qrCodeData.brand}</li>
-          <li>Prix : {qrCodeData.price}€</li>
-        </ul>
+      {qrCodeData && (
+        <>
+          <h2>Article scanné !</h2>
+          <ul>
+            <li>Article : {qrCodeData.name}</li>
+            <li>Marque : {qrCodeData.brand}</li>
+            <li>Prix : {qrCodeData.price}€</li>
+          </ul>
 
-        {articleState > 0 && (
-          <button
-            onClick={() => {
-              updateArticleField(qrCodeData.id, "state", articleState - 1);
-              setShowModal(false);
-            }}
-          >
-            {articleState === 1
-              ? "Enlever de l'inventaire"
-              : articleState === 2
-              ? "Annuler la vente"
-              : ""}
-          </button>
-        )}
+          {articleState > 0 && (
+            <button
+              onClick={() => {
+                updateArticleField(qrCodeData.id, "state", articleState - 1);
+                setQRCodeData("");
+              }}
+            >
+              {articleState === 1
+                ? "Enlever de l'inventaire"
+                : articleState === 2
+                ? "Annuler la vente"
+                : ""}
+            </button>
+          )}
 
-        {articleState < 2 && (
-          <button
-            onClick={() => {
-              updateArticleField(qrCodeData.id, "state", articleState + 1);
-              setShowModal(false);
-            }}
-          >
-            {articleState === 0
-              ? "Inventorier"
-              : articleState === 1
-              ? "Vendre"
-              : ""}
-          </button>
-        )}
-        <button onClick={() => setShowModal(false)}>Annuler</button>
-      </Modal>
+          {articleState < 2 && (
+            <button
+              onClick={() => {
+                updateArticleField(qrCodeData.id, "state", articleState + 1);
+                setQRCodeData("");
+              }}
+            >
+              {articleState === 0
+                ? "Inventorier"
+                : articleState === 1
+                ? "Vendre"
+                : ""}
+            </button>
+          )}
+          <button onClick={() => setQRCodeData("")}>Annuler</button>
+        </>
+      )}
     </div>
   );
 };
