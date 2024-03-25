@@ -18,7 +18,13 @@ const QRCodePDFGenerator = ({ data }) => {
     // Boucle à travers chaque QR code
     for (let i = 0; i < data.length; i++) {
       // Générer le QR code en tant qu'image
-      const qrCodeDataURL = await generateQRCodeDataURL(data[i].id);
+      const jsonString = JSON.stringify({
+        "id" : data[i].id,
+        "name": data[i].name,
+        "brand": data[i].brand,
+        "price": data[i].price
+      });
+      const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
 
       // Ajouter le QR code à la position spécifiée dans le PDF
       doc.addImage(qrCodeDataURL, "PNG", 15, y + 5, 30, 30);
