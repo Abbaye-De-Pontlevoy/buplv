@@ -1,12 +1,11 @@
 import { ArticleDisplay } from "./ArticleDisplay";
 
-const ArticleList = ({articleJSON, callAfterSubmit}) => {
-
+const ArticleList = ({articleList, callAfterDelete}) => {
 	return (
 		<ul>{
-			Object.keys(articleJSON).map((index) => (
-				<li key={articleJSON[index].id}>
-					<ArticleDisplay article={articleJSON[index]} callAfterSubmit={callAfterSubmit} />
+			articleList.map((article) => (
+				<li key={article.id}>
+					<ArticleDisplay article={article} callAfterDelete={callAfterDelete} />
 				</li>
 			))
 		}</ul>

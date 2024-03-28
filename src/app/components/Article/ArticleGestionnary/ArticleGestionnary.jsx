@@ -40,8 +40,8 @@ const ArticleGestionnary = () => {
       ) : (
         <>
           <ArticleList
-            articleJSON={articleList}
-            callAfterSubmit={updateArticleList}
+            articleList={articleList}
+            callAfterDelete={updateArticleList}
           />
 
           <ArticleForm
