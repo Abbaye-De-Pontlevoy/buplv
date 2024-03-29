@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import ArticleForm from "../ArticleForm/ArticleForm";
 import ArticleList from "../ArticleList/ArticleList";
-import { getArticleList } from "../ArticleList/removeArticleAction";
+import removeArticleAction, {
+  getArticleList,
+} from "./removeArticleAction";
 import { getUserID } from "@/app/helpers/getUserID";
 import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 
@@ -41,7 +43,10 @@ const ArticleGestionnary = () => {
         <>
           <ArticleList
             articleList={articleList}
-            callAfterDelete={updateArticleList}
+            callAfterDelete={async (articleId) => {
+              await removeArticleAction({ id: articleId });
+              updateArticleList();
+            }}
           />
 
           <ArticleForm
