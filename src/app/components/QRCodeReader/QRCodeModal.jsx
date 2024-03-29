@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import Modal from "react-modal";
-import QRCodeReader from "./QRCodeReader";
+import AQR from "./QRCodeReader";
 
+Modal.setAppElement("#root");
 
-const QRCodeReaderModal = () => {
+const AQRModal = ({onQRCodeRead, disabled}) => {
   const [showModal, setShowModal] = useState(false);
   const [qrCodeValue, setQRCodeValue] = useState("");
 
@@ -13,22 +14,22 @@ const QRCodeReaderModal = () => {
     setShowModal(false);
     if (value) {
       setQRCodeValue(value);
+      onQRCodeRead(value);
     }
   };
 
   return (
     <div>
-      <button onClick={() => setShowModal(true)}>Open QR Code Reader</button>
+      <button onClick={() => setShowModal(true)} disabled={disabled}>Scanner un article</button>
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
-        contentLabel="QR Code Reader Modal"
+        contentLabel="Scan Articles"
       >
-        <QRCodeReader onClose={handleModalClose} />
+        <AQR onQRCodeRead={handleModalClose} />
       </Modal>
-      <p>QR Code Value: {qrCodeValue}</p>
     </div>
   );
 };
 
-export default QRCodeReaderModal;
+export default AQRModal;

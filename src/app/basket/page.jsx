@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import ArticleList from "../components/Article/ArticleList/ArticleList";
-import QRCodeReader from "../components/QRCodeReader/QRCodeReader";
-import AQRModal from "../components/AQR/AQRModal";
+import AQRModal from "../components/QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
+import MenuButton from "../components/Button/MenuButton/MenuButton";
 
 const QRCodePage = () => {
   const [basket, setBasket] = useState([]);
@@ -73,6 +73,7 @@ const QRCodePage = () => {
       <form onSubmit={handleValidate}>
         <button type="submit" disabled={validatingBasket}>Valider</button>
       </form>
+      <MenuButton />
     </div>
   );
 };
