@@ -27,6 +27,7 @@ const AQRModal = ({onQRCodeRead, disabled}) => {
         contentLabel="Scan Articles"
       >
         <AQR onQRCodeRead={handleModalClose} />
+        <button onClick={() => handleModalClose(null)}>Fermer</button>
       </Modal>
     </div>
   );
