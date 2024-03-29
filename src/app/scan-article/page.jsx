@@ -91,6 +91,7 @@ const ScanArticle = () => {
           </button>
         )}
         <button onClick={() => setShowModal(false)}>Annuler</button>
+        <MenuButton />
       </Modal>
       <MenuButton />
     </div>
