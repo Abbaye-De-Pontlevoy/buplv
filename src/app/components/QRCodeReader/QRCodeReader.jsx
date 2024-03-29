@@ -76,7 +76,7 @@ const AQR = ({onQRCodeRead}) => {
   return (
     <div className="qr-reader">
       {/* QR */}
-      <video ref={videoEl}></video>
+      <video ref={videoEl} style={{ width: "100%" }}></video>
     </div>
   );
 };
