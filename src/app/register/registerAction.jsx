@@ -17,7 +17,6 @@ export default async function registerAction(currentState, formData) {
   const password2 = formData.get("password2");
   const iban = formData.get("iban");
   const bic = formData.get("bic");
-  const country_code = formData.get("country_code");
 
   // Validate password
   if (password !== password2) return "Passwords do not match";
@@ -40,8 +39,7 @@ export default async function registerAction(currentState, formData) {
         address: address,
         password: hash,
         iban: iban,
-        bic: bic,
-        country_code: country_code,
+        bic: bic
       },
     });
   } catch (e) {

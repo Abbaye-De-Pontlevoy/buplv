@@ -48,10 +48,6 @@ export default function register() {
           Bic:
           <input type="text" name="bic" required />
         </label>
-        <label>
-          Code Pays:
-          <input type="text" name="country_code" required />
-        </label>
         <button type="submit">register</button>
       </form>
       {error && <p>{error}</p>}

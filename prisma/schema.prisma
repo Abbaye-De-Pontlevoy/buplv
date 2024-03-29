@@ -15,15 +15,14 @@ datasource db {
 
 model Seller {
   id                  String  @id @default(uuid())
-  student_name        String  @unique
+  student_name        String 
   grade               String
   email               String  @unique
   phone               String
   address             String
   password            String
   iban                String
-  bic                 String  
-  country_code        String
+  bic                 String
   articles            Article[]
 }
 

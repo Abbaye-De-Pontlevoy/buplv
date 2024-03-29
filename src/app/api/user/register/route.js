@@ -14,8 +14,7 @@ export async function POST(request) {
 	address,
 	password,
   iban,
-  bic,
-  country_code
+  bic
   } = body;
 
 
@@ -42,8 +41,7 @@ export async function POST(request) {
 		address: address,
 		password: hash,
     iban: iban,
-    bic: bic,
-    country_code: country_code
+    bic: bic
 	},
 });
 
