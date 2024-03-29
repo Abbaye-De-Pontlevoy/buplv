@@ -8,7 +8,11 @@ export default async function Page() {
     <>
       <h1>HOME</h1>
       <Nav/>
-      <a href="/qrcode">(temporaire) Scan QR Code</a>
+      <h2>Login Actions</h2>
+      <ul>
+        <li><a href="/basket">(temporaire) Créer un panier</a></li>
+        <li><a href="/scan-article">(temporaire) Scanner un article</a></li>
+      </ul>
     </>
   )
 }
