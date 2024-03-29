@@ -14,9 +14,13 @@ export default async function registerAction(currentState, formData) {
   const phone = formData.get("phone");
   const address = formData.get("address");
   const password = formData.get("password");
+  const password2 = formData.get("password2");
   const iban = formData.get("iban");
   const bic = formData.get("bic");
   const country_code = formData.get("country_code");
+
+  // Validate password
+  if (password !== password2) return "Passwords do not match";
 
   // Validate data
   if (!validateEmail(email) || !validatePassword(password))
@@ -40,7 +44,7 @@ export default async function registerAction(currentState, formData) {
         country_code: country_code,
       },
     });
-  } catch (e){
+  } catch (e) {
     console.log(e);
     return "Name or email already associated with an account. Please try again or login.";
   }

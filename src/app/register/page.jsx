@@ -33,8 +33,12 @@ export default function register() {
           <input type="text" name="address" required />
         </label>
         <label>
-          Password:
+          Mot de passe:
           <input type="password" name="password" required />
+        </label>
+        <label>
+          Vérification du mot de passe:
+          <input type="password" name="password2" required />
         </label>
         <label>
           Iban:
