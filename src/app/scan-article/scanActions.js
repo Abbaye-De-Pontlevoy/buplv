@@ -22,5 +22,8 @@ export const getArticleState = async (articleID) => {
 		},
 	});
 
+	if(!article)
+		return null;
+
 	return article.state;
 }

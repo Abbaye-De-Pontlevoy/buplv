@@ -16,6 +16,7 @@ const ScanArticle = () => {
     qrCode = JSON.parse(qrCode);
 
     const state = await getArticleState(qrCode.id);
+
     qrCode.state = parseInt(state);
 
     setQRCodeData(qrCode);
@@ -54,7 +55,7 @@ const ScanArticle = () => {
           </li>
           <li>
             Etat :{" "}
-            {qrCodeData.state
+            {qrCodeData.state != null
               ? qrCodeData.state === 2
                 ? "Vendu"
                 : qrCodeData.state === 1
@@ -79,7 +80,7 @@ const ScanArticle = () => {
           </button>
         )}
 
-        {qrCodeData.state === 1 && (
+        {qrCodeData.state === 0 && (
           <button
             onClick={() => {
               updateArticleField(qrCodeData.id, "state", qrCodeData.state + 1);
