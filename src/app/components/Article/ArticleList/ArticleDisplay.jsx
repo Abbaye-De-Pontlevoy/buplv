@@ -1,5 +1,4 @@
 import { useState } from "react";
-import removeArticleAction from "./removeArticleAction";
 
 export const ArticleDisplay = ({ article, callAfterDelete }) => {
 	const [isDisabled, setIsDisabled] = useState(false);
@@ -7,9 +6,8 @@ export const ArticleDisplay = ({ article, callAfterDelete }) => {
 	const deleteHandler = async (e) => {
 		e.preventDefault();
 		setIsDisabled(true);
-		await removeArticleAction({ id: article.id });
-		await callAfterDelete();
-		setIsDisabled(false);
+		await callAfterDelete(article.id);
+		//setIsDisabled(false);
 	}
 
 	return (
