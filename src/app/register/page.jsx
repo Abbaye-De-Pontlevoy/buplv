@@ -19,19 +19,19 @@ export default function register() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    student_name: "Rivera",
-    student_firstname: "Nicolas",
-    grade: "55T",
-    email: "n.c@hotmail.com",
-    phone: "+33 6 76 26 59 68",
-    password: "AZERTYUIOPQSDFGHJKLM",
-    password2: "AZERTYUIOPQSDFGHJKLM",
-    address: "12 rue de la convention",
+    student_name: "",
+    student_firstname: "",
+    grade: "",
+    email: "",
+    phone: "",
+    password: "",
+    password2: "",
+    address: "",
     comp_address: "",
-    zip: "33000",
-    city: "Bordeaux",
-    iban: "FR1420041010050500013M02606",
-    bic: "DEUTDEFF500",
+    zip: "",
+    city: "",
+    iban: "",
+    bic: "",
   });
 
   function formatPhoneNumber(phoneNumber) {
