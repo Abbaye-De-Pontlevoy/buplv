@@ -1,0 +1,25 @@
+#bandeau-rangement{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+	height: 500px;
+	background-image: url("./assets/BU_rangement.webp");
+	background-position: 50% 40%;
+	background-attachment: fixed; 
+}
+
+#information-div{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	margin-top: 50px;
+
+	width:70%;
+
+	background-color: white;
+}

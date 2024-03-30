@@ -1,11 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Tauri&display=swap");
+
+:root {
+  --main-blue: #123554;
+  --main-blue-rgb: 18, 53, 84;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Tauri", sans-serif;
+  color: var(--main-blue);
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  /*background-color: #f5f5f5;*/
+}
+
+body{
+  padding-bottom: 50px;
+}
+
+.button,
+button {
+  border: none;
+  outline: none;
+  padding: 20px 30px;
+  border-radius: 8px;
+
+  background-color: rgba(
+    var(--main-blue-rgb),
+    0.8
+  );
+
+  font-size: large;
+  color: white;
+}
+
+.button:hover,
+button:hover {
+  cursor: pointer;
+  background-color: var(--main-blue);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 .formulaire {
   display: flex;
   flex-direction: column;
-  background-color: aqua;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  width: 100%;
+}
+
+form input {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid var(--main-blue);
+  width: 100%;
+}
+
+
+h1{
+	font-size: 2em;
+}
+
+.formTitle{
+  padding: 30px
+}
+
+span{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.mainContainer{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.formContainer{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+		border-radius: 8px;
+		padding-bottom: 20px;
+}
+
+.formContainer form{
+	padding: 30px;
+	padding-top: 0px;
 }

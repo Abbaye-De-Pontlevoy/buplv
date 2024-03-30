@@ -1,29 +1,23 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import validateEmail from "@/app/helpers/validateEmail";
-import validatePassword from "@/app/helpers/validatePassword";
 import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
-export default async function registerAction(currentState, formData) {
+export default async function registerAction(formData) {
   // Get the data off the form
-  const student_name = formData.get("student_name");
-  const grade = formData.get("grade");
-  const email = formData.get("email");
-  const phone = formData.get("phone");
-  const address = formData.get("address");
-  const password = formData.get("password");
-  const password2 = formData.get("password2");
-  const iban = formData.get("iban");
-  const bic = formData.get("bic");
+  const {
+    student_name,
+    grade,
+    email,
+    phone,
+    address,
+    password,
+    iban,
+    bic,
+  } = formData;
 
-  // Validate password
-  if (password !== password2) return "Passwords do not match";
-
-  // Validate data
-  if (!validateEmail(email) || !validatePassword(password))
-    return "Invalid email or password";
+  console.log(formData);
 
   try {
     // Hash the password
@@ -44,7 +38,7 @@ export default async function registerAction(currentState, formData) {
     });
   } catch (e) {
     console.log(e);
-    return "Name or email already associated with an account. Please try again or login.";
+    return "Email déjà associé à un compte. Veuillez utiliser un autre email ou vous connecter.";
   }
 
   redirect("/login");

@@ -3,7 +3,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import validateEmail from "@/app/helpers/validateEmail";
-import validatePassword from "@/app/helpers/validatePassword";
 import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
@@ -14,7 +13,7 @@ export default async function loginAction(currentState, formData) {
   const password = formData.get("password");
 
   // Validate data
-  if (!validateEmail(email) || !validatePassword(password))
+  if (!validateEmail(email))
     return "Invalid email or password";
 
   // Lookup the seller

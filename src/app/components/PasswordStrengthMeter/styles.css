@@ -1,0 +1,43 @@
+.password-strength-meter {
+  width: 100%;
+}
+
+progress[value] {
+  --color: var(--main-blue); /* the progress color */
+  --background: lightgrey; /* the background color */
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 100%;
+  height: 10px;
+  margin: 0px 0px 10px 0px;
+  border-radius: 8em;
+  background: var(--background);
+}
+
+progress[value]::-moz-progress-bar {
+  border-radius: 8em;
+  background: var(--color);
+}
+
+progress[value].strength-red::-webkit-progress-value {
+  border-radius: 8em;
+  background: red;
+}
+
+progress[value].strength-orange::-webkit-progress-value {
+  border-radius: 8em;
+  background: orange;
+}
+
+progress[value].strength-green::-webkit-progress-value {
+  border-radius: 8em;
+  background: green;
+}
+
+progress[value]::-webkit-progress-bar {
+  border-radius: 8em;
+  background: var(--background);
+}

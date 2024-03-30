@@ -1,0 +1,63 @@
+#registerMainContainer{
+	width: 500px;
+}
+
+#circleSpan{
+	padding-top: 10px;
+	padding-bottom: 20px;
+	justify-content: center;
+}
+
+.line {
+  height: 2px; 
+  width: 80px; 
+  background-color: var(--main-blue); 
+  position: relative; 
+}
+
+.active.line {
+  background-color: var(--main-blue);
+	height: 4px;
+}
+
+.circleSpan {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 40px; /* Largeur du cercle */
+  height: 40px; /* Hauteur du cercle */
+  border-radius: 50%; /* Bordure arrondie pour créer un cercle */
+  background-color: white; /* Couleur de fond blanc */
+  color: var(--main-blue); /* Couleur du texte bleu */
+  border: 2px solid var(--main-blue); /* Bordure bleue de 2px */
+  display: flex; /* Utilisation de Flexbox pour centrer le contenu */
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center; /* Centrer verticalement */
+  font-size: 20px; /* Taille du texte */
+  position: relative; /* Positionnement relatif pour placer la ligne par rapport au cercle */
+}
+
+.active {
+  background-color: var(--main-blue);
+  color: white;
+}
+
+.buttonSpan button{
+	width: 100%;
+}
+
+.errorMessage{
+  color: red;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+
+/* media queries */
+@media (max-width: 500px) {
+  #registerMainContainer{
+    width: 100%;
+  }
+}
