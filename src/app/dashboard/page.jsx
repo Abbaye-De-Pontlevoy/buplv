@@ -11,12 +11,10 @@ const Dashboard = () => {
       <Menu current="/dashboard" />
 
       <div id="bandeau-rangement">
-        <div id="dashboardContainer" className="mainContainer">
-          <div className="formContainer">
-            <h1 className="formTitle">Liste des articles enregistrés</h1>
+        <div className="formContainer">
+          <h1 className="formTitle">Liste des articles enregistrés</h1>
 
-            <ArticleGestionnary />
-          </div>
+          <ArticleGestionnary />
         </div>
       </div>
     </>

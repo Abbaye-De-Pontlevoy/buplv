@@ -2,6 +2,7 @@ import { ArticleDisplay } from "./ArticleDisplay";
 
 const ArticleList = ({ articleList, callAfterDelete }) => {
   return (
+    <div className="overFlowSlider">
     <table id="articleTable">
       <thead>
         <tr>
@@ -23,6 +24,8 @@ const ArticleList = ({ articleList, callAfterDelete }) => {
         ))}
       </tbody>
     </table>
+
+    </div>
   );
 };
 

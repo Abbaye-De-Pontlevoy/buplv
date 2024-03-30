@@ -1,3 +1,7 @@
+.mainContainer{
+	padding-bottom: 50px;
+}
+
 #registerMainContainer{
 	width: 500px;
 }

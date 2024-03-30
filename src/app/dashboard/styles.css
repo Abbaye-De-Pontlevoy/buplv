@@ -13,10 +13,14 @@
 	background-size: cover;
 }
 
-#dashboardContainer{
-	flex-direction: row;
-}
-
 .formContainer{
 	gap: 20px;
+}
+
+@media (max-width: 400px) {
+	#bandeau-rangement{
+		padding: 0;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
 }
