@@ -7,14 +7,14 @@ import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
 
-export default async function loginAction(currentState, formData) {
+export default async function loginAction(formData) {
   // Get the data off the form
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const email = formData.email;
+  const password = formData.password;
 
   // Validate data
   if (!validateEmail(email))
-    return "Invalid email or password";
+    return "Email ou mot de passe invalide.";
 
   // Lookup the seller
   const seller = await prisma.seller.findFirst({
@@ -23,13 +23,13 @@ export default async function loginAction(currentState, formData) {
     },
   });
 
-  if (!seller) return "Invalid email or password";
+  if (!seller) return "Email ou mot de passe invalide.";
 
   // Compare password
   const isCorrectPassword = bcrypt.compareSync(password, seller.password);
   //const isCorrectPassword = password === seller.password;
 
-  if (!isCorrectPassword) return "Invalid email or password";
+  if (!isCorrectPassword) return "Email ou mot de passe invalide.";
 
   try {
     // Create jwt token
@@ -50,7 +50,7 @@ export default async function loginAction(currentState, formData) {
       sameSite: "strict",
     });
   } catch (e) {
-    return "Invalid email or password";
+    return "Email ou mot de passe invalide.";
   }
 
   redirect("/dashboard");

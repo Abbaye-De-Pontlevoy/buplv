@@ -19,10 +19,10 @@ const QRCodePDFGenerator = ({ data }) => {
     for (let i = 0; i < data.length; i++) {
       // Générer le QR code en tant qu'image
       const jsonString = JSON.stringify({
-        "id" : data[i].id,
-        "name": data[i].name,
-        "brand": data[i].brand,
-        "price": data[i].price
+        id: data[i].id,
+        name: data[i].name,
+        brand: data[i].brand,
+        price: data[i].price,
       });
       const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
 
@@ -31,7 +31,11 @@ const QRCodePDFGenerator = ({ data }) => {
 
       // Ajouter le titre du QR code à côté de celui-ci
       doc.setFontSize(12);
-      doc.text(50, y + 15, `Article : ${data[i].name}\nMarque : ${data[i].brand}\nPrix : ${data[i].price}€`);
+      doc.text(
+        50,
+        y + 15,
+        `Article : ${data[i].name}\nMarque : ${data[i].brand}\nPrix : ${data[i].price}€`
+      );
       y += 40;
 
       // Dessiner une ligne sous le QRCode
@@ -62,10 +66,9 @@ const QRCodePDFGenerator = ({ data }) => {
 
   // Rendu du composant
   return (
-    <div>
-      {/* Bouton pour générer le PDF */}
+    <>
       <button onClick={generatePDF}>Télécharger les QRCodes</button>
-    </div>
+    </>
   );
 };
 

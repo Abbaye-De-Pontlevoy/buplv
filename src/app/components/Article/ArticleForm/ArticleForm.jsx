@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import "./styles.css";
+
 const ArticleForm = ({ callAfterSubmit, title }) => {
   const [articleData, setArticleData] = useState({});
   const [name, setName] = useState("");
@@ -67,91 +69,107 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   };
 
   return (
-    <>
-      {title}
-      <form onSubmit={handleSubmit}>
-        <select
-          name="name"
-          key="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          disabled={!articleData || isLoading}
-        >
-          <option key="default" value="">
-            Sélectionner un article
-          </option>
-          {Object.keys(articleData).map((articleName) => (
-            <option key={articleName} value={articleName}>
-              {articleName}
-            </option>
-          ))}
-        </select>
-
-        <select
-          name="brand"
-          key="brand"
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-          disabled={!name || isLoading}
-        >
-          <option key="default" value="">
-            Sélectionner une marque
-          </option>
-          {name &&
-            articleData[name] &&
-            Object.keys(articleData[name]).map((article) => (
-              <option key={article} value={article}>
-                {article}
+    <div className="addArticleContainer">
+      <h3 id="articleFormTitle">{title}</h3>
+      <form onSubmit={handleSubmit} id="addArticleForm">
+        <table>
+        <tbody>
+        <tr>
+          <td>
+            <select
+              name="name"
+              key="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={!articleData || isLoading}
+            >
+              <option key="default" value="">
+                Article
               </option>
-            ))}
-        </select>
-
-        <select
-          name="size"
-          key="size"
-          value={size}
-          onChange={(e) => setSize(e.target.value)}
-          disabled={!brand || !name || isLoading}
-        >
-          <option key="default" value="">
-            Sélectionner une taille
-          </option>
-          {name &&
-            brand &&
-            articleData[name][brand] &&
-            articleData[name][brand]["size"] &&
-            articleData[name][brand]["size"].map((article) => (
-              <option key={article} value={article}>
-                {article}
+              {Object.keys(articleData).map((articleName) => (
+                <option key={articleName} value={articleName}>
+                  {articleName}
+                </option>
+              ))}
+            </select>
+          </td>
+          <td>
+            <select
+              name="brand"
+              key="brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              disabled={!name || isLoading}
+            >
+              <option key="default" value="">
+                Marque
               </option>
-            ))}
-        </select>
-
-        <select
-          name="quantity"
-          key="quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          disabled={!size || isLoading}
-        >
-          <option key="default" value="">
-            Sélectionner une quantité
-          </option>
-          {name &&
-            brand &&
-            size &&
-            Array.from({ length: 5 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
+              {name &&
+                articleData[name] &&
+                Object.keys(articleData[name]).map((article) => (
+                  <option key={article} value={article}>
+                    {article}
+                  </option>
+                ))}
+            </select>
+          </td>
+          <td>
+            <select
+              name="size"
+              key="size"
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+              disabled={!brand || !name || isLoading}
+            >
+              <option key="default" value="">
+                Taille
               </option>
-            ))}
-        </select>
-
-        <button type="submit" disabled={!quantity || isLoading}>
-          Ajouter
-        </button>
+              {name &&
+                brand &&
+                articleData[name][brand] &&
+                articleData[name][brand]["size"] &&
+                articleData[name][brand]["size"].map((article) => (
+                  <option key={article} value={article}>
+                    {article}
+                  </option>
+                ))}
+            </select>
+          </td>
+          <td>
+            <select
+              name="quantity"
+              key="quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              disabled={!size || isLoading}
+            >
+              <option key="default" value="">
+                Quantité
+              </option>
+              {name &&
+                brand &&
+                size &&
+                Array.from({ length: 5 }, (_, i) => (
+                  <option key={i + 1} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))}
+            </select>
+          </td>
+          <td id="tdAddButton">
+            <button
+              id="addArticleButton"
+              type="submit"
+              disabled={!quantity || isLoading}
+            >
+              ✓
+            </button>
+          </td>
+        </tr>
+        </tbody>
+        </table>
       </form>
-    </>
+    </div>
   );
 };
 

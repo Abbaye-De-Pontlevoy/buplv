@@ -1,22 +1,26 @@
-"use client"
+"use client";
 
 import ArticleGestionnary from "../components/Article/ArticleGestionnary/ArticleGestionnary";
-import LogoutButton from "../components/Button/LogoutButton/LogoutButton";
-import MenuButton from "../components/Button/MenuButton/MenuButton";
+import Menu from "../components/Menu/Menu";
+
+import "./styles.css";
 
 const Dashboard = () => {
-	return (
-		<>
-			<h1>Dashboard</h1>
+  return (
+    <>
+      <Menu current="/dashboard" />
 
-			<h2>Liste des articles enregistrés</h2>
-			<ArticleGestionnary/>
+      <div id="bandeau-rangement">
+        <div id="dashboardContainer" className="mainContainer">
+          <div className="formContainer">
+            <h1 className="formTitle">Liste des articles enregistrés</h1>
 
-			<h2>Actions</h2>
-			<LogoutButton />
-			<MenuButton />
-		</>
-	);
+            <ArticleGestionnary />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Dashboard;

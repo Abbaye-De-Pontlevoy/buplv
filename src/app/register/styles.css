@@ -48,16 +48,13 @@
 	width: 100%;
 }
 
-.errorMessage{
-  color: red;
-  text-align: center;
-  padding-bottom: 10px;
-}
-
-
 /* media queries */
 @media (max-width: 500px) {
   #registerMainContainer{
     width: 100%;
   }
+}
+
+#loginLink{
+  padding-top: 20px;
 }

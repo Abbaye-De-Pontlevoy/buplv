@@ -1,17 +1,16 @@
 "use server";
 
-import Image from "next/image";
-import BU_rangement from "@/app/assets/BU_rangement.webp";
-
+import Menu from "./components/Menu/Menu";
 import "./globals.css";
 import "./page.css";
 
 export default async function Page() {
   return (
     <>
+      <Menu current="/" />
       <div id="bandeau-rangement">
         <form action="/dashboard" className="buttonForm">
-          <button type="submit"> Je participe à la bourse !</button>
+          <button type="submit" id="participeButton"> Je participe à la bourse !</button>
         </form>
       </div>
 

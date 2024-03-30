@@ -50,7 +50,7 @@ const ArticleGestionnary = () => {
           />
 
           <ArticleForm
-            title={<h2>Ajouter un article</h2>}
+            title="Ajouter un article"
             callAfterSubmit={updateArticleList}
           />
 

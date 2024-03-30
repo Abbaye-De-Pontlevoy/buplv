@@ -1,0 +1,22 @@
+#bandeau-rangement{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+	padding: 30px;
+	
+	background-image: url("../assets/BU_rangement.webp");
+	background-position: 50% 40%;
+	background-attachment: fixed; 
+	background-size: cover;
+}
+
+#dashboardContainer{
+	flex-direction: row;
+}
+
+.formContainer{
+	gap: 20px;
+}

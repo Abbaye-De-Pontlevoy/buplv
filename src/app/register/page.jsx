@@ -8,6 +8,7 @@ import "../globals.css";
 import "./styles.css";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
+import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 
 export default function register() {
   const formRef = useRef(null);
@@ -21,7 +22,7 @@ export default function register() {
     student_firstname: "",
     grade: "",
     email: "",
-    phone: "",
+    phone: "+33 ",
     password: "",
     password2: "",
     address: "",
@@ -32,9 +33,28 @@ export default function register() {
     bic: "",
   });
 
+  function formatPhoneNumber(phoneNumber) {
+    // Supprime tous les caractères non numériques du numéro de téléphone
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
+  
+    // Ajoute '+33' au début du numéro de téléphone
+    let formattedPhoneNumber = '+33';
+  
+    // Ajoute le premier chiffre après '+33' séparément
+    formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(2, 1)}`;
+  
+    // Parcourt chaque paire de chiffres restante du numéro de téléphone et les sépare par des '.'
+    for (let i = 3; i < cleanedPhoneNumber.length; i += 2) {
+      formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(i, 2)}`;
+    }
+  
+    return formattedPhoneNumber;
+  }
+
   const handleChange = (e) => {
     let { name, value } = e.target;
-    if (name === "email") value = value.toLowerCase().trim();
+    if (name === "email") value = value.toLowerCase().replace(/\s/g, "");
+    if (name === "phone") value = formatPhoneNumber(value);
     setFormData({ ...formData, [name]: value });
 
     if (step === 1) {
@@ -43,6 +63,9 @@ export default function register() {
         .setCustomValidity("");
       formRef.current
         .querySelector('input[name="password2"]')
+        .setCustomValidity("");
+      formRef.current
+        .querySelector('input[name="phone"]')
         .setCustomValidity("");
     }
   };
@@ -71,8 +94,12 @@ export default function register() {
     );
     const passwordStrength = parseInt(passwordStrengthComponent.value);
 
+    const phoneNumber = formRef.current.querySelector('input[name="phone"]');
+
     passwordInput.setCustomValidity("");
     password2Input.setCustomValidity("");
+    phoneNumber.setCustomValidity("");
+
     if (passwordStrength <= 50) {
       passwordInput.setCustomValidity("Votre mot de passe est trop faible.");
       passwordInput.reportValidity();
@@ -81,6 +108,9 @@ export default function register() {
         "Les mots de passe ne correspondent pas."
       );
       password2Input.reportValidity();
+    } else if (isValidPhoneNumber(phoneNumber.value) === false) {
+      phoneNumber.setCustomValidity("Numéro de téléphone invalide.");
+      phoneNumber.reportValidity();
     } else if (!formRef.current.checkValidity()) {
       formRef.current.reportValidity();
     } else {
@@ -131,7 +161,11 @@ export default function register() {
           <p className={"circle " + (step >= 3 ? "active" : "")}>3</p>
         </span>
 
-        <form ref={formRef} onSubmit={handleValidateForm} className="formulaire">
+        <form
+          ref={formRef}
+          onSubmit={handleValidateForm}
+          className="formulaire"
+        >
           {step === 1 && (
             <>
               <span>
@@ -303,7 +337,7 @@ export default function register() {
           )}
         </form>
         <p className="errorMessage">{error}</p>
-        <p>
+        <p id="loginLink">
           Déjà inscrit ? <a href="/login">Je me connecte</a>
         </p>
       </div>

@@ -1,0 +1,47 @@
+.deleteButtonForm {
+	width: fit-content;
+}
+
+.deleteButton {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+
+  background-color: white;;
+  color: var(--main-blue);
+	border: 2px solid var(--main-blue);
+  text-align: center;
+  text-decoration: none;
+}
+
+.deleteButton:hover {
+  background-color: white;
+  border: 2px solid red;
+  color: red;
+}
+
+.articleLine:hover {
+  background-color: rgba(var(--main-blue-rgb), 0.5);
+  color: white !important;
+}
+
+#articleTable{
+	min-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#articleTable th{
+	font-weight: bolder;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.tdDeleteButton, #thDelete{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	padding: 2px;
+}
