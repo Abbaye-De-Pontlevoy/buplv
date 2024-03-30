@@ -5,7 +5,7 @@ const Menu = ({current}) => {
 		{ name: 'Accueil', path: '/' },
 		{ name: 'Tableau de bord', path: '/dashboard' },
 		{ name: 'Mon Profil (à venir)', path: '/profil' },
-		{ name: 'Contact (à venir)', path: '/profil' },
+		{ name: 'Contact (à venir)', path: '/contact' },
 	];
 
 	return (

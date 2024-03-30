@@ -11,7 +11,7 @@ export async function middleware( request ) {
       return NextResponse.redirect(process.env.NEXT_PUBLIC_VERCEL_URL + '/dashboard');
     }
   }else{
-    const restrictedPaths = ['/dashboard'];
+    const restrictedPaths = ['/dashboard', '/profil'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
       return Response.redirect(process.env.NEXT_PUBLIC_VERCEL_URL + '/login');
     }
