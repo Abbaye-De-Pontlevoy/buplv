@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useFormState } from "react-dom";
 import registerAction from "./registerAction";
 
 import "../globals.css";
@@ -9,6 +8,8 @@ import "./styles.css";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
+import validateIBANAndBIC from "../helpers/areIBANandBICcorrects";
+import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 
 export default function register() {
   const formRef = useRef(null);
@@ -18,36 +19,36 @@ export default function register() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    student_name: "",
-    student_firstname: "",
-    grade: "",
-    email: "",
-    phone: "+33 ",
-    password: "",
-    password2: "",
-    address: "",
+    student_name: "Rivera",
+    student_firstname: "Nicolas",
+    grade: "55T",
+    email: "n.c@hotmail.com",
+    phone: "+33 6 76 26 59 68",
+    password: "AZERTYUIOPQSDFGHJKLM",
+    password2: "AZERTYUIOPQSDFGHJKLM",
+    address: "12 rue de la convention",
     comp_address: "",
-    zip: "",
-    city: "",
-    iban: "",
-    bic: "",
+    zip: "33000",
+    city: "Bordeaux",
+    iban: "FR1420041010050500013M02606",
+    bic: "DEUTDEFF500",
   });
 
   function formatPhoneNumber(phoneNumber) {
     // Supprime tous les caractères non numériques du numéro de téléphone
-    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
-  
+    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
+
     // Ajoute '+33' au début du numéro de téléphone
-    let formattedPhoneNumber = '+33';
-  
+    let formattedPhoneNumber = "+33";
+
     // Ajoute le premier chiffre après '+33' séparément
     formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(2, 1)}`;
-  
+
     // Parcourt chaque paire de chiffres restante du numéro de téléphone et les sépare par des '.'
     for (let i = 3; i < cleanedPhoneNumber.length; i += 2) {
       formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(i, 2)}`;
     }
-  
+
     return formattedPhoneNumber;
   }
 
@@ -67,13 +68,18 @@ export default function register() {
       formRef.current
         .querySelector('input[name="phone"]')
         .setCustomValidity("");
+    } else if (step === 3) {
+      formRef.current.querySelector('input[name="iban"]').setCustomValidity("");
+      formRef.current.querySelector('input[name="bic"]').setCustomValidity("");
     }
+
+    setError("");
   };
 
   const handleStepChange = (value, verify = true) => {
     if (!verify) return setStep(value);
 
-    if (step > 1) {
+    if (step == 2) {
       if (formRef.current.checkValidity()) {
         setStep(value);
       } else {
@@ -123,6 +129,28 @@ export default function register() {
   const handleValidateForm = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const ibanInput = formRef.current.querySelector('input[name="iban"]');
+    const bicInput = formRef.current.querySelector('input[name="bic"]');
+    ibanInput.setCustomValidity("");
+    bicInput.setCustomValidity("");
+
+    const { validIban, validBic } = await areIBANandBICcorrects({
+      iban: formData.iban,
+      bic: formData.bic,
+    });
+    if (!validIban) {
+      ibanInput.setCustomValidity("IBAN invalide.");
+      ibanInput.reportValidity();
+      setIsLoading(false);
+      return;
+    } else if (!validBic) {
+      bicInput.setCustomValidity("BIC invalide.");
+      bicInput.reportValidity();
+      setIsLoading(false);
+      return;
+    }
+
     const address =
       formData.address +
       ", " +
