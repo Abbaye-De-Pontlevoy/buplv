@@ -1,26 +1,38 @@
-#bandeau-rangement{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+#bandeau-rangement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-	width: 100%;
-	padding: 30px;
-	
-	background-image: url("../assets/BU_rangement.webp");
-	background-position: 50% 40%;
-	background-attachment: fixed; 
-	background-size: cover;
+  width: 100%;
+  padding: 30px;
+
+  background-image: url("../assets/BU_rangement.webp");
+  background-position: 50% 40%;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-.formContainer{
-	gap: 20px;
+#dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  gap: 20px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 8px;
+	max-width: 95%;
+}
+
+.formContainer {
+  gap: 20px;
 }
 
 @media (max-width: 400px) {
-	#bandeau-rangement{
-		padding: 0;
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
+  #bandeau-rangement {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }

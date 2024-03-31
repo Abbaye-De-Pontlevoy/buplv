@@ -13,9 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body id="root">
-        <Header />
-        {children}
-        <Footer />
+        <div id="pageCorpusContent">
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
