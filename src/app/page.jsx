@@ -14,7 +14,7 @@ export default async function Page() {
         </form>
       </div>
 
-      <div id="information-div">
+      <div id="corpus-div">
         <h1>La bourse à l'uniforme</h1>
         <p>
           La bourse à l'uniforme est un événement organisé par l'association des

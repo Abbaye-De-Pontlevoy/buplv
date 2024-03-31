@@ -3,6 +3,7 @@
 :root {
   --main-blue: #123554;
   --main-blue-rgb: 18, 53, 84;
+  --light-main-blue: rgba(18, 53, 84, 0.8);
 }
 
 * {
@@ -28,7 +29,7 @@ button {
   padding: 10px 20px;
   border-radius: 8px;
 
-  background-color: rgba(var(--main-blue-rgb), 0.8);
+  background-color: var(--light-main-blue);
 
   font-size: large;
   color: white;
