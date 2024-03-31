@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <div id="footerContent">
-        <div className="footerColumn" id="column1">
+        <div className="footerColumn desktopOnly" id="column1">
           <a href="/">Accueil</a>
           <a href="/dashboard">Tableau de bord</a>
           <a href="/profil">Mon profil</a>
@@ -18,10 +18,18 @@ const Footer = () => {
           <Image src={logo_plv} alt="Logo de l'abbaye de Pontlevoy" />
           <h3>BOURSE À L'UNIFORME</h3>
         </div>
+        <div className="footerColumn phoneOnly" id="column1">
+          <a href="/">Accueil</a>
+          <a href="/dashboard">Tableau de bord</a>
+          <a href="/profil">Mon profil</a>
+          <a href="/contact">Contact</a>
+        </div>
         <div className="footerColumn" id="column3">
           <p>APEL de l'Abbaye de Pontlevoy</p>
           <p>Gestion de la bourse : APEL</p>
-          <a href="https://github.com/Maclow42/" target="_blank">Github : Maclow42</a>
+          <a href="https://github.com/Maclow42/" target="_blank">
+            Github : Maclow42
+          </a>
         </div>
       </div>
     </div>

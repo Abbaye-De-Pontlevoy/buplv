@@ -143,3 +143,17 @@ td {
     text-align: center;
   }
 }
+
+.phoneOnly {
+  display: none !important;
+}
+
+@media (max-width: 400px) {
+  .phoneOnly {
+    display: flex !important;
+  }
+  .desktopOnly {
+    display: none !important;
+  }
+}
+

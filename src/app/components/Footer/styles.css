@@ -53,3 +53,27 @@
 #column3{
   align-items: flex-end;
 }
+
+@media (max-width: 400px) {
+  .footer {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #footerContent {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footerColumn {
+    align-items: center;
+  }
+
+  #column1,
+  #column2,
+  #column3 {
+    flex: 1;
+    width: 100%;
+    align-items: center;
+  }
+}
