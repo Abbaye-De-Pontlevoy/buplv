@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body id="root">
-        <div id="pageCorpusContent">
+        <div className="pageCorpusContent">
           <Header />
           {children}
           <Footer />

@@ -16,9 +16,7 @@ export default async function registerAction(formData) {
     iban,
     bic,
   } = formData;
-
-  console.log(formData);
-
+  
   try {
     // Hash the password
     const hash = bcrypt.hashSync(password, 8);

@@ -22,13 +22,25 @@
   width: 100%;
 }
 
-#pageCorpusContent{
+.pageCorpusContent{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   min-height: 100vh;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  gap: 20px;
+	padding: 20px;
+	background-color: white;
+	border-radius: 8px;
+	max-width: 95%;
 }
 
 .button,
@@ -91,14 +103,6 @@ span {
   gap: 5px;
   width: 100%;
   align-self: flex-start;
-}
-
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  gap: 20px;
 }
 
 .formContainer {

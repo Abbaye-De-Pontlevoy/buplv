@@ -11,7 +11,7 @@ const Dashboard = () => {
       <Menu current="/dashboard" />
 
       <div id="bandeau-rangement">
-        <div id="dashboardContainer">
+        <div className="mainContainer">
           <h1 className="formTitle">Liste des articles enregistrés</h1>
 
           <ArticleGestionnary />

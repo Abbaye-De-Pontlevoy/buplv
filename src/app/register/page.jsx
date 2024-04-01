@@ -174,7 +174,7 @@ export default function register() {
   };
 
   return (
-    <div className="mainContainer" id="registerMainContainer">
+    <div className="mainContainer">
       <div className="formContainer">
         <h1 className="formTitle">Créer un compte</h1>
 
