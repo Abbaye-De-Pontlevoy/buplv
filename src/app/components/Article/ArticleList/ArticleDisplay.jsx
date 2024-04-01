@@ -22,7 +22,7 @@ export const ArticleDisplay = ({ article, callAfterDelete }) => {
           ? "Inventorié"
           : article.state === 2
           ? "Vendu"
-          : ""}
+          : "Enregistré"}
       </td>
       <td>{article.price} €</td>
       <td className="tdDeleteButton">

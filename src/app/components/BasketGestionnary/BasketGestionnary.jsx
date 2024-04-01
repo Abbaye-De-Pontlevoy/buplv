@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import ArticleList from "../components/Article/ArticleList/ArticleList";
-import AQRModal from "../components/QRCodeReader/QRCodeModal";
+import ArticleList from "../Article/ArticleList/ArticleList";
+import AQRModal from "../QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
-import MenuButton from "../components/Button/MenuButton/MenuButton";
 
-const QRCodePage = () => {
+import "./styles.css";
+
+const BasketGestionnary = () => {
   const [basket, setBasket] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [validatingBasket, setValidatingBasket] = useState(false);
 
   const checkArticle = async (article) => {
@@ -41,41 +41,52 @@ const QRCodePage = () => {
         return false;
       default:
         setBasket([...basket, article]);
-        setTotalPrice(totalPrice + articleData.price);
         return true;
     }
   };
 
   const removeArticle = (toremoveId) => {
-    setTotalPrice(
-      totalPrice - basket.find((article) => article.id === toremoveId).price
-    );
     const newBasket = basket.filter((article) => article.id !== toremoveId);
     setBasket(newBasket);
   };
 
   const handleValidate = async (e) => {
     e.preventDefault();
+    
+    const confirmValidation = window.confirm("Êtes-vous sûr de vouloir valider le panier ?");
+    if (confirmValidation) {
+      setValidatingBasket(true);
+      await validateBasket(basket);
+      setBasket([]);
+      setValidatingBasket(false);
+    }
+
     setValidatingBasket(true);
     await validateBasket(basket);
     setBasket([]);
-    setTotalPrice(0);
     setValidatingBasket(false);
   };
 
   return (
-    <div>
+    <div className="overFlowSlider">
       <h1>Panier</h1>
-      <ArticleList articleList={basket} callAfterDelete={removeArticle} />
-      <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket}/>
-      <p>Price : {totalPrice} €</p>
+      <ArticleList
+        articleList={basket}
+        callAfterDelete={removeArticle}
+        displayTotal={true}
+      />
 
-      <form onSubmit={handleValidate}>
-        <button type="submit" disabled={validatingBasket}>Valider</button>
-      </form>
-      <MenuButton />
+      <span id="validateAndScanSpan">
+        <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket} />
+
+        <form onSubmit={handleValidate}>
+          <button type="submit" disabled={validatingBasket}>
+            Valider le panier
+          </button>
+        </form>
+      </span>
     </div>
   );
 };
 
-export default QRCodePage;
+export default BasketGestionnary;

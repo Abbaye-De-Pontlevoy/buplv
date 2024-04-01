@@ -26,11 +26,6 @@
   color: white !important;
 }
 
-.overFlowSlider {
-	width: 100%;
-	overflow-x: auto;
-}
-
 #articleTable{
 	min-width: 700px;
 	margin-left: auto;

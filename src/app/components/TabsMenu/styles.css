@@ -1,0 +1,32 @@
+.tabs-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+	gap: 0;
+	border-radius: 8px;
+	background-color: white;
+}
+
+.tabs-menu .tab-item {
+	width: 100%;
+  border: none;
+  color: var(--main-blue);
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+	border-radius: 8px;
+}
+
+.tabs-menu .tab-item:hover {
+	background-color: var(--light-main-blue);
+	color: white;
+}
+
+.tabs-menu .tab-item.active {
+	background-color: var(--main-blue);
+	color: white;
+}

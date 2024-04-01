@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { getArticleState, updateArticleField } from "./scanActions";
-import AQR from "../components/QRCodeReader/QRCodeReader";
-import MenuButton from "../components/Button/MenuButton/MenuButton";
+import AQR from "../QRCodeReader/QRCodeReader";
+import MenuButton from "../Button/MenuButton/MenuButton";
 
 Modal.setAppElement("#root");
 
-const ScanArticle = () => {
+const ArticleScanner = () => {
   const [showModal, setShowModal] = useState(false);
   const [qrCodeData, setQRCodeData] = useState({});
 
@@ -93,9 +93,8 @@ const ScanArticle = () => {
         <button onClick={() => setShowModal(false)}>Annuler</button>
         <MenuButton />
       </Modal>
-      <MenuButton />
     </div>
   );
 };
 
-export default ScanArticle;
+export default ArticleScanner;
