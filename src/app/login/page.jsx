@@ -35,7 +35,7 @@ export default function Login() {
   }
 
   return (
-    <div className="mainContainer">
+    <div id="loginContainer">
       <div className="formContainer">
         <h1 className="formTitle">Connexion</h1>
         <form ref={formRef} onSubmit={handleValidate} className="formulaire">
