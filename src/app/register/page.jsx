@@ -13,7 +13,7 @@ import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 
 export default function register() {
   const formRef = useRef(null);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +31,7 @@ export default function register() {
     city: "",
     iban: "",
     bic: "",
+    return_articles: false,
   });
 
   const handleChange = (e) => {
@@ -137,6 +138,7 @@ export default function register() {
       ", " +
       (formData.comp_address ? formData.comp_address + ", " : "") +
       formData.zip +
+      " " +
       formData.city;
 
     const processedData = {
@@ -148,6 +150,7 @@ export default function register() {
       address: address,
       iban: formData.iban,
       bic: formData.bic,
+      return_articles: formData.return_articles,
     };
     const apiResult = await registerAction(processedData);
     if (apiResult) {
@@ -198,7 +201,7 @@ export default function register() {
                   />
                 </label>
               </span>
-              
+
               <label>
                 Email:
                 <input
@@ -318,6 +321,25 @@ export default function register() {
                   onChange={handleChange}
                   required
                 />
+              </label>
+
+              <label>
+                <span>
+                  <input
+                    type="checkbox"
+                    name="return_articles"
+                    id="returnCheckBox"
+                    value={formData.return_articles}
+                    onChange={() =>
+                      setFormData({
+                        ...formData,
+                        ["return_articles"]: !formData.return_articles,
+                      })
+                    }
+                  />
+                  Je souhaite que mes articles invendus me soient retournés par
+                  voie postale (frais à ma charge).
+                </span>
               </label>
 
               <span className="buttonSpan">

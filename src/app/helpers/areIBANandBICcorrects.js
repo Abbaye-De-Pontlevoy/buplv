@@ -11,8 +11,6 @@ const areIBANandBICcorrects = async ({ iban, bic }) => {
 		validIban,
 		validBic,
 	};
-
-	console.log(result);
 	
 	return result;
 };

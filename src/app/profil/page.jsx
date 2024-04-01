@@ -25,6 +25,7 @@ const ProfilePage = () => {
     password2: "",
     iban: "",
     bic: "",
+    return_articles: false,
   });
   const [editingMode, setEditingMode] = useState(false);
 
@@ -46,6 +47,7 @@ const ProfilePage = () => {
         password2: "",
         iban: user.iban,
         bic: user.bic,
+        return_articles: user.return_articles,
       });
 
       setIsLoading(false);
@@ -166,7 +168,6 @@ const ProfilePage = () => {
       setError(apiResult);
       setEditingMode(false);
       setIsUpdating(false);
-
     } catch (e) {
       setError("Erreur lors de la mise à jour de vos données.");
       setIsUpdating(false);
@@ -221,7 +222,6 @@ const ProfilePage = () => {
                       type="email"
                       name="email"
                       value={userInfo.email}
-                      onChange={handleChange}
                       disabled={true}
                       required
                     />
@@ -293,6 +293,14 @@ const ProfilePage = () => {
                       disabled={!editingMode}
                       required
                     />
+                  </label>
+
+                  <label>
+                    Retours :
+                    <p>
+                      {(userInfo.return_articles ? "J'ai " : "Je n'ai pas ") +
+                        "souhaité que mes articles invendus me soient retournés par voie postale (non modifiable)."}
+                    </p>
                   </label>
 
                   {editingMode && (

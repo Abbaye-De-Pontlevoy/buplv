@@ -14,7 +14,16 @@
 }
 
 #mainContainerProfile{
-  min-width: 550px;
+  width: 550px;
+}
+
+#returnCheckBox{
+  width: fit-content;
+  margin: 30px 10px 30px 0px;
+}
+
+span label{
+  width: 100%;
 }
 
 @media (max-width: 400px) {

@@ -15,6 +15,7 @@ export default async function registerAction(formData) {
     password,
     iban,
     bic,
+    return_articles
   } = formData;
   
   try {
@@ -31,7 +32,8 @@ export default async function registerAction(formData) {
         address: address,
         password: hash,
         iban: iban,
-        bic: bic
+        bic: bic,
+        return_articles: return_articles
       },
     });
   } catch (e) {

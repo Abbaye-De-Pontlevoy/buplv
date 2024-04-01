@@ -31,6 +31,7 @@ export async function getUserInfos (request){
         address: true,
         iban: true,
         bic: true,
+        return_articles: true,
       },
     });
 
