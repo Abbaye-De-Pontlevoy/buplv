@@ -2,39 +2,27 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-// Styles
-//import "./AQR.css";
-
-// Qr Scanner
 import QrScanner from "qr-scanner";
 
 const AQR = ({onQRCodeRead}) => {
-  // QR States
   const scanner = useRef(null);
   const videoEl = useRef(null);
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
 
-  // Result
   const [scannedResult, setScannedResult] = useState("");
 
-  // Success
   const onScanSuccess = (result) => {
-    // Handle success.
-    // You can do whatever you want with the scanned result.
     onQRCodeRead(result?.data);
     setScannedResult(result?.data);
   };
 
-  // Fail
   const onScanFail = (err) => {
-    // Print the "err" to browser console.
     console.log(err);
   };
 
   useEffect(() => {
     if (videoEl?.current && !scanner.current) {
-      // Instantiate the QR Scanner
       scanner.current = new QrScanner(videoEl?.current, onScanSuccess, {
         onDecodeError: onScanFail,
         // This is the camera facing mode. In mobile devices, "environment" means back camera and "user" means front camera.
@@ -75,7 +63,6 @@ const AQR = ({onQRCodeRead}) => {
 
   return (
     <div className="qr-reader">
-      {/* QR */}
       <video ref={videoEl} style={{ width: "100%" }}></video>
     </div>
   );

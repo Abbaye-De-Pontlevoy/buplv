@@ -9,27 +9,7 @@ import removeArticleAction, {
 import { getUserID } from "@/app/helpers/getUserID";
 import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 
-const ArticleGestionnary = () => {
-  const [userID, setUserID] = useState("");
-  const [articleList, setArticleList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchArticleList = async () => {
-      setIsLoading(true);
-
-      const newUserID = await getUserID();
-      const newArticleList = await getArticleList(newUserID);
-
-      setUserID(newUserID);
-      setArticleList(newArticleList);
-
-      setIsLoading(false);
-    };
-
-    fetchArticleList();
-  }, []);
-
+const ArticleGestionnary = ({articleList, setArticleList, userID, isLoading, setIsLoading}) => {
   const updateArticleList = async () => {
     const newArticleList = await getArticleList(userID);
     setArticleList(newArticleList);
