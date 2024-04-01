@@ -60,11 +60,6 @@ const BasketGestionnary = () => {
       setBasket([]);
       setValidatingBasket(false);
     }
-
-    setValidatingBasket(true);
-    await validateBasket(basket);
-    setBasket([]);
-    setValidatingBasket(false);
   };
 
   return (
@@ -80,7 +75,7 @@ const BasketGestionnary = () => {
         <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket} />
 
         <form onSubmit={handleValidate}>
-          <button type="submit" disabled={validatingBasket}>
+          <button type="submit" disabled={basket.length === 0 || validatingBasket}>
             Valider le panier
           </button>
         </form>

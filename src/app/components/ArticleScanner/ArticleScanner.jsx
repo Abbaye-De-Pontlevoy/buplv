@@ -4,7 +4,8 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { getArticleState, updateArticleField } from "./scanActions";
 import AQR from "../QRCodeReader/QRCodeReader";
-import MenuButton from "../Button/MenuButton/MenuButton";
+
+import "./styles.css"
 
 Modal.setAppElement("#root");
 
@@ -37,6 +38,7 @@ const ArticleScanner = () => {
       {!showModal && <AQR onQRCodeRead={handleQRCodeRead} />}
 
       <Modal
+        className="scannerModal"
         isOpen={showModal}
         onRequestClose={closeModal}
         contentLabel="QR Code Modal"
@@ -90,8 +92,7 @@ const ArticleScanner = () => {
             Inventorier
           </button>
         )}
-        <button onClick={() => setShowModal(false)}>Annuler</button>
-        <MenuButton />
+        <button onClick={() => setShowModal(false)}>Retour</button>
       </Modal>
     </div>
   );
