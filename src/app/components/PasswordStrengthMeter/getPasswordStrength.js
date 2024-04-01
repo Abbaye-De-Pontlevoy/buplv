@@ -2,11 +2,11 @@ function getPasswordStrength(password) {
   let score = 0;
 
   // Longueur du mot de passe
-  if (password.length <= 8) {
+  if (password.length < 8) {
     return 3*password.length;
   }
 
-  score += 3*password.length;
+  score += 5*password.length;
 
   // Présence de chiffres
   if (/\d/.test(password)) {
@@ -25,7 +25,7 @@ function getPasswordStrength(password) {
 
   // Présence de caractères répétés
   if (/(.)\1/.test(password)) {
-    score -= 10;
+    score -= 5;
   }
 
 
