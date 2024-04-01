@@ -5,6 +5,7 @@
   align-items: center;
 
   width: 100%;
+  min-height: 50vh;
   padding: 30px;
 
   background-image: url("../assets/BU_rangement.webp");
