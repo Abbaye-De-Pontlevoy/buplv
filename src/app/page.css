@@ -1,4 +1,4 @@
-#bandeau-rangement{
+.bandeau-rangement{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

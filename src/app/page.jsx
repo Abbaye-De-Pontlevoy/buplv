@@ -8,7 +8,7 @@ export default async function Page() {
   return (
     <>
       <Menu current="/" />
-      <div id="bandeau-rangement">
+      <div className="bandeau-rangement">
         <form action="/dashboard" className="buttonForm">
           <button type="submit" id="participeButton"> Je participe à la bourse !</button>
         </form>

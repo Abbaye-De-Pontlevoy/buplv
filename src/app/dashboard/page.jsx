@@ -31,7 +31,7 @@ const Dashboard = () => {
     <>
       <Menu current="/dashboard" />
 
-      <div id="bandeau-rangement">
+      <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">
           {displayTab && (
             <TabsMenu
