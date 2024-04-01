@@ -7,15 +7,14 @@ import TabsMenu from "../components/TabsMenu/TabsMenu";
 import { isUserAdmin } from "../helpers/isUserAdmin";
 import BasketGestionnary from "../components/BasketGestionnary/BasketGestionnary";
 import ArticleScanner from "../components/ArticleScanner/ArticleScanner";
-
-import "./styles.css";
 import { getUserID } from "../helpers/getUserID";
 import { getArticleList } from "../components/Article/ArticleGestionnary/removeArticleAction";
+
+import "./styles.css";
 
 const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const tabList = ["Articles enregistrés", "Panier acheteur", "Scanner"];
   const [displayTab, setDisplayTab] = useState(false);
   const [activeTab, setActiveTab] = useState("");
 
@@ -23,9 +22,30 @@ const Dashboard = () => {
   const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const tabList = ["Articles enregistrés", "Panier acheteur", "Scanner"];
+  const tabsContents = [
+    <>
+      <h1 className="formTitle">Liste des articles enregistrés</h1>
+      <ArticleGestionnary
+        articleList={articleList}
+        setArticleList={setArticleList}
+        userID={userID}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
+    </>,
+    <>
+      <h1 className="formTitle">Création de paniers</h1>
+      <BasketGestionnary />
+    </>,
+    <>
+      <h1 className="formTitle">Scanner</h1>
+      <ArticleScanner />
+    </>,
+  ];
+
   useEffect(() => {
     const fecthData = async () => {
-
       // fetch if admin for display tabs
       const isAdmin = await isUserAdmin();
       if (isAdmin) {
@@ -54,46 +74,17 @@ const Dashboard = () => {
 
       <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">
-          {displayTab && (
+          {isAdmin ? (
             <TabsMenu
               tabs={tabList}
+              tabsContents={tabsContents}
               activeTab={activeTab}
               setActiveTab={setActiveTab}
             />
-          )}
-
-          {isAdmin ? (
-            activeTab === "" ? (
-              <>
-                <h1>Tableau de bord</h1>
-                <p>Chargement...</p>
-              </>
-            ) : activeTab === tabList[0] ? (
-              isLoading ? <p>Chargement...</p>:<>
-                <h1 className="formTitle">Liste des articles enregistrés</h1>
-                <ArticleGestionnary 
-                  articleList={articleList}
-                  setArticleList={setArticleList}
-                  userID={userID}
-                  isLoading={isLoading}
-                  setIsLoading={setIsLoading}
-                />
-              </>
-            ) : activeTab === tabList[1] ? (
-              <>
-                <h1 className="formTitle">Création de paniers</h1>
-                <BasketGestionnary />
-              </>
-            ) : (
-              <>
-                <h1 className="formTitle">Scanner</h1>
-                <ArticleScanner />
-              </>
-            )
           ) : (
-            isLoading ? <p>Chargement...</p>:<>
+            <>
               <h1 className="formTitle">Liste des articles enregistrés</h1>
-              <ArticleGestionnary 
+              <ArticleGestionnary
                 articleList={articleList}
                 setArticleList={setArticleList}
                 userID={userID}

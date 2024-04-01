@@ -6,13 +6,16 @@ import Menu from "../components/Menu/Menu";
 import { getUserInfos } from "../helpers/getUserInfos";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import updateAction from "./updateAction";
-
 import "./styles.css";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 
 const ProfilePage = () => {
+  // Ref for the form element
+  const formRef = useRef(null);
+
+  // State variables
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -28,156 +31,135 @@ const ProfilePage = () => {
     return_articles: false,
   });
   const [editingMode, setEditingMode] = useState(false);
-
-  const formRef = useRef(null);
   const [error, setError] = useState("");
 
+  // Fetch user data when component mounts
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-
       const user = await getUserInfos();
-      setUserInfo({
-        firstname: user.firstname,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        address: user.address,
-        password: "",
-        password2: "",
-        iban: user.iban,
-        bic: user.bic,
-        return_articles: user.return_articles,
-      });
-
+      setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...user }));
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
+  // Handle form input change
   const handleChange = (e) => {
-    let { name, value } = e.target;
-    if (name === "email") value = value.toLowerCase().replace(/\s/g, "");
-    if (name === "phone") value = formatPhoneNumber(value);
-    setUserInfo({ ...userInfo, [name]: value });
-
-    formRef.current
-      .querySelector('input[name="password"]')
-      .setCustomValidity("");
-    formRef.current
-      .querySelector('input[name="password2"]')
-      .setCustomValidity("");
-    formRef.current.querySelector('input[name="phone"]').setCustomValidity("");
-
-    formRef.current.querySelector('input[name="iban"]').setCustomValidity("");
-    formRef.current.querySelector('input[name="bic"]').setCustomValidity("");
-
+    const { name, value } = e.target;
+    // Update userInfo state with new input value
+    const newValue =
+      name === "email"
+        ? value.toLowerCase().replace(/\s/g, "")
+        : name === "phone"
+        ? formatPhoneNumber(value)
+        : value;
+    setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [name]: newValue }));
+    // Clear validation messages
+    clearInputValidation(name);
     setError("");
   };
 
+  // Clear input validation messages
+  const clearInputValidation = (name) => {
+    formRef.current
+      .querySelector(`input[name="${name}"]`)
+      .setCustomValidity("");
+  };
+
+  // Handle form submission
   const handleValidateForm = async (e) => {
     e.preventDefault();
-
     setIsUpdating(true);
 
     try {
-      const passwordInput = formRef.current.querySelector(
-        'input[name="password"]'
-      );
+      const form = formRef.current;
+      const passwordInput = form.querySelector('input[name="password"]');
+      const password2Input = form.querySelector('input[name="password2"]');
+      const phoneNumberInput = form.querySelector('input[name="phone"]');
+      const ibanInput = form.querySelector('input[name="iban"]');
+      const bicInput = form.querySelector('input[name="bic"]');
 
+      // Clear all input validation messages
+      clearInputValidation("password");
+      clearInputValidation("password2");
+      clearInputValidation("phone");
+      clearInputValidation("iban");
+      clearInputValidation("bic");
+
+      // Password strength validation
       if (passwordInput.value.length > 0) {
-        const password2Input = formRef.current.querySelector(
-          'input[name="password2"]'
+        const passwordStrength = parseInt(
+          form.querySelector(".password-strength-meter .progress").value
         );
-
-        const passwordStrengthComponent = formRef.current.querySelector(
-          ".password-strength-meter .progress"
-        );
-        const passwordStrength = parseInt(passwordStrengthComponent.value);
-
-        passwordInput.setCustomValidity("");
-        password2Input.setCustomValidity("");
 
         if (passwordStrength <= 50) {
-          passwordInput.setCustomValidity(
-            "Votre mot de passe est trop faible."
-          );
+          passwordInput.setCustomValidity("Your password is too weak.");
           passwordInput.reportValidity();
           setIsUpdating(false);
           return;
         } else if (passwordInput.value !== password2Input.value) {
-          password2Input.setCustomValidity(
-            "Les mots de passe ne correspondent pas."
-          );
+          password2Input.setCustomValidity("Passwords do not match.");
           password2Input.reportValidity();
           setIsUpdating(false);
           return;
         }
       }
 
-      const phoneNumber = formRef.current.querySelector('input[name="phone"]');
-      phoneNumber.setCustomValidity("");
-
-      if (isValidPhoneNumber(phoneNumber.value) === false) {
-        phoneNumber.setCustomValidity("Numéro de téléphone invalide.");
-        phoneNumber.reportValidity();
-        return;
-      } else if (!formRef.current.checkValidity()) {
-        formRef.current.reportValidity();
+      // Phone number validation
+      if (!isValidPhoneNumber(phoneNumberInput.value)) {
+        phoneNumberInput.setCustomValidity("Invalid phone number.");
+        phoneNumberInput.reportValidity();
         setIsUpdating(false);
         return;
       }
 
-      const ibanInput = formRef.current.querySelector('input[name="iban"]');
-      const bicInput = formRef.current.querySelector('input[name="bic"]');
-      ibanInput.setCustomValidity("");
-      bicInput.setCustomValidity("");
+      // Check form validity
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        setIsUpdating(false);
+        return;
+      }
 
+      // IBAN and BIC validation
       const { validIban, validBic } = await areIBANandBICcorrects({
         iban: userInfo.iban,
         bic: userInfo.bic,
       });
       if (!validIban) {
-        ibanInput.setCustomValidity("IBAN invalide.");
+        ibanInput.setCustomValidity("Invalid IBAN.");
         ibanInput.reportValidity();
         setIsUpdating(false);
         return;
       } else if (!validBic) {
-        bicInput.setCustomValidity("BIC invalide.");
+        bicInput.setCustomValidity("Invalid BIC.");
         bicInput.reportValidity();
         setIsUpdating(false);
         return;
       }
 
-      const iban = userInfo.iban.replace(/\s/g, "");
-      const bic = userInfo.bic.replace(/\s/g, "");
-
+      // Prepare data for API call
       const processedData = {
-        firstname: userInfo.firstname,
-        name: userInfo.name,
-        email: userInfo.email,
-        phone: userInfo.phone,
-        password: userInfo.password,
-        address: userInfo.address,
-        iban: iban,
-        bic: bic,
+        ...userInfo,
+        iban: userInfo.iban.replace(/\s/g, ""),
+        bic: userInfo.bic.replace(/\s/g, ""),
       };
 
+      // Call update action API
       const apiResult = await updateAction(processedData);
-
       setError(apiResult);
       setEditingMode(false);
       setIsUpdating(false);
     } catch (e) {
-      setError("Erreur lors de la mise à jour de vos données.");
+      setError("Error updating your data.");
       setIsUpdating(false);
     }
   };
 
+  // JSX for the component
   return (
     <>
       <Menu current="/profil" />
-
       <div className="bandeau-rangement">
         <div className="mainContainer" id="mainContainerProfile">
           <h1>Mon profil</h1>

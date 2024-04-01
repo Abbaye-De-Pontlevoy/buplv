@@ -1,7 +1,9 @@
 import "./styles.css";
 
-const TabsMenu = ({ tabs, activeTab, setActiveTab }) => {
+const TabsMenu = ({ tabs, tabsContents, activeTab, setActiveTab }) => {
+	const activeTabIndex = tabs.indexOf(activeTab);
 	return (
+		<>
 		<span className="tabs-menu">
 			{tabs.map((tab) => (
 				<div
@@ -13,6 +15,8 @@ const TabsMenu = ({ tabs, activeTab, setActiveTab }) => {
 				</div>
 			))}
 		</span>
+		{tabsContents[activeTabIndex]}
+		</>
 	);
 }
 
