@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Modal from "react-modal";
-import AQR from "./QRCodeReader";
+import QRCodeReader from "./QRCodeReader";
 
 Modal.setAppElement("#root");
 
@@ -26,7 +26,7 @@ const AQRModal = ({onQRCodeRead, disabled}) => {
         onRequestClose={() => setShowModal(false)}
         contentLabel="Scan Articles"
       >
-        <AQR onQRCodeRead={handleModalClose} />
+        <QRCodeReader onQRCodeRead={handleModalClose} />
         <button onClick={() => handleModalClose(null)}>Fermer</button>
       </Modal>
     </div>

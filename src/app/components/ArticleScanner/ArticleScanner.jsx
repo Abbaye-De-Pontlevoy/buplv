@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { getArticleState, updateArticleField } from "./scanActions";
-import AQR from "../QRCodeReader/QRCodeReader";
+import QRCodeReader from "../QRCodeReader/QRCodeReader";
 
 import "./styles.css"
 
@@ -35,7 +35,7 @@ const ArticleScanner = () => {
 
   return (
     <div>
-      {!showModal && <AQR onQRCodeRead={handleQRCodeRead} />}
+      {!showModal && <QRCodeReader onQRCodeRead={handleQRCodeRead} />}
 
       <Modal
         className="scannerModal"

@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import registerAction from "./registerAction";
-
 import "../globals.css";
 import "./styles.css";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
@@ -11,14 +10,13 @@ import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 
-export default function register() {
-  const formRef = useRef(null);
-  const [step, setStep] = useState(3);
-
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+export default function Register() {
+  const formRef = useRef(null); // Reference for the form element
+  const [step, setStep] = useState(1); // Current step in the registration process
+  const [error, setError] = useState(""); // Error message if registration fails
+  const [isLoading, setIsLoading] = useState(false); // Loading state while registering
   const [formData, setFormData] = useState({
+    // Form data for registration
     firstname: "",
     name: "",
     email: "",
@@ -34,12 +32,15 @@ export default function register() {
     return_articles: false,
   });
 
+  // Function to handle changes in form inputs
   const handleChange = (e) => {
-    let { name, value } = e.target;
-    if (name === "email") value = value.toLowerCase().replace(/\s/g, "");
-    if (name === "phone") value = formatPhoneNumber(value);
-    setFormData({ ...formData, [name]: value });
+    const { name, value } = e.target;
+    let updatedValue = value;
+    if (name === "email") updatedValue = value.toLowerCase().replace(/\s/g, "");
+    if (name === "phone") updatedValue = formatPhoneNumber(value);
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: updatedValue }));
 
+    // Reset custom validation messages and error
     if (step === 1) {
       formRef.current
         .querySelector('input[name="password"]')
@@ -54,14 +55,15 @@ export default function register() {
       formRef.current.querySelector('input[name="iban"]').setCustomValidity("");
       formRef.current.querySelector('input[name="bic"]').setCustomValidity("");
     }
-
     setError("");
   };
 
+  // Function to handle step changes in the registration process
   const handleStepChange = (value, verify = true) => {
     if (!verify) return setStep(value);
 
-    if (step == 2) {
+    // Validation for each step
+    if (step === 2) {
       if (formRef.current.checkValidity()) {
         setStep(value);
       } else {
@@ -76,82 +78,76 @@ export default function register() {
     const password2Input = formRef.current.querySelector(
       'input[name="password2"]'
     );
-
     const passwordStrengthComponent = formRef.current.querySelector(
       ".password-strength-meter .progress"
     );
     const passwordStrength = parseInt(passwordStrengthComponent.value);
-
     const phoneNumber = formRef.current.querySelector('input[name="phone"]');
 
     passwordInput.setCustomValidity("");
     password2Input.setCustomValidity("");
     phoneNumber.setCustomValidity("");
 
+    // Validate password strength, match, and phone number format
     if (passwordStrength <= 50) {
-      passwordInput.setCustomValidity("Votre mot de passe est trop faible.");
+      passwordInput.setCustomValidity("Your password is too weak.");
       passwordInput.reportValidity();
     } else if (passwordInput.value !== password2Input.value) {
-      password2Input.setCustomValidity(
-        "Les mots de passe ne correspondent pas."
-      );
+      password2Input.setCustomValidity("Passwords do not match.");
       password2Input.reportValidity();
     } else if (isValidPhoneNumber(phoneNumber.value) === false) {
-      phoneNumber.setCustomValidity("Numéro de téléphone invalide.");
+      phoneNumber.setCustomValidity("Invalid phone number.");
       phoneNumber.reportValidity();
     } else if (!formRef.current.checkValidity()) {
       formRef.current.reportValidity();
     } else {
       setStep(value);
     }
-
-    return;
   };
 
+  // Function to handle form submission and registration
   const handleValidateForm = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault(); // Prevent default form submission behavior
+    setIsLoading(true); // Set loading state to true
 
     const ibanInput = formRef.current.querySelector('input[name="iban"]');
     const bicInput = formRef.current.querySelector('input[name="bic"]');
-    ibanInput.setCustomValidity("");
-    bicInput.setCustomValidity("");
+    ibanInput.setCustomValidity(""); // Reset custom validity message for IBAN
+    bicInput.setCustomValidity(""); // Reset custom validity message for BIC
 
+    // Check if IBAN and BIC are correct
     const { validIban, validBic } = await areIBANandBICcorrects({
       iban: formData.iban,
       bic: formData.bic,
     });
+
+    // If IBAN is invalid, set custom validity message and stop loading
     if (!validIban) {
-      ibanInput.setCustomValidity("IBAN invalide.");
+      ibanInput.setCustomValidity("Invalid IBAN.");
       ibanInput.reportValidity();
       setIsLoading(false);
       return;
-    } else if (!validBic) {
-      bicInput.setCustomValidity("BIC invalide.");
+    }
+    // If BIC is invalid, set custom validity message and stop loading
+    else if (!validBic) {
+      bicInput.setCustomValidity("Invalid BIC.");
       bicInput.reportValidity();
       setIsLoading(false);
       return;
     }
 
-    const address =
-      formData.address +
-      ", " +
-      (formData.comp_address ? formData.comp_address + ", " : "") +
-      formData.zip +
-      " " +
-      formData.city;
+    // Concatenate address parts
+    const address = `${formData.address}, ${
+      formData.comp_address ? formData.comp_address + ", " : ""
+    }${formData.zip} ${formData.city}`;
 
+    // Create processed data object for registration
     const processedData = {
-      firstname: formData.firstname,
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      password: formData.password,
-      address: address,
-      iban: formData.iban,
-      bic: formData.bic,
-      return_articles: formData.return_articles,
+      ...formData,
+      address,
     };
+
+    // Call register action with processed data
     const apiResult = await registerAction(processedData);
     if (apiResult) {
       setError(apiResult);
@@ -159,17 +155,18 @@ export default function register() {
     }
   };
 
+  // Return JSX for registration form
   return (
     <div id="registerContainer">
       <div className="formContainer">
         <h1 className="formTitle">Créer un compte</h1>
 
         <span id="circleSpan">
-          <p className={"circle " + (step >= 1 ? "active" : "")}>1</p>
-          <div className={"line " + (step >= 2 ? "active" : "")}></div>
-          <p className={"circle " + (step >= 2 ? "active" : "")}>2</p>
-          <div className={"line " + (step >= 3 ? "active" : "")}></div>
-          <p className={"circle " + (step >= 3 ? "active" : "")}>3</p>
+          <p className={`circle ${step >= 1 ? "active" : ""}`}>1</p>
+          <div className={`line ${step >= 2 ? "active" : ""}`}></div>
+          <p className={`circle ${step >= 2 ? "active" : ""}`}>2</p>
+          <div className={`line ${step >= 3 ? "active" : ""}`}></div>
+          <p className={`circle ${step >= 3 ? "active" : ""}`}>3</p>
         </span>
 
         <form
@@ -329,12 +326,12 @@ export default function register() {
                     type="checkbox"
                     name="return_articles"
                     id="returnCheckBox"
-                    value={formData.return_articles}
+                    checked={formData.return_articles}
                     onChange={() =>
-                      setFormData({
-                        ...formData,
-                        ["return_articles"]: !formData.return_articles,
-                      })
+                      setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        return_articles: !prevFormData.return_articles,
+                      }))
                     }
                   />
                   Je souhaite que mes articles invendus me soient retournés par

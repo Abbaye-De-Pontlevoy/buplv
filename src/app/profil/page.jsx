@@ -37,8 +37,10 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
       const user = await getUserInfos();
       setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...user }));
+
       setIsLoading(false);
     };
     fetchData();
@@ -286,7 +288,11 @@ const ProfilePage = () => {
                   </label>
 
                   {editingMode && (
-                    <button type="submit" disabled={!editingMode || isUpdating}>
+                    <button
+                      type="submit"
+                      disabled={!editingMode || isUpdating}
+                      style={{ marginTop: "20px" }}
+                    >
                       {!isUpdating ? "Enregistrer" : "Chargement..."}
                     </button>
                   )}

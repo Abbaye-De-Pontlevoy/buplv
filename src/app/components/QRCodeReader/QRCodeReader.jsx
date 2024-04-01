@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import QrScanner from "qr-scanner";
 
-const AQR = ({onQRCodeRead}) => {
+const QRCodeReader = ({onQRCodeRead}) => {
   const scanner = useRef(null);
   const videoEl = useRef(null);
   const qrBoxEl = useRef(null);
@@ -68,4 +68,4 @@ const AQR = ({onQRCodeRead}) => {
   );
 };
 
-export default AQR;
+export default QRCodeReader;

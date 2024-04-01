@@ -6,34 +6,39 @@ import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuBu
 
 import "./styles.css";
 
+// Component for handling user login
 export default function Login() {
-  const formRef = useRef(null);
+  const formRef = useRef(null); // Reference to the form element
 
+  // State variables
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState(""); // Error message state
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
+  // Function to handle form submission
   const handleValidate = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault(); // Prevent default form submission behavior
+    setIsLoading(true); // Set loading state to true
 
+    // Call loginAction function to validate user login
     const result = await loginAction(formData);
     if (result) {
-      setError(result);
-      setIsLoading(false);
+      setError(result); // Set error message if loginAction returns an error
+      setIsLoading(false); // Set loading state to false
     }
   };
 
+  // Function to handle form input changes
   const handleChange = (e) => {
     let { name, value } = e.target;
-    if (name === "email") value = value.toLowerCase().replace(/\s/g, "");
-    setFormData({ ...formData, [name]: value });
-  }
+    if (name === "email") value = value.toLowerCase().replace(/\s/g, ""); // Normalize email input
+    setFormData({ ...formData, [name]: value }); // Update form data state
+  };
 
+  // Render the login form
   return (
     <div id="loginContainer">
       <div className="formContainer">
@@ -41,11 +46,23 @@ export default function Login() {
         <form ref={formRef} onSubmit={handleValidate} className="formulaire">
           <label>
             Email:
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </label>
           <label>
             Mot de Passe:
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
           </label>
           <button type="submit" disabled={isLoading}>
             {!isLoading ? "Valider" : "Chargement..."}

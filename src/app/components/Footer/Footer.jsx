@@ -1,6 +1,5 @@
 import Image from "next/image";
 import logo_plv from "../../assets/logo_plv_reduced.webp";
-import AccountButton from "../Button/AccountButton/AccountButton";
 
 import "./styles.css";
 
