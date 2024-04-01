@@ -13,12 +13,8 @@
   background-size: cover;
 }
 
-#dashboardMainContainer {
-  min-width: 800px;
-}
-
-.formContainer {
-  gap: 20px;
+#mainContainerProfile{
+  min-width: 550px;
 }
 
 @media (max-width: 400px) {
@@ -28,7 +24,7 @@
     padding-bottom: 20px;
   }
 
-  #dashboardMainContainer {
+  #mainContainerProfile {
     min-width: 0;
   }
 }

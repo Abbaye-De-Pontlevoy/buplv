@@ -9,6 +9,7 @@ import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordS
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
+import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 
 export default function register() {
   const formRef = useRef(null);
@@ -31,24 +32,6 @@ export default function register() {
     iban: "",
     bic: "",
   });
-
-  function formatPhoneNumber(phoneNumber) {
-    // Supprime tous les caractères non numériques du numéro de téléphone
-    const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "");
-
-    // Ajoute '+33' au début du numéro de téléphone
-    let formattedPhoneNumber = "+33";
-
-    // Ajoute le premier chiffre après '+33' séparément
-    formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(2, 1)}`;
-
-    // Parcourt chaque paire de chiffres restante du numéro de téléphone et les sépare par des '.'
-    for (let i = 3; i < cleanedPhoneNumber.length; i += 2) {
-      formattedPhoneNumber += ` ${cleanedPhoneNumber.substr(i, 2)}`;
-    }
-
-    return formattedPhoneNumber;
-  }
 
   const handleChange = (e) => {
     let { name, value } = e.target;

@@ -3,7 +3,7 @@ import logoutAction from "./logoutAction";
 const LogoutButton = () => {
 	return (
 		<form action={logoutAction}>
-			<button>Logout</button>
+			<button>Déconnexion</button>
 		</form>
 	);
 };

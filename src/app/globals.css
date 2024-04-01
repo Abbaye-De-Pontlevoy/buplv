@@ -92,6 +92,11 @@ form input {
   width: 100%;
 }
 
+form input:disabled {
+  background-color: #f0f0f0;
+  border-color: white;
+}
+
 h1 {
   font-size: 2em;
 }
