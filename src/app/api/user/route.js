@@ -30,7 +30,7 @@ export async function POST(req) {
 
 	const response = await prisma.seller.findFirst({
 		where: {
-			student_name: data.name,
+			name: data.name,
 		},
 	});
 

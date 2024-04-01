@@ -8,7 +8,6 @@ import "./styles.css";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
-import validateIBANAndBIC from "../helpers/areIBANandBICcorrects";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 
 export default function register() {
@@ -19,9 +18,8 @@ export default function register() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    student_name: "",
-    student_firstname: "",
-    grade: "",
+    firstname: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
@@ -159,9 +157,8 @@ export default function register() {
       formData.city;
 
     const processedData = {
-      student_firstname: formData.student_firstname,
-      student_name: formData.student_name,
-      grade: formData.grade,
+      firstname: formData.firstname,
+      name: formData.name,
       email: formData.email,
       phone: formData.phone,
       password: formData.password,
@@ -201,8 +198,8 @@ export default function register() {
                   Prénom:
                   <input
                     type="text"
-                    name="student_firstname"
-                    value={formData.student_firstname}
+                    name="firstname"
+                    value={formData.firstname}
                     onChange={handleChange}
                     required
                   />
@@ -211,24 +208,14 @@ export default function register() {
                   Nom:
                   <input
                     type="text"
-                    name="student_name"
-                    value={formData.student_name}
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
                   />
                 </label>
               </span>
-
-              <label>
-                Classe de l'élève:
-                <input
-                  type="text"
-                  name="grade"
-                  value={formData.grade}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
+              
               <label>
                 Email:
                 <input

@@ -7,8 +7,8 @@ import bcrypt from "bcryptjs";
 export default async function registerAction(formData) {
   // Get the data off the form
   const {
-    student_name,
-    grade,
+    firstname,
+    name,
     email,
     phone,
     address,
@@ -26,8 +26,8 @@ export default async function registerAction(formData) {
     // Create a user in db
     await prisma.seller.create({
       data: {
-        student_name: student_name,
-        grade: grade,
+        firstname: firstname,
+        name: name,
         email: email,
         phone: phone,
         address: address,
