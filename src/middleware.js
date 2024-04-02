@@ -8,12 +8,12 @@ export async function middleware( request ) {
   if(isConnected) {
     const restrictedPaths = ['/login', '/register'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return NextResponse.redirect((process.env.VERCEL_ENV === 'production' ? "https://" : "") + process.env.VERCEL_URL + '/dashboard');
+      return NextResponse.redirect((process.env.VERCEL_ENV === 'production' ? "https://buplv.vercel.com" : process.env.NEXT_PUBLIC_URL) + '/dashboard');
     }
   }else{
     const restrictedPaths = ['/dashboard', '/profil'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      return Response.redirect((process.env.VERCEL_ENV === 'production' ? "https://" : "") + process.env.VERCEL_URL + '/login');
+      return Response.redirect((process.env.VERCEL_ENV === 'production' ? "https://buplv.vercel.com" : process.env.NEXT_PUBLIC_URL) + '/login');
     }
   }
   
