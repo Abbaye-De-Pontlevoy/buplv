@@ -9,12 +9,16 @@ export async function middleware( request ) {
     const restrictedPaths = ['/login', '/register'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
       console.log((process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? "https://" : "") + process.env.NEXT_PUBLIC_URL + '/dashboard');
+      console.log("process.env.NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+      console.log("process.env.NEXT_PUBLIC_URL", process.env.NEXT_PUBLIC_URL);
       return NextResponse.redirect((process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? "https://" : "") + process.env.NEXT_PUBLIC_URL + '/dashboard');
     }
   }else{
     const restrictedPaths = ['/dashboard', '/profil'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
-      console.log((process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? "https://" : "") + process.env.NEXT_PUBLIC_URL + '/dashboard');
+      console.log((process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? "https://" : "") + process.env.NEXT_PUBLIC_URL + '/login');
+      console.log("process.env.NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+      console.log("process.env.NEXT_PUBLIC_URL", process.env.NEXT_PUBLIC_URL);
       return Response.redirect((process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? "https://" : "") +  process.env.NEXT_PUBLIC_URL + '/login');
     }
   }
