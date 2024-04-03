@@ -1,22 +1,36 @@
+"use client"
+
+import { useContext, useEffect, useState } from "react";
+import { isUserAdmin } from "@/app/helpers/isUserAdmin";
+import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
+
 import "./styles.css";
 
-const Menu = ({current}) => {
-	const menuContent = [
-		{ name: 'Accueil', path: '/' },
-		{ name: 'Tableau de bord', path: '/dashboard' },
-		{ name: 'Mon profil', path: '/profil' },
-		{ name: 'Contact', path: '/contact' },
-	];
+const Menu = ({ current, hasAdminCookie }) => {
+	const { isConnected, isAdmin } = useContext(UserInfoContext);
 
-	return (
-		<span className="menuSpan">
-			{menuContent.map((item, index) => {
-				return (
-					<a key={index} href={item.path} className={current === item.path ? 'active' : ''}> {item.name} </a>
-				);
-			})}
-		</span>
-	);
-}
+  const menuContent = [
+    { name: "Accueil", path: "/", accessibility: "all" },
+    { name: "Tableau de bord", path: "/dashboard", accessibility: "all" },
+    { name: "Administration", path: "/admin-panel", accessibility: "admin" },
+  ];
+
+  return (
+    <span className="menuSpan">
+      {menuContent.map((item, index) => {
+        if (item.accessibility === "admin" && !(isAdmin || hasAdminCookie)) return null;
+        return (
+          <a
+            key={index}
+            href={item.path}
+            className={current === item.path ? "active" : ""}
+          >
+            {item.name}
+          </a>
+        );
+      })}
+    </span>
+  );
+};
 
 export default Menu;

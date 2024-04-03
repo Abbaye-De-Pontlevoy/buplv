@@ -1,5 +1,5 @@
 import Footer from "./components/Footer/Footer";
-import Header from "./components/Header/Header";
+import { UserInfoProvider } from "./components/UserInfoProvider/UserInfoProvider";
 
 import "./globals.css";
 
@@ -12,13 +12,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body id="root">
-        <div className="pageCorpusContent">
-          <Header />
-          {children}
-          <Footer />
-        </div>
-      </body>
+      <UserInfoProvider>
+        <body id="root">
+          <div className="pageCorpusContent">
+            {children}
+            <Footer />
+          </div>
+        </body>
+      </UserInfoProvider>
     </html>
   );
 }

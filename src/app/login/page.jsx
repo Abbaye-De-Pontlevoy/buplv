@@ -5,6 +5,7 @@ import loginAction from "./loginAction";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 
 import "./styles.css";
+import Header from "../components/Header/Header";
 
 // Component for handling user login
 export default function Login() {
@@ -40,39 +41,42 @@ export default function Login() {
 
   // Render the login form
   return (
-    <div id="loginContainer">
-      <div className="formContainer">
-        <h1 className="formTitle">Connexion</h1>
-        <form ref={formRef} onSubmit={handleValidate} className="formulaire">
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Mot de Passe:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <button type="submit" disabled={isLoading}>
-            {!isLoading ? "Valider" : "Chargement..."}
-          </button>
-        </form>
+    <>
+      <Header hasConnectedToken={true} displayAccountButton={false} />
+      <div id="loginContainer">
+        <div className="formContainer">
+          <h1 className="formTitle">Connexion</h1>
+          <form ref={formRef} onSubmit={handleValidate} className="formulaire">
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Mot de Passe:
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <button type="submit" disabled={isLoading}>
+              {!isLoading ? "Valider" : "Chargement..."}
+            </button>
+          </form>
 
-        <p className="errorMessage">{error}</p>
-        <a href="/register">Pas encore inscrit ?</a>
+          <p className="errorMessage">{error}</p>
+          <a href="/register">Pas encore inscrit ?</a>
+        </div>
+        <ReturnMenuButton />
       </div>
-      <ReturnMenuButton />
-    </div>
+    </>
   );
 }

@@ -1,0 +1,35 @@
+.bandeau-rangement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 50vh;
+  padding: 30px;
+
+  background-image: url("../assets/BU_rangement.webp");
+  background-position: 50% 40%;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+#dashboardMainContainer{
+  width: 800px;
+}
+
+.formContainer {
+  gap: 20px;
+}
+
+@media (max-width: 400px) {
+  .bandeau-rangement {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  #dashboardMainContainer {
+    min-width: 0;
+  }
+}

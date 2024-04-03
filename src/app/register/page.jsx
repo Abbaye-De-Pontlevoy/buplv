@@ -9,6 +9,7 @@ import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuBu
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
+import Header from "../components/Header/Header";
 
 export default function Register() {
   const formRef = useRef(null); // Reference for the form element
@@ -157,208 +158,211 @@ export default function Register() {
 
   // Return JSX for registration form
   return (
-    <div id="registerContainer">
-      <div className="formContainer">
-        <h1 className="formTitle">Créer un compte</h1>
+    <>
+      <Header hasConnectedToken={true} displayAccountButton={false} />
+      <div id="registerContainer">
+        <div className="formContainer">
+          <h1 className="formTitle">Créer un compte</h1>
 
-        <span id="circleSpan">
-          <p className={`circle ${step >= 1 ? "active" : ""}`}>1</p>
-          <div className={`line ${step >= 2 ? "active" : ""}`}></div>
-          <p className={`circle ${step >= 2 ? "active" : ""}`}>2</p>
-          <div className={`line ${step >= 3 ? "active" : ""}`}></div>
-          <p className={`circle ${step >= 3 ? "active" : ""}`}>3</p>
-        </span>
+          <span id="circleSpan">
+            <p className={`circle ${step >= 1 ? "active" : ""}`}>1</p>
+            <div className={`line ${step >= 2 ? "active" : ""}`}></div>
+            <p className={`circle ${step >= 2 ? "active" : ""}`}>2</p>
+            <div className={`line ${step >= 3 ? "active" : ""}`}></div>
+            <p className={`circle ${step >= 3 ? "active" : ""}`}>3</p>
+          </span>
 
-        <form
-          ref={formRef}
-          onSubmit={handleValidateForm}
-          className="formulaire"
-        >
-          {step === 1 && (
-            <>
-              <span>
-                <label>
-                  Prénom:
-                  <input
-                    type="text"
-                    name="firstname"
-                    value={formData.firstname}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Nom:
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-              </span>
-
-              <label>
-                Email:
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                N° de téléphone:
-                <input
-                  type="text"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-
-              <label>
-                Mot de passe:
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <PasswordStrengthMeter password={formData.password} />
-              <label>
-                Vérification du mot de passe:
-                <input
-                  type="password"
-                  name="password2"
-                  value={formData.password2}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-
-              <button onClick={() => handleStepChange(2)}>Suivant</button>
-            </>
-          )}
-          {step === 2 && (
-            <>
-              <label>
-                N° et nom de la rue:
-                <input
-                  type="text"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Complément d'adresse:
-                <input
-                  type="text"
-                  name="comp_address"
-                  value={formData.comp_address}
-                  onChange={handleChange}
-                />
-              </label>
-              <span>
-                <label>
-                  Code postal:
-                  <input
-                    type="text"
-                    name="zip"
-                    value={formData.zip}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Ville:
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-              </span>
-
-              <span className="buttonSpan">
-                <button onClick={() => handleStepChange(1, false)}>
-                  Précédent
-                </button>
-                <button onClick={() => handleStepChange(3)}>Suivant</button>
-              </span>
-            </>
-          )}
-          {step === 3 && (
-            <>
-              <label>
-                IBAN:
-                <input
-                  type="text"
-                  name="iban"
-                  value={formData.iban}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Bic:
-                <input
-                  type="text"
-                  name="bic"
-                  value={formData.bic}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-
-              <label>
+          <form
+            ref={formRef}
+            onSubmit={handleValidateForm}
+            className="formulaire"
+          >
+            {step === 1 && (
+              <>
                 <span>
-                  <input
-                    type="checkbox"
-                    name="return_articles"
-                    id="returnCheckBox"
-                    checked={formData.return_articles}
-                    onChange={() =>
-                      setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        return_articles: !prevFormData.return_articles,
-                      }))
-                    }
-                  />
-                  Je souhaite que mes articles invendus me soient retournés par
-                  voie postale (frais à ma charge).
+                  <label>
+                    Prénom:
+                    <input
+                      type="text"
+                      name="firstname"
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                  <label>
+                    Nom:
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
                 </span>
-              </label>
 
-              <span className="buttonSpan">
-                <button
-                  onClick={() => handleStepChange(2, false)}
-                  disabled={isLoading}
-                >
-                  Précédent
-                </button>
-                <button type="submit" disabled={isLoading}>
-                  {!isLoading ? "Valider" : "Chargement..."}
-                </button>
-              </span>
-            </>
-          )}
-        </form>
-        <p className="errorMessage">{error}</p>
-        <p id="loginLink">
-          Déjà inscrit ? <a href="/login">Je me connecte</a>
-        </p>
+                <label>
+                  Email:
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  N° de téléphone:
+                  <input
+                    type="text"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  Mot de passe:
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <PasswordStrengthMeter password={formData.password} />
+                <label>
+                  Vérification du mot de passe:
+                  <input
+                    type="password"
+                    name="password2"
+                    value={formData.password2}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <button onClick={() => handleStepChange(2)}>Suivant</button>
+              </>
+            )}
+            {step === 2 && (
+              <>
+                <label>
+                  N° et nom de la rue:
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  Complément d'adresse:
+                  <input
+                    type="text"
+                    name="comp_address"
+                    value={formData.comp_address}
+                    onChange={handleChange}
+                  />
+                </label>
+                <span>
+                  <label>
+                    Code postal:
+                    <input
+                      type="text"
+                      name="zip"
+                      value={formData.zip}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                  <label>
+                    Ville:
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </span>
+
+                <span className="buttonSpan">
+                  <button onClick={() => handleStepChange(1, false)}>
+                    Précédent
+                  </button>
+                  <button onClick={() => handleStepChange(3)}>Suivant</button>
+                </span>
+              </>
+            )}
+            {step === 3 && (
+              <>
+                <label>
+                  IBAN:
+                  <input
+                    type="text"
+                    name="iban"
+                    value={formData.iban}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+                <label>
+                  Bic:
+                  <input
+                    type="text"
+                    name="bic"
+                    value={formData.bic}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  <span>
+                    <input
+                      type="checkbox"
+                      name="return_articles"
+                      id="returnCheckBox"
+                      checked={formData.return_articles}
+                      onChange={() =>
+                        setFormData((prevFormData) => ({
+                          ...prevFormData,
+                          return_articles: !prevFormData.return_articles,
+                        }))
+                      }
+                    />
+                    Je souhaite que mes articles invendus me soient retournés
+                    par voie postale (frais à ma charge).
+                  </span>
+                </label>
+
+                <span className="buttonSpan">
+                  <button
+                    onClick={() => handleStepChange(2, false)}
+                    disabled={isLoading}
+                  >
+                    Précédent
+                  </button>
+                  <button type="submit" disabled={isLoading}>
+                    {!isLoading ? "Valider" : "Chargement..."}
+                  </button>
+                </span>
+              </>
+            )}
+          </form>
+          <p className="errorMessage">{error}</p>
+          <p id="loginLink">
+            Déjà inscrit ? <a href="/login">Je me connecte</a>
+          </p>
+        </div>
+        <ReturnMenuButton />
       </div>
-      <ReturnMenuButton />
-    </div>
+    </>
   );
 }

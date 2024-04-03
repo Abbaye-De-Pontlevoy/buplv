@@ -1,3 +1,4 @@
+import Header from "../components/Header/Header";
 import Menu from "../components/Menu/Menu";
 
 import "./styles.css";
@@ -9,6 +10,7 @@ const ContactPage = () => {
 
   return (
     <>
+      <Header hasConnectedToken={true} displayAccountButton={true} />
       <Menu current="/contact" />
 
       <div className="bandeau-rangement">

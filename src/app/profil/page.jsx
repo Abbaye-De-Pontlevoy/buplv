@@ -10,6 +10,7 @@ import "./styles.css";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
+import Header from "../components/Header/Header";
 
 const ProfilePage = () => {
   // Ref for the form element
@@ -161,6 +162,7 @@ const ProfilePage = () => {
   // JSX for the component
   return (
     <>
+      <Header hasConnectedToken={true} displayAccountButton={true} />
       <Menu current="/profil" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="mainContainerProfile">

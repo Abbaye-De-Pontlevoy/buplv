@@ -11,6 +11,10 @@
   margin-bottom: 20px;
 }
 
+.accountButton{
+  align-self: flex-end;
+}
+
 #logoDiv {
   width: 100%;
   height: 100px;
