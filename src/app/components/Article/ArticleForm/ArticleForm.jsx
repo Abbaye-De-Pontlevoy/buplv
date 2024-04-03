@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./styles.css";
+import { addArticle } from "./articleFormAction";
 
 const ArticleForm = ({ callAfterSubmit, title }) => {
   const [articleData, setArticleData] = useState({});
@@ -41,24 +42,14 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
     setIsLoading(true);
 
     // add article to the server
-    const apiURL = "/api/article/add-article/";
     const submitData = {
       name: name,
       brand: brand,
       size: size,
       quantity: quantity,
-      price: articleData[name][brand]["price"],
+      price: articleData[name][brand]["price"]
     };
-    for (let i = 0; i < quantity; i++) {
-      const response = await fetch(apiURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submitData),
-      });
-      const data = await response.json();
-    }
+    const result = await addArticle(submitData);
 
     // call the parent function
     if (callAfterSubmit) await callAfterSubmit();
