@@ -26,11 +26,19 @@ export const ArticleDisplay = ({ article, callAfterDelete }) => {
       </td>
       <td>{article.price} €</td>
       <td className="tdDeleteButton">
-        <form className="deleteButtonForm" onSubmit={deleteHandler}>
-          <button type="submit" className="deleteButton" disabled={isDisabled}>
-            x
-          </button>
-        </form>
+        {article.state === 0 ? (
+          <form className="deleteButtonForm" onSubmit={deleteHandler}>
+            <button
+              type="submit"
+              className="deleteButton"
+              disabled={isDisabled}
+            >
+              x
+            </button>
+          </form>
+        ) : (
+          '-'
+        )}
       </td>
     </tr>
   );
