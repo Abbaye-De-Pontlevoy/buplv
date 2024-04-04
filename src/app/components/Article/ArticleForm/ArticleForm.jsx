@@ -33,7 +33,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
       brand: brand,
       size: size,
       quantity: quantity,
-      price: articleData[name][brand]["price"]
+      price: articleData[name]["price"]
     };
     const result = await addArticle(submitData);
 
@@ -82,10 +82,9 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 Marque
               </option>
               {name &&
-                articleData[name] &&
-                Object.keys(articleData[name]).map((article) => (
-                  <option key={article} value={article}>
-                    {article}
+                articleData[name]["brand"].map((brand) => (
+                  <option key={brand} value={brand}>
+                    {brand}
                   </option>
                 ))}
             </select>
@@ -103,11 +102,9 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
               </option>
               {name &&
                 brand &&
-                articleData[name][brand] &&
-                articleData[name][brand]["size"] &&
-                articleData[name][brand]["size"].map((article) => (
-                  <option key={article} value={article}>
-                    {article}
+                articleData[name]["size"].map((size) => (
+                  <option key={size} value={size}>
+                    {size}
                   </option>
                 ))}
             </select>
