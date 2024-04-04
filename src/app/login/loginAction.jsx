@@ -63,5 +63,5 @@ export default async function loginAction(formData) {
   }
 
   // Redirect user to dashboard after successful login
-  redirect("/dashboard");
+  redirect("/details");
 }
