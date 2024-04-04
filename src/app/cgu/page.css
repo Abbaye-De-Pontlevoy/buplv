@@ -31,10 +31,6 @@
 	margin: 20px;
 }
 
-#participeButton{
-	padding: 20px;
-}
-
 @media (max-width: 400px) {
 	#corpus-div{
 		width: 90%;
