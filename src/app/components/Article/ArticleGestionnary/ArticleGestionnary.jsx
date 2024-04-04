@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import ArticleForm from "../ArticleForm/ArticleForm";
 import ArticleList from "../ArticleList/ArticleList";
 import removeArticleAction, {
   getArticleList,
 } from "./removeArticleAction";
-import { getUserID } from "@/app/helpers/getUserID";
 import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 
 const ArticleGestionnary = ({articleList, setArticleList, userID, isLoading, setIsLoading}) => {

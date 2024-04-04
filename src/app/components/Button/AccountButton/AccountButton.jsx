@@ -7,7 +7,7 @@ import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 import "./styles.css";
 
 const AccountButton = ({ className, hasConnectedToken }) => {
-  const { isConnected, isAdmin } = useContext(UserInfoContext);
+  const { isConnected } = useContext(UserInfoContext);
 
   return (
     <div className={className} id="accountDiv">

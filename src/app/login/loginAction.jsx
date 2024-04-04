@@ -24,11 +24,10 @@ export default async function loginAction(formData) {
   });
 
   // Check if seller exists
-  if (!seller) return "Email ou mot de passe invalide."; // Return error message if seller not found
+  if (!seller) return "Email ou mot de passe invalide.";
 
   // Compare password with hashed password
   const isCorrectPassword = bcrypt.compareSync(password, seller.password);
-  //const isCorrectPassword = password === seller.password; // Alternative comparison (not recommended)
 
   // If password is incorrect, return error message
   if (!isCorrectPassword) return "Email ou mot de passe invalide.";
@@ -38,10 +37,15 @@ export default async function loginAction(formData) {
     const secret = new TextEncoder().encode(process.env.SECRET_KEY);
     const alg = "HS256";
 
+    const jwtData = {
+      id: seller.id,
+      admin: seller.admin,
+    };
+
     const jwt = await new jose.SignJWT({})
       .setProtectedHeader({ alg })
       .setExpirationTime("72h")
-      .setSubject(seller.id)
+      .setSubject(jwtData)
       .sign(secret);
 
     // Set JWT token as a cookie

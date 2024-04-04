@@ -7,7 +7,7 @@ import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 import "./styles.css";
 
 const Menu = ({ current, hasAdminCookie }) => {
-	const { isConnected, isAdmin } = useContext(UserInfoContext);
+	const { isAdmin } = useContext(UserInfoContext);
 
   const menuContent = [
     { name: "Accueil", path: "/", accessibility: "all" },

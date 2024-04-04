@@ -3,33 +3,30 @@
 import { useContext, useEffect, useState } from "react";
 import ArticleGestionnary from "../components/Article/ArticleGestionnary/ArticleGestionnary";
 import Menu from "../components/Menu/Menu";
-import BasketGestionnary from "../components/BasketGestionnary/BasketGestionnary";
-import ArticleScanner from "../components/ArticleScanner/ArticleScanner";
-import { getUserID } from "../helpers/getUserID";
 import { getArticleList } from "../components/Article/ArticleGestionnary/removeArticleAction";
-import "./styles.css";
 import Header from "../components/Header/Header";
+import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
+
+import "./styles.css";
 
 const Dashboard = () => {
+	const { userID } = useContext(UserInfoContext);
 
-  const [userID, setUserID] = useState("");
   const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
 
   // Effect to fetch data when component mounts
   useEffect(() => {
     const fetchData = async () => {
       // Fetch user ID and article list
       setIsLoading(true);
-      const newUserID = await getUserID();
-      const newArticleList = await getArticleList(newUserID);
-      setUserID(newUserID);
+      const newArticleList = await getArticleList(userID);
       setArticleList(newArticleList);
       setIsLoading(false);
     };
+    if(!userID) return;
     fetchData();
-  }, []);
+  }, [userID]);
 
   return (
     <>

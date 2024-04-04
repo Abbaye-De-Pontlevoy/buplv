@@ -6,11 +6,12 @@ import Menu from "../components/Menu/Menu";
 import { getUserInfos } from "../helpers/getUserInfos";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import updateAction from "./updateAction";
-import "./styles.css";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 import Header from "../components/Header/Header";
+
+import "./styles.css";
 
 const ProfilePage = () => {
   // Ref for the form element

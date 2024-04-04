@@ -21,7 +21,7 @@ export async function getUserInfos (request){
     // get the user role from prisma
     const user = await prisma.seller.findUnique({
       where: {
-        id: payload.sub,
+        id: payload.sub.id,
       },
       select: {
         firstname: true,

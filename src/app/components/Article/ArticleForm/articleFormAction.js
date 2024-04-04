@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserID } from "@/app/helpers/getUserID";
+import { getConnexionInfo } from "@/app/helpers/getConnexionInfo";
 import prisma from "@/app/lib/prisma";
 
 export const addArticle = async (e) => {
@@ -10,9 +10,9 @@ export const addArticle = async (e) => {
   const quantity = e.quantity;
   const price = e.price;
 
-  const userID = await getUserID();
+  const { id } = await getConnexionInfo();
 
-  if (!userID) return false;
+  if (!id) return false;
 
   // Créer un tableau pour stocker les promesses
   const createPromises = [];
@@ -22,7 +22,7 @@ export const addArticle = async (e) => {
     createPromises.push(
       prisma.article.create({
         data: {
-          seller_id: userID,
+          seller_id: id,
           name: name,
           brand: brand,
           size: size,
