@@ -1,8 +1,21 @@
-import logoutAction from "./logoutAction";
+import { useContext } from "react";
+import removeCookie from "./logoutAction";
+import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
+import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
+	const router = useRouter();
+	const { refresh } = useContext(UserInfoContext);
+
+	const logoutHandler = async (e) => {
+		e.preventDefault();
+		await removeCookie();
+		await refresh();
+		router.push('/');
+	}
+
 	return (
-		<form action={logoutAction}>
+		<form onSubmit={logoutHandler}>
 			<button>Déconnexion</button>
 		</form>
 	);
