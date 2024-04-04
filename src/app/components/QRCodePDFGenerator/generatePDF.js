@@ -17,19 +17,20 @@ export async function generatePDF(data) {
       id: data[i].id,
       name: data[i].name,
       brand: data[i].brand,
+      size: data[i].size,
       price: data[i].price,
     });
     const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
 
     // Ajouter le QR code à la position spécifiée dans le PDF
-    doc.addImage(qrCodeDataURL, "PNG", 15, y + 5, 30, 30);
+    doc.addImage(qrCodeDataURL, "PNG", 15, y + 8, 30, 30);
 
     // Ajouter le titre du QR code à côté de celui-ci
     doc.setFontSize(12);
     doc.text(
       50,
       y + 15,
-      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nPrix : ${data[i].price}€`
+      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nID : ${data[i].id}  `
     );
     y += 40;
 
