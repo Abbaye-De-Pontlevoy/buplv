@@ -14,22 +14,28 @@ export default async function Page() {
         <div className="mainContainer" id="corpus-div">
           <h1>Conditions Générales d'Utilisation</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna id
-            aliquam aliquet, nunc nisl tincidunt nunc, vitae lacinia nisl enim sed
-            mauris. Sed auctor, justo a tincidunt aliquet, nunc nisl tincidunt nunc, vitae
-            lacinia nisl enim sed mauris.
+            Ci-dessous beaucoup de choses pour te dire qu'en gros tu n'as pas le
+            choix d'accepter les cookies si tu veux vendre tes vêtements car le
+            développeur de ce site avait vraiment la flemme de gérer ta session
+            user depuis le serveur.
           </p>
           <p>
-            Nullam euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc, vitae
-            lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt aliquet, nunc
-            nisl tincidunt nunc, vitae lacinia nisl enim sed mauris. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc, vitae
+            lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt aliquet,
+            nunc nisl tincidunt nunc, vitae lacinia nisl enim sed mauris.
           </p>
           <p>
-            Sed euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc, vitae lacinia
-            nisl enim sed mauris. Sed auctor, justo a tincidunt aliquet, nunc nisl
-            tincidunt nunc, vitae lacinia nisl enim sed mauris. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit.
+            Nullam euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc,
+            vitae lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt
+            aliquet, nunc nisl tincidunt nunc, vitae lacinia nisl enim sed
+            mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+          <p>
+            Sed euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc,
+            vitae lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt
+            aliquet, nunc nisl tincidunt nunc, vitae lacinia nisl enim sed
+            mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
         </div>
       </div>
