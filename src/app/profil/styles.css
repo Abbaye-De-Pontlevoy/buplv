@@ -27,6 +27,10 @@ span label{
   width: 100%;
 }
 
+span button{
+  width: 100%;
+}
+
 @media (max-width: 400px) {
   .bandeau-rangement {
     padding: 0;

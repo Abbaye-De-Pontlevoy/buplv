@@ -26,14 +26,14 @@ const ProfilePage = () => {
     email: "",
     phone: "",
     address: "",
-    password: "",
-    password2: "",
     iban: "",
     bic: "",
     return_articles: false,
   });
+  const [password, setPassword] = useState("");
   const [editingMode, setEditingMode] = useState(false);
   const [error, setError] = useState("");
+  const [step, setStep] = useState(0);
 
   // Fetch user data when component mounts
   useEffect(() => {
@@ -64,51 +64,16 @@ const ProfilePage = () => {
     setError("");
   };
 
-  // Clear input validation messages
-  const clearInputValidation = (name) => {
-    formRef.current
-      .querySelector(`input[name="${name}"]`)
-      .setCustomValidity("");
-  };
-
-  // Handle form submission
-  const handleValidateForm = async (e) => {
-    e.preventDefault();
-    setIsUpdating(true);
-
-    try {
+  const changeStep = async (newStep, verification = true) => {
+    if (verification) {
       const form = formRef.current;
-      const passwordInput = form.querySelector('input[name="password"]');
-      const password2Input = form.querySelector('input[name="password2"]');
       const phoneNumberInput = form.querySelector('input[name="phone"]');
       const ibanInput = form.querySelector('input[name="iban"]');
       const bicInput = form.querySelector('input[name="bic"]');
 
-      // Clear all input validation messages
-      clearInputValidation("password");
-      clearInputValidation("password2");
       clearInputValidation("phone");
       clearInputValidation("iban");
       clearInputValidation("bic");
-
-      // Password strength validation
-      if (passwordInput.value.length > 0) {
-        const passwordStrength = parseInt(
-          form.querySelector(".password-strength-meter .progress").value
-        );
-
-        if (passwordStrength <= 50) {
-          passwordInput.setCustomValidity("Your password is too weak.");
-          passwordInput.reportValidity();
-          setIsUpdating(false);
-          return;
-        } else if (passwordInput.value !== password2Input.value) {
-          password2Input.setCustomValidity("Passwords do not match.");
-          password2Input.reportValidity();
-          setIsUpdating(false);
-          return;
-        }
-      }
 
       // Phone number validation
       if (!isValidPhoneNumber(phoneNumberInput.value)) {
@@ -141,7 +106,26 @@ const ProfilePage = () => {
         setIsUpdating(false);
         return;
       }
+    }
 
+    setPassword("");
+    setStep(newStep);
+  };
+
+  // Clear input validation messages
+  const clearInputValidation = (name) => {
+    console.log("clearing validation message for", name);
+    formRef.current
+      .querySelector(`input[name="${name}"]`)
+      .setCustomValidity("");
+  };
+
+  // Handle form submission
+  const handleValidateForm = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+
+    try {
       // Prepare data for API call
       const processedData = {
         ...userInfo,
@@ -150,12 +134,19 @@ const ProfilePage = () => {
       };
 
       // Call update action API
-      const apiResult = await updateAction(processedData);
-      setError(apiResult);
-      setEditingMode(false);
+      const apiResult = await updateAction({
+        password: password,
+        data: processedData,
+      });
+
+      if (apiResult === true) {
+        setStep(0);
+        setEditingMode(false);
+      } else setError(apiResult);
+
       setIsUpdating(false);
     } catch (e) {
-      setError("Error updating your data.");
+      setError("Erreur lors de la mise à jour de vos données.");
       setIsUpdating(false);
     }
   };
@@ -178,140 +169,157 @@ const ProfilePage = () => {
                   onSubmit={handleValidateForm}
                   className="formulaire"
                 >
-                  <span>
+                  {step === 0 ? (
+                    <>
+                      <span>
+                        <label>
+                          Prénom:
+                          <input
+                            type="text"
+                            name="firstname"
+                            value={userInfo.firstname}
+                            onChange={handleChange}
+                            disabled={!editingMode}
+                            required
+                          />
+                        </label>
+                        <label>
+                          Nom:
+                          <input
+                            type="text"
+                            name="name"
+                            value={userInfo.name}
+                            onChange={handleChange}
+                            disabled={!editingMode}
+                            required
+                          />
+                        </label>
+                      </span>
+
+                      <label>
+                        Email:
+                        <input
+                          type="email"
+                          name="email"
+                          value={userInfo.email}
+                          disabled={true}
+                          required
+                        />
+                      </label>
+                      <label>
+                        N° de téléphone:
+                        <input
+                          type="text"
+                          name="phone"
+                          value={userInfo.phone}
+                          onChange={handleChange}
+                          disabled={!editingMode}
+                          required
+                        />
+                      </label>
+
+                      <label>
+                        Adresse complète:
+                        <input
+                          type="text"
+                          name="address"
+                          value={userInfo.address}
+                          onChange={handleChange}
+                          disabled={!editingMode}
+                          required
+                        />
+                      </label>
+
+                      <label>
+                        IBAN:
+                        <input
+                          type="text"
+                          name="iban"
+                          value={userInfo.iban}
+                          onChange={handleChange}
+                          disabled={!editingMode}
+                          required
+                        />
+                      </label>
+                      <label>
+                        Bic:
+                        <input
+                          type="text"
+                          name="bic"
+                          value={userInfo.bic}
+                          onChange={handleChange}
+                          disabled={!editingMode}
+                          required
+                        />
+                      </label>
+
+                      <label>
+                        Retours :
+                        <p>
+                          {(userInfo.return_articles
+                            ? "J'ai "
+                            : "Je n'ai pas ") +
+                            "souhaité que mes articles invendus me soient retournés par voie postale (non modifiable)."}
+                        </p>
+                      </label>
+
+                      {editingMode && (
+                        <button
+                          type="button"
+                          disabled={!editingMode || isUpdating}
+                          style={{ marginTop: "20px" }}
+                          onClick={() => changeStep(1)}
+                        >
+                          Valider
+                        </button>
+                      )}
+                    </>
+                  ) : (
                     <label>
-                      Prénom:
+                      Veuillez entrer votre mot de passe pour enregistrer les
+                      modifications :
                       <input
-                        type="text"
-                        name="firstname"
-                        value={userInfo.firstname}
-                        onChange={handleChange}
-                        disabled={!editingMode}
-                        required
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
                       />
+                      {error && <p style={{ color: "red" }}>{error}</p>}
+                      <span>
+                        <button
+                          type="button"
+                          onClick={() => changeStep(0, false)}
+                        >
+                          Retour
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={!editingMode || isUpdating}
+                        >
+                          {!isUpdating ? "Valider" : "Chargement..."}
+                        </button>
+                      </span>
                     </label>
-                    <label>
-                      Nom:
-                      <input
-                        type="text"
-                        name="name"
-                        value={userInfo.name}
-                        onChange={handleChange}
-                        disabled={!editingMode}
-                        required
-                      />
-                    </label>
-                  </span>
-
-                  <label>
-                    Email:
-                    <input
-                      type="email"
-                      name="email"
-                      value={userInfo.email}
-                      disabled={true}
-                      required
-                    />
-                  </label>
-                  <label>
-                    N° de téléphone:
-                    <input
-                      type="text"
-                      name="phone"
-                      value={userInfo.phone}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    Nouveau mot de passe:
-                    <input
-                      type="password"
-                      name="password"
-                      value={userInfo.password}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                    />
-                  </label>
-                  <PasswordStrengthMeter password={userInfo.password} />
-                  <label>
-                    Vérification du mot de passe:
-                    <input
-                      type="password"
-                      name="password2"
-                      value={userInfo.password2}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                    />
-                  </label>
-
-                  <label>
-                    Adresse complète:
-                    <input
-                      type="text"
-                      name="address"
-                      value={userInfo.address}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    IBAN:
-                    <input
-                      type="text"
-                      name="iban"
-                      value={userInfo.iban}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                      required
-                    />
-                  </label>
-                  <label>
-                    Bic:
-                    <input
-                      type="text"
-                      name="bic"
-                      value={userInfo.bic}
-                      onChange={handleChange}
-                      disabled={!editingMode}
-                      required
-                    />
-                  </label>
-
-                  <label>
-                    Retours :
-                    <p>
-                      {(userInfo.return_articles ? "J'ai " : "Je n'ai pas ") +
-                        "souhaité que mes articles invendus me soient retournés par voie postale (non modifiable)."}
-                    </p>
-                  </label>
-
-                  {editingMode && (
-                    <button
-                      type="submit"
-                      disabled={!editingMode || isUpdating}
-                      style={{ marginTop: "20px" }}
-                    >
-                      {!isUpdating ? "Enregistrer" : "Chargement..."}
-                    </button>
                   )}
                 </form>
               </div>
 
-              <label>
-                <input
-                  type="checkbox"
-                  checked={editingMode}
-                  onChange={() => setEditingMode(!editingMode)}
-                />
-                Modifier mes informations
-              </label>
+              {step === 0 && (
+                <>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={editingMode}
+                      onChange={() => setEditingMode(!editingMode)}
+                    />
+                    Modifier mes informations
+                  </label>
 
-              <LogoutButton />
+                  <LogoutButton />
+                </>
+              )}
             </>
           )}
         </div>
