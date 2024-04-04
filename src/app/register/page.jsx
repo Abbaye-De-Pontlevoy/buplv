@@ -323,24 +323,34 @@ export default function Register() {
                   />
                 </label>
 
-                <label>
-                  <span>
-                    <input
-                      type="checkbox"
-                      name="return_articles"
-                      id="returnCheckBox"
-                      checked={formData.return_articles}
-                      onChange={() =>
-                        setFormData((prevFormData) => ({
-                          ...prevFormData,
-                          return_articles: !prevFormData.return_articles,
-                        }))
-                      }
-                    />
-                    Je souhaite que mes articles invendus me soient retournés
-                    par voie postale (frais à ma charge).
-                  </span>
-                </label>
+                <div id="checkboxesDiv">
+                  <label>
+                    <span>
+                      <input
+                        type="checkbox"
+                        name="return_articles"
+                        id="returnCheckBox"
+                        checked={formData.return_articles}
+                        onChange={() =>
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            return_articles: !prevFormData.return_articles,
+                          }))
+                        }
+                      />
+                      Je souhaite que mes articles invendus me soient retournés
+                      par voie postale (frais à ma charge).
+                    </span>
+                  </label>
+
+                  <label>
+                    <span>
+                      <input type="checkbox" required id="cguCheckBox"/>
+                      J'accepte les{" "}
+                      <a href="/cgu" target="_blank">conditions générales d'utilisation.</a>
+                    </span>
+                  </label>
+                </div>
 
                 <span className="buttonSpan">
                   <button

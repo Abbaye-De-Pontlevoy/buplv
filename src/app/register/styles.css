@@ -65,7 +65,10 @@
   }
 }
 
-#returnCheckBox{
-  width: fit-content;
+#checkboxesDiv{
   margin: 30px 10px 30px 0px;
+}
+
+#returnCheckBox, #cguCheckBox{
+  width: fit-content;
 }
