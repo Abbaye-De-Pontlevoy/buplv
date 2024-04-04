@@ -1,4 +1,4 @@
-export const clothesJSON = {
+const clothesJSON = {
     "T-shirt": {
         "Nike": {"price": 20, "size": ["S", "M", "L"]},
         "Adidas": {"price": 25, "size": ["XS", "S", "M", "L", "XL"]},
@@ -19,3 +19,5 @@ export const clothesJSON = {
         "Armani": {"price": 80, "size": ["S", "M", "L", "XL"]}
     }
 };
+
+export default clothesJSON;
