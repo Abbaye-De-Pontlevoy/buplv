@@ -3,29 +3,16 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import { addArticle } from "./articleFormAction";
 
+import clothesJSON from "@/app/data/clothesJSON";
+
 const ArticleForm = ({ callAfterSubmit, title }) => {
-  const [articleData, setArticleData] = useState({});
+  const articleData = clothesJSON;
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(0);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-
-      // get article list from the server
-      const response = await fetch("/api/clothesJSON");
-      const data = await response.json();
-      setArticleData(data);
-
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setSize("");
