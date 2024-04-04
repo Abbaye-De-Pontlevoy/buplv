@@ -10,9 +10,14 @@ export const UserInfoProvider = ({ children }) => {
     isConnected: false,
     isAdmin: false,
     userID: null,
-  
+    key: 0,
   })
-  const [isLoading, setIsLoading] = useState(true);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const refresh = () => {
+    setUserInfo(userInfo => ({...userInfo, key: userInfo.key + 1}));
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,16 +25,17 @@ export const UserInfoProvider = ({ children }) => {
       setUserInfo({
         isConnected: data.connected,
         isAdmin: data.admin,
-        userID: data.id
+        userID: data.id,
+        refresh: refresh
       });
-      setIsLoading(false);
+      setIsLoaded(true);
     };
     fetchData();
-  }, []);
+  }, [userInfo.key]);
 
   return (
     <UserInfoContext.Provider value={userInfo}>
-      {!isLoading && children}
+      {isLoaded && children}
     </UserInfoContext.Provider>
   );
 };

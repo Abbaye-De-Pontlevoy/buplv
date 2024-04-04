@@ -8,13 +8,14 @@ import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
 
 export default async function loginAction(formData) {
+  cookies().delete("buConnectedToken");
+
   // Get the data off the form
   const email = formData.email;
   const password = formData.password;
 
   // Validate email format
-  if (!validateEmail(email))
-    return "Email ou mot de passe invalide."; // Return error message if email is invalid
+  if (!validateEmail(email)) return "Email ou mot de passe invalide."; // Return error message if email is invalid
 
   // Lookup the seller in the database
   const seller = await prisma.seller.findFirst({
@@ -56,6 +57,7 @@ export default async function loginAction(formData) {
       path: "/", // Cookie path
       sameSite: "strict", // SameSite attribute set to strict
     });
+
   } catch (e) {
     return "Email ou mot de passe invalide."; // Return error message if JWT token creation fails
   }

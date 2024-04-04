@@ -10,7 +10,7 @@ const Header = ({hasConnectedToken, displayAccountButton, displayMenu}) => {
       { displayAccountButton && <AccountButton className="accountButton" hasConnectedToken={hasConnectedToken}/>}
       <a href="/" className="title">
         <div id="logoDiv">
-          <Image src={logo_plv} alt="logo" id="plvlogo" priority />
+          <Image src={logo_plv} alt="logo" id="plvlogo" priority={true} />
         </div>
         <h1>BOURSE À L'UNIFORME</h1>
       </a>
