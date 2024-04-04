@@ -64,7 +64,6 @@ const BasketGestionnary = () => {
 
   return (
     <div className="overFlowSlider">
-      <h1>Panier</h1>
       <ArticleList
         articleList={basket}
         callAfterDelete={removeArticle}
