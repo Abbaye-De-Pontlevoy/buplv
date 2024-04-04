@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./styles.css";
 import { addArticle } from "./articleFormAction";
 
-import clothesJSON from "@/app/data/clothesJSON";
+import { clothesJSON } from "@/app/data/clothesJSON";
 
 const ArticleForm = ({ callAfterSubmit, title }) => {
   const articleData = clothesJSON;
