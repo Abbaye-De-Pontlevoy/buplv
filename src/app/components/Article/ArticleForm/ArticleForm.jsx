@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
+import { addArticle } from "./articleFormAction";
+import { clothesJSON } from "@/app/data/clothesJSON";
 
 import "./styles.css";
-import { addArticle } from "./articleFormAction";
-
-import { clothesJSON } from "@/app/data/clothesJSON";
 
 const ArticleForm = ({ callAfterSubmit, title }) => {
   const articleData = clothesJSON;

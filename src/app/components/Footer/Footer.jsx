@@ -25,7 +25,7 @@ const Footer = () => {
         </div>
         <div className="footerColumn" id="column3">
           <p>APEL de l'Abbaye de Pontlevoy</p>
-          <p>@Bourse à l'uniforme 2024</p>
+          <a href="/cgu">Conditions Générales</a>
           <a href="https://github.com/Maclow42/" target="_blank">
             Github : Maclow42
           </a>
