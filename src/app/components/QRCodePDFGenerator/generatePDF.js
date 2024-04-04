@@ -30,7 +30,7 @@ export async function generatePDF(data) {
     doc.text(
       50,
       y + 15,
-      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nID : ${data[i].id}  `
+      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nREF : ${data[i].id}  `
     );
     y += 40;
 
