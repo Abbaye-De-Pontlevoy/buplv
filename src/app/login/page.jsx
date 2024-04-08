@@ -27,18 +27,18 @@ export default function Login() {
   // Function to handle form submission
   const handleValidate = async (e) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
 
     // Call loginAction function to validate user login
     const result = await loginAction(formData);
-    if (result) {
+    if (result.access) {
       router.push("/dashboard");
       login(result);
-      
-    } else {
-      setError("Email ou mot de passe invalide.");
-      setIsLoading(false);
     }
+
+    setError(result.msg);
+    setIsLoading(false);
   };
 
   // Function to handle form input changes

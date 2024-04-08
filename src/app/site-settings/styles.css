@@ -1,0 +1,50 @@
+.bandeau-rangement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 50vh;
+  padding: 30px;
+
+  background-image: url("../assets/BU_rangement.webp");
+  background-position: 50% 40%;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+#settingsContainer{
+  min-width: 400px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+form span {
+  justify-content: space-between;
+}
+
+
+form span input {
+  width: min-content;
+}
+
+button{
+  margin-top: 20px;
+}
+
+@media (max-width: 400px) {
+  .bandeau-rangement {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  #settingsContainer{
+    min-width: 0;
+  }
+}

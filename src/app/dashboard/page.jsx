@@ -41,7 +41,6 @@ const Dashboard = () => {
           <ArticleGestionnary
             articleList={articleList}
             setArticleList={setArticleList}
-            userID={userInfo.userID}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />

@@ -6,16 +6,22 @@ import validateEmail from "@/app/helpers/validateEmail";
 import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
+import { getSettings } from "../config/settings";
 
 export default async function loginAction(formData) {
   cookies().delete("buConnectedToken");
+
+  const connexionError = {
+    access: false,
+    msg: "Nom d'utilisateur ou mot de passe incorrect.",
+  };
 
   // Get the data off the form
   const email = formData.email;
   const password = formData.password;
 
   // Validate email format
-  if (!validateEmail(email)) return null;
+  if (!validateEmail(email)) return connexionError;
 
   // Lookup the seller in the database
   const seller = await prisma.seller.findFirst({
@@ -25,13 +31,13 @@ export default async function loginAction(formData) {
   });
 
   // Check if seller exists
-  if (!seller) return null;
+  if (!seller) return connexionError;
 
   // Compare password with hashed password
   const isCorrectPassword = bcrypt.compareSync(password, seller.password);
 
   // If password is incorrect, return error message
-  if (!isCorrectPassword) return null;
+  if (!isCorrectPassword) return connexionError;
 
   try {
     // Create JWT token
@@ -49,6 +55,14 @@ export default async function loginAction(formData) {
       .setSubject(jwtData)
       .sign(secret);
 
+    const siteSettings = await getSettings();
+    if (!seller.admin && !siteSettings.publicAccess) {
+      return {
+        access: false,
+        msg: "Accès refusé.",
+      };
+    }
+
     // Set JWT token as a cookie
     cookies().set("buConnectedToken", jwt, {
       secure: true,
@@ -57,16 +71,16 @@ export default async function loginAction(formData) {
       path: "/", // Cookie path
       sameSite: "strict", // SameSite attribute set to strict
     });
-
   } catch (e) {
-    return null; // Return error message if JWT token creation fails
+    return connexionError;
   }
 
   // Redirect user to dashboard after successful login
-  //redirect("/details");
 
   return {
+    access: true,
     id: seller.id,
     admin: seller.admin,
-  }
+    msg: "Authentification réussie. Redirection en cours...",
+  };
 }

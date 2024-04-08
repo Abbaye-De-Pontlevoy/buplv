@@ -3,7 +3,7 @@
 .menuSpan{
   justify-content: center;
   gap: 30px;
-	padding: 10px;
+	flex-wrap: wrap;
 }
 
 .menuSpan a{
@@ -21,6 +21,10 @@
 	width: 100%;
 	height: 2px;
 	background-color: var(--main-blue);
+}
+
+.item{
+	margin-bottom: 10px;
 }
 
 @media (max-width: 400px) {

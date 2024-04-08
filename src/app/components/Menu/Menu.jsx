@@ -12,6 +12,7 @@ const Menu = ({ current, hasAdminCookie }) => {
     { name: "Comment faire ?", path: "/details", accessibility: "all" },
     { name: "Mes articles", path: "/dashboard", accessibility: "all" },
     { name: "Administration", path: "/admin-panel", accessibility: "admin" },
+    { name: "Paramètres du site", path: "/site-settings", accessibility: "admin"}
   ];
 
   return (
@@ -22,7 +23,7 @@ const Menu = ({ current, hasAdminCookie }) => {
           <a
             key={index}
             href={item.path}
-            className={current === item.path ? "active" : ""}
+            className={current === item.path ? "item active" : "item"}
           >
             {item.name}
           </a>

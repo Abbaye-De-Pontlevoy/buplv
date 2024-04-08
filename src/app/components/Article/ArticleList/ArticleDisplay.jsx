@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "./styles.css";
 
-export const ArticleDisplay = ({ article, callAfterDelete }) => {
+export const ArticleDisplay = ({ article, enabledRemoveButton, callAfterDelete }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const deleteHandler = async (e) => {
@@ -31,7 +31,7 @@ export const ArticleDisplay = ({ article, callAfterDelete }) => {
             <button
               type="submit"
               className="deleteButton"
-              disabled={isDisabled}
+              disabled={isDisabled || !enabledRemoveButton}
             >
               x
             </button>

@@ -2,6 +2,7 @@ import { ArticleDisplay } from "./ArticleDisplay";
 
 const ArticleList = ({
   articleList,
+  enabledRemoveButton,
   callAfterDelete,
   displayTotal = false,
 }) => {
@@ -23,6 +24,7 @@ const ArticleList = ({
             <ArticleDisplay
               key={article.id}
               article={article}
+              enabledRemoveButton={enabledRemoveButton}
               callAfterDelete={callAfterDelete}
             />
           ))}
