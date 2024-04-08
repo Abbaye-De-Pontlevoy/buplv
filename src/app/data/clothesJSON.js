@@ -395,7 +395,7 @@ export const clothesJSON = {
 					],
 					"price": 8,
 					"apelPart": 1.6
-				}
+				},
 			},
 			"Poléo Prestige": {
 				"Chemisier blanc": {
@@ -413,56 +413,56 @@ export const clothesJSON = {
 					"price": 7,
 					"apelPart": 1.4
 				},
+				"Pull bleu marine coton": {
+					"size": [
+						"10",
+						"12",
+						"14",
+						"16",
+						"XS",
+						"S",
+						"M",
+						"L",
+						"XL",
+						"XXL"
+					],
+					"price": 10,
+					"apelPart": 2
+				},
 			},
-			"Pull bleu marine coton": {
-				"size": [
-					"10",
-					"12",
-					"14",
-					"16",
-					"XS",
-					"S",
-					"M",
-					"L",
-					"XL",
-					"XXL"
-				],
-				"price": 10,
-				"apelPart": 2
-			},
-		},
-		"Poléo Standard": {
-			"Chemisier blanc": {
-				"size": [
-					"10",
-					"12",
-					"14",
-					"16",
-					"XS",
-					"S",
-					"M",
-					"L",
-					"XL",
-					"XXL"
-				],
-				"price": 7,
-				"apelPart": 1.4
-			},
-			"Pull gris coton": {
-				"size": [
-					"10",
-					"12",
-					"14",
-					"16",
-					"XS",
-					"S",
-					"M",
-					"L",
-					"XL",
-					"XXL"
-				],
-				"price": 10,
-				"apelPart": 2
+			"Poléo Standard": {
+				"Chemisier blanc": {
+					"size": [
+						"10",
+						"12",
+						"14",
+						"16",
+						"XS",
+						"S",
+						"M",
+						"L",
+						"XL",
+						"XXL"
+					],
+					"price": 7,
+					"apelPart": 1.4
+				},
+				"Pull gris coton": {
+					"size": [
+						"10",
+						"12",
+						"14",
+						"16",
+						"XS",
+						"S",
+						"M",
+						"L",
+						"XL",
+						"XXL"
+					],
+					"price": 10,
+					"apelPart": 2
+				},
 			},
 			"Uniforme Prestige": {
 				"Chemisier blanc": {
@@ -525,7 +525,7 @@ export const clothesJSON = {
 					],
 					"price": 8,
 					"apelPart": 1.6
-				}
+				},
 			},
 			"Poléo Prestige": {
 				"Chemise blanche": {
