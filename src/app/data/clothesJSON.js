@@ -4,12 +4,7 @@ export const clothesJSON = {
 			"B&C": {
 				"Doudoune sans manche": {
 					"size": [
-						"XS",
-						"S",
-						"M",
-						"L",
-						"XL",
-						"XXL"
+						"taille unique"
 					],
 					"price": 8,
 					"apelPart": 1.6
@@ -194,12 +189,7 @@ export const clothesJSON = {
 			"B&C": {
 				"Doudoune sans manche": {
 					"size": [
-						"XS",
-						"S",
-						"M",
-						"L",
-						"XL",
-						"XXL"
+						"taille unique"
 					],
 					"price": 8,
 					"apelPart": 1.6
@@ -386,12 +376,7 @@ export const clothesJSON = {
 			"B&C": {
 				"Doudoune sans manche": {
 					"size": [
-						"XS",
-						"S",
-						"M",
-						"L",
-						"XL",
-						"XXL"
+						"taille unique"
 					],
 					"price": 8,
 					"apelPart": 1.6
@@ -516,12 +501,7 @@ export const clothesJSON = {
 			"B&C": {
 				"Doudoune sans manche": {
 					"size": [
-						"XS",
-						"S",
-						"M",
-						"L",
-						"XL",
-						"XXL"
+						"taille unique"
 					],
 					"price": 8,
 					"apelPart": 1.6
