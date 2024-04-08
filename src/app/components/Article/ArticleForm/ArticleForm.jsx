@@ -16,10 +16,21 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-  }, [name]);
+    setSex("");
+  }, [grade]);
 
   useEffect(() => {
-  }, [brand]);
+    setBrand("");
+    setName("");
+  }, [sex]);
+
+  useEffect(() => {
+    setSize("");
+  }, [name, brand]);
+
+  useEffect(() => {
+    setQuantity(0);
+  }, [size]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
