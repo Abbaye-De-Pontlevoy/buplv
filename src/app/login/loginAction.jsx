@@ -59,7 +59,7 @@ export default async function loginAction(formData) {
     if (!seller.admin && !siteSettings.publicAccess) {
       return {
         access: false,
-        msg: "Accès refusé.",
+        msg: "Accès refusé. Site en maintenance.",
       };
     }
 

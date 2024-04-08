@@ -105,6 +105,10 @@ h3 {
   align-self: flex-start;
 }
 
+p.error{
+  color: red;
+}
+
 .formTitle {
   padding: 30px;
 }

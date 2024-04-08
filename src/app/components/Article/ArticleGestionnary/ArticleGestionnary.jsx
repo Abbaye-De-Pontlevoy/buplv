@@ -45,12 +45,12 @@ const ArticleGestionnary = ({
             }}
           />
 
-          {(settings.allowArticleRegistration || userInfo.isAdmin)  && (
+          {(settings.allowArticleRegistration || userInfo.isAdmin) ? (
             <ArticleForm
               title="Ajouter un article"
               callAfterSubmit={updateArticleList}
             />
-          )}
+          ): <p className="error">Periode d'ajout/modification des article terminée.</p>}
 
           {articleList.length != 0 && <QRCodePDFGenerator data={articleList} />}
         </>
