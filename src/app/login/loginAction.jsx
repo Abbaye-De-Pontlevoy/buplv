@@ -15,7 +15,7 @@ export default async function loginAction(formData) {
   const password = formData.password;
 
   // Validate email format
-  if (!validateEmail(email)) return "Email ou mot de passe invalide."; // Return error message if email is invalid
+  if (!validateEmail(email)) return null;
 
   // Lookup the seller in the database
   const seller = await prisma.seller.findFirst({
@@ -25,13 +25,13 @@ export default async function loginAction(formData) {
   });
 
   // Check if seller exists
-  if (!seller) return "Email ou mot de passe invalide.";
+  if (!seller) return null;
 
   // Compare password with hashed password
   const isCorrectPassword = bcrypt.compareSync(password, seller.password);
 
   // If password is incorrect, return error message
-  if (!isCorrectPassword) return "Email ou mot de passe invalide.";
+  if (!isCorrectPassword) return null;
 
   try {
     // Create JWT token
@@ -59,9 +59,14 @@ export default async function loginAction(formData) {
     });
 
   } catch (e) {
-    return "Email ou mot de passe invalide."; // Return error message if JWT token creation fails
+    return null; // Return error message if JWT token creation fails
   }
 
   // Redirect user to dashboard after successful login
-  redirect("/details");
+  //redirect("/details");
+
+  return {
+    id: seller.id,
+    admin: seller.admin,
+  }
 }

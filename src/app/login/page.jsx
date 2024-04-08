@@ -1,34 +1,43 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import loginAction from "./loginAction";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
+import Header from "../components/Header/Header";
+import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
+import { useRouter } from "next/navigation";
 
 import "./styles.css";
-import Header from "../components/Header/Header";
 
-// Component for handling user login
 export default function Login() {
-  const formRef = useRef(null); // Reference to the form element
+  const router = useRouter();
+
+  const formRef = useRef(null);
 
   // State variables
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState(""); // Error message state
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { login } = useContext(UserInfoContext);
 
   // Function to handle form submission
   const handleValidate = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    setIsLoading(true); // Set loading state to true
+    e.preventDefault();
+    setIsLoading(true);
 
     // Call loginAction function to validate user login
     const result = await loginAction(formData);
     if (result) {
-      setError(result); // Set error message if loginAction returns an error
-      setIsLoading(false); // Set loading state to false
+      router.push("/dashboard");
+      login(result);
+      
+    } else {
+      setError("Email ou mot de passe invalide.");
+      setIsLoading(false);
     }
   };
 
@@ -36,7 +45,7 @@ export default function Login() {
   const handleChange = (e) => {
     let { name, value } = e.target;
     if (name === "email") value = value.toLowerCase().replace(/\s/g, ""); // Normalize email input
-    setFormData({ ...formData, [name]: value }); // Update form data state
+    setFormData({ ...formData, [name]: value });
   };
 
   // Render the login form

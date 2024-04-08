@@ -6,7 +6,7 @@ import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 import "./styles.css";
 
 const Menu = ({ current, hasAdminCookie }) => {
-	const { isAdmin } = useContext(UserInfoContext);
+	const { userInfo } = useContext(UserInfoContext);
 
   const menuContent = [
     { name: "Comment faire ?", path: "/details", accessibility: "all" },
@@ -17,7 +17,7 @@ const Menu = ({ current, hasAdminCookie }) => {
   return (
     <span className="menuSpan">
       {menuContent.map((item, index) => {
-        if (item.accessibility === "admin" && !(isAdmin || hasAdminCookie)) return null;
+        if (item.accessibility === "admin" && !(userInfo.isAdmin || hasAdminCookie)) return null;
         return (
           <a
             key={index}

@@ -6,19 +6,30 @@ import React, { createContext, useEffect, useState } from "react";
 export const UserInfoContext = createContext(null);
 
 export const UserInfoProvider = ({ children }) => {
-  const refresh = () => {
-    setUserInfo(userInfo => ({...userInfo, key: userInfo.key + 1}));
-  }
 
   const [userInfo, setUserInfo] = useState({
     isConnected: false,
     isAdmin: false,
     userID: null,
-    key: 0,
-    refresh: refresh
   })
 
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const logout = () => {
+    setUserInfo({
+      isConnected: false,
+      isAdmin: false,
+      userID: null
+    });
+  }
+
+  const login = (data) => {
+    setUserInfo({
+      isConnected: true,
+      isAdmin: data?.admin,
+      userID: data?.id
+    });
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,16 +37,15 @@ export const UserInfoProvider = ({ children }) => {
       setUserInfo({
         isConnected: data?.connected,
         isAdmin: data?.admin,
-        userID: data?.id,
-        refresh: refresh
+        userID: data?.id
       });
       setIsLoaded(true);
     };
     fetchData();
-  }, [userInfo.key]);
+  }, []);
 
   return (
-    <UserInfoContext.Provider value={userInfo}>
+    <UserInfoContext.Provider value={{userInfo, logout, login}}>
       {isLoaded && children}
     </UserInfoContext.Provider>
   );

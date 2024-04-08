@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
 	const router = useRouter();
-	const { refresh } = useContext(UserInfoContext);
+	const { logout } = useContext(UserInfoContext);
 
 	const logoutHandler = async (e) => {
 		e.preventDefault();
 		await removeCookie();
-		await refresh();
+		await logout();
 		router.push('/');
 	}
 

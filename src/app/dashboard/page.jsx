@@ -10,7 +10,7 @@ import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider
 import "./styles.css";
 
 const Dashboard = () => {
-  const { userID, refresh } = useContext(UserInfoContext);
+  const { userInfo, login } = useContext(UserInfoContext);
 
   const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,18 +18,18 @@ const Dashboard = () => {
   // Effect to fetch data when component mounts
   useEffect(() => {
     const fetchData = async () => {
-      if(!userID){
-        await refresh();
+      if(!userInfo.userID){
+        //await refresh();
         return;
       }
       // Fetch user ID and article list
       setIsLoading(true);
-      const newArticleList = await getArticleList(userID);
+      const newArticleList = await getArticleList(userInfo.userID);
       setArticleList(newArticleList);
       setIsLoading(false);
     };
     fetchData();
-  }, [userID]);
+  }, [userInfo.userID]);
 
   return (
     <>
@@ -41,7 +41,7 @@ const Dashboard = () => {
           <ArticleGestionnary
             articleList={articleList}
             setArticleList={setArticleList}
-            userID={userID}
+            userID={userInfo.userID}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
