@@ -46,7 +46,6 @@ const SettingsForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="formTitle">Paramètres du site</h1>
       {isLoading ? (
         <p>Chargement...</p>
       ) : (

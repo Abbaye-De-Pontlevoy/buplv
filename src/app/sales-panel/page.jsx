@@ -8,11 +8,10 @@ import ArticleScanner from "../components/ArticleScanner/ArticleScanner";
 import Header from "../components/Header/Header";
 
 import "./styles.css";
-import RapportsGenerator from "../components/RapportsGenerator/RapportsGenerator";
 
 const SalesPanel = () => {
     // List of tabs and their contents
-    const tabList = ["Caisse", "Inventaire", "Rapports"];
+    const tabList = ["Caisse", "Inventaire"];
     const tabsContents = [
       <>
         <h1 className="formTitle">Caisse</h1>
@@ -21,11 +20,7 @@ const SalesPanel = () => {
       <>
         <h1 className="formTitle">Inventaire</h1>
         <ArticleScanner />
-      </>,
-      <>
-        <h1 className="formTitle">Rapports</h1>
-        <RapportsGenerator/>
-      </>,
+      </>
     ];
 
   const [activeTab, setActiveTab] = useState(tabList[0]);

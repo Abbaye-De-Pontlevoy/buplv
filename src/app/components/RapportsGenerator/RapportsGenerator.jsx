@@ -1,7 +1,7 @@
 import DownloadCSVButton from "../Button/DownloadCSVButton/DownloadCSVButton";
 import { getRapportsIBAN } from "./rapportsAction";
 
-const MyComponent = () => {
+const RapportsGenerator = () => {
   return (
     <div>
       <DownloadCSVButton
@@ -12,4 +12,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default RapportsGenerator;
