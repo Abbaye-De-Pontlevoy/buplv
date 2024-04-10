@@ -10,7 +10,7 @@ import Header from "../components/Header/Header";
 import "./styles.css";
 import RapportsGenerator from "../components/RapportsGenerator/RapportsGenerator";
 
-const AdminPanel = () => {
+const SalesPanel = () => {
     // List of tabs and their contents
     const tabList = ["Caisse", "Inventaire", "Rapports"];
     const tabsContents = [
@@ -33,7 +33,7 @@ const AdminPanel = () => {
   return (
     <>
       <Header hasConnectedToken={true} displayAccountButton={true} />
-      <Menu current="/admin-panel" hasAdminCookie={true} />
+      <Menu current="/sales-panel" hasAdminCookie={true} />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">
           <TabsMenu
@@ -48,4 +48,4 @@ const AdminPanel = () => {
   );
 };
 
-export default AdminPanel;
+export default SalesPanel;

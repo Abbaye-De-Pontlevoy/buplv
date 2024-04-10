@@ -11,7 +11,7 @@ const Menu = ({ current, hasAdminCookie }) => {
   const menuContent = [
     { name: "Comment faire ?", path: "/details", accessibility: "all" },
     { name: "Mes articles", path: "/dashboard", accessibility: "all" },
-    { name: "Administration", path: "/admin-panel", accessibility: "admin" },
+    { name: "Ventes", path: "/sales-panel", accessibility: "admin" },
     { name: "Paramètres du site", path: "/site-settings", accessibility: "admin"}
   ];
 

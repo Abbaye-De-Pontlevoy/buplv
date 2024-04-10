@@ -12,10 +12,10 @@ export async function middleware( request ) {
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
       return NextResponse.redirect( URL + '/dashboard');
     }
-    if(request.nextUrl.pathname === '/admin-panel' && !admin)
+    if(request.nextUrl.pathname === '/sales-panel' && !admin)
       return NextResponse
   }else{
-    const restrictedPaths = ['/dashboard', '/profil', '/admin-panel'];
+    const restrictedPaths = ['/dashboard', '/profil', '/sales-panel'];
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
       return Response.redirect(URL + '/login');
     }
