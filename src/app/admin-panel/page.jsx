@@ -8,10 +8,11 @@ import ArticleScanner from "../components/ArticleScanner/ArticleScanner";
 import Header from "../components/Header/Header";
 
 import "./styles.css";
+import RapportsGenerator from "../components/RapportsGenerator/RapportsGenerator";
 
 const AdminPanel = () => {
     // List of tabs and their contents
-    const tabList = ["Caisse", "Inventaire"];
+    const tabList = ["Caisse", "Inventaire", "Rapports"];
     const tabsContents = [
       <>
         <h1 className="formTitle">Caisse</h1>
@@ -20,6 +21,10 @@ const AdminPanel = () => {
       <>
         <h1 className="formTitle">Inventaire</h1>
         <ArticleScanner />
+      </>,
+      <>
+        <h1 className="formTitle">Rapports</h1>
+        <RapportsGenerator/>
       </>,
     ];
 
