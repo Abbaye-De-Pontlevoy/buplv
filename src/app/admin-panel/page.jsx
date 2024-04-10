@@ -8,10 +8,11 @@ import RapportsGenerator from "../components/RapportsGenerator/RapportsGenerator
 import TabsMenu from "../components/TabsMenu/TabsMenu";
 
 import "./styles.css";
+import ArticleModifier from "../components/ArticleModifier/ArticleModifier";
 
 const SiteSettings = () => {
   // List of tabs and their contents
-  const tabList = ["Paramètres", "Rapports"];
+  const tabList = ["Paramètres", "Rapports", "Recherche d'article"];
   const tabsContents = [
     <>
       <h1 className="formTitle">Paramètres du site</h1>
@@ -21,6 +22,10 @@ const SiteSettings = () => {
       <h1 className="formTitle">Rapports</h1>
       <RapportsGenerator />
     </>,
+    <>
+      <h1>Rechercher un article</h1>
+      <ArticleModifier/>
+    </>
   ];
 
   const [activeTab, setActiveTab] = useState(tabList[0]);

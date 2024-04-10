@@ -33,10 +33,6 @@ form span input {
   width: min-content;
 }
 
-button{
-  margin-top: 20px;
-}
-
 @media (max-width: 400px) {
   .bandeau-rangement {
     padding: 0;

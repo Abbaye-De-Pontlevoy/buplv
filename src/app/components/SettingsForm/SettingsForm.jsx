@@ -89,7 +89,7 @@ const SettingsForm = () => {
             </label>
           )}
 
-          <button type="submit">Enregistrer</button>
+          <button id="SubmitSettingsChanges" type="submit">Enregistrer</button>
         </>
       )}
     </form>

@@ -13,6 +13,6 @@ form span input {
   width: min-content;
 }
 
-button{
+#SubmitSettingsChanges{
   margin-top: 20px;
 }
