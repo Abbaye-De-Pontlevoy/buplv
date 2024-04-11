@@ -23,6 +23,15 @@ scannerModal p {
 	text-decoration: none;
 }
 
+#buttonDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: stretch;
+
+  margin-top: 10px;
+}
+
 @media (max-width: 400px) {
   .scannerModal {
     width: 80%;

@@ -27,7 +27,7 @@ export const addArticle = async (e) => {
           brand: brand,
           size: size,
           price: price,
-          state: 0,
+          state: 1,
         },
       })
     );

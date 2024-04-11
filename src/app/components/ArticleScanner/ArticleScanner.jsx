@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { getArticleState, updateArticleField } from "./scanActions";
 import QRCodeReader from "../QRCodeReader/QRCodeReader";
 
-import "./styles.css"
+import "./styles.css";
 
 Modal.setAppElement("#root");
 
@@ -58,40 +58,62 @@ const ArticleScanner = () => {
           <li>
             Etat :{" "}
             {qrCodeData.state != null
-              ? qrCodeData.state === 2
+              ? qrCodeData.state === 3
                 ? "Vendu"
-                : qrCodeData.state === 1
+                : qrCodeData.state === 2
                 ? "Inventorié"
-                : "Non inventorié"
+                : qrCodeData.state === 1
+                ? "Non inventorié"
+                : qrCodeData.state === -1
+                ? "Invendable"
+                : "Supprimé"
               : "chargement..."}
           </li>
         </ul>
 
-        {qrCodeData.state > 0 && (
-          <button
-            onClick={() => {
-              updateArticleField(qrCodeData.id, "state", qrCodeData.state - 1);
-              closeModal();
-            }}
-          >
-            {qrCodeData.state === 1
-              ? "Enlever de l'inventaire"
-              : qrCodeData.state === 2
-              ? "Annuler la vente"
-              : ""}
-          </button>
-        )}
+        <div id="buttonDiv">
+          {qrCodeData.state >= 2 && (
+            <button
+              onClick={() => {
+                updateArticleField(
+                  qrCodeData.id,
+                  "state",
+                  qrCodeData.state - 1
+                );
+                closeModal();
+              }}
+            >
+              {qrCodeData.state === 2
+                ? "Enlever de l'inventaire"
+                : qrCodeData.state === 3
+                ? "Annuler la vente"
+                : ""}
+            </button>
+          )}
 
-        {qrCodeData.state === 0 && (
-          <button
-            onClick={() => {
-              updateArticleField(qrCodeData.id, "state", qrCodeData.state + 1);
-              closeModal();
-            }}
-          >
-            Inventorier
-          </button>
-        )}
+          {qrCodeData.state <= 1 && (
+            <button
+              onClick={() => {
+                updateArticleField(qrCodeData.id, "state", 2);
+                closeModal();
+              }}
+            >
+              Inventorier
+            </button>
+          )}
+
+          {qrCodeData.state >= 1 && qrCodeData.state <= 2 && (
+            <button
+              onClick={() => {
+                updateArticleField(qrCodeData.id, "state", -1);
+                closeModal();
+              }}
+            >
+              Déclarer invendable
+            </button>
+          )}
+        </div>
+
         <button onClick={() => setShowModal(false)}>Retour</button>
       </Modal>
     </div>

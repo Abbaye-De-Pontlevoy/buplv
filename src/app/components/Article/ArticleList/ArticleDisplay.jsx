@@ -2,7 +2,11 @@ import { useState } from "react";
 
 import "./styles.css";
 
-export const ArticleDisplay = ({ article, enabledRemoveButton, callAfterDelete }) => {
+export const ArticleDisplay = ({
+  article,
+  enabledRemoveButton,
+  callAfterDelete,
+}) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const deleteHandler = async (e) => {
@@ -18,15 +22,17 @@ export const ArticleDisplay = ({ article, enabledRemoveButton, callAfterDelete }
       <td>{article.brand}</td>
       <td>{article.size}</td>
       <td>
-        {article.state === 1
-          ? "Inventorié"
+        {article.state === -1
+          ? "Invendable"
           : article.state === 2
+          ? "Inventorié"
+          : article.state === 3
           ? "Vendu"
           : "Enregistré"}
       </td>
       <td>{article.price} €</td>
       <td className="tdDeleteButton">
-        {article.state === 0 ? (
+        {article.state === 1 ? (
           <form className="deleteButtonForm" onSubmit={deleteHandler}>
             <button
               type="submit"
@@ -37,7 +43,7 @@ export const ArticleDisplay = ({ article, enabledRemoveButton, callAfterDelete }
             </button>
           </form>
         ) : (
-          '-'
+          "-"
         )}
       </td>
     </tr>
