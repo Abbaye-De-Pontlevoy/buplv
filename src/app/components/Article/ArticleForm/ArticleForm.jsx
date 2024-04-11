@@ -8,8 +8,10 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   const articleData = clothesJSON;
   const [grade, setGrade] = useState("");
   const [sex, setSex] = useState("");
-  const [name, setName] = useState("");
-  const [brand, setBrand] = useState("");
+  const [name, setName] = useState({
+    brand: "",
+    name: "",
+  });
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(0);
 
@@ -20,13 +22,15 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   }, [grade]);
 
   useEffect(() => {
-    setBrand("");
-    setName("");
+    setName({
+      brand: "",
+      name: "",
+    });
   }, [sex]);
 
   useEffect(() => {
     setSize("");
-  }, [name, brand]);
+  }, [name]);
 
   useEffect(() => {
     setQuantity(0);
@@ -39,18 +43,18 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
 
     // add article to the server
     const submitData = {
-      name: name,
-      brand: brand,
+      name: name.name,
+      brand: name.brand,
       size: size,
       quantity: quantity,
-      price: articleData[grade][sex][brand][name]["price"],
+      price: articleData[grade][sex][name.brand][name.name]["price"],
     };
     const result = await addArticle(submitData);
 
     // call the parent function
     if (callAfterSubmit) await callAfterSubmit();
 
-    setName("");
+    setGrade("");
 
     setIsLoading(false);
   };
@@ -103,18 +107,17 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 <select
                   name="name"
                   key="name"
-                  value={`${brand}-${name}`}
+                  value={`${name.brand}-${name.name}`}
                   onChange={(e) => {
                     const [brand, articleName] = e.target.value.split("-");
-                    setBrand(brand);
-                    setName(articleName);
+                    setName({ brand, name: articleName });
                   }}
                   disabled={!sex || isLoading}
                 >
                   <option key="default" value="">
                     Article
                   </option>
-                  {sex &&
+                  {grade && sex &&
                     Object.keys(articleData[grade][sex]).map((brand) =>
                       Object.keys(articleData[grade][sex][brand]).map(
                         (articleName) => (
@@ -135,17 +138,19 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   key="size"
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
-                  disabled={!name || isLoading}
+                  disabled={!name.brand || isLoading}
                 >
                   <option key="default" value="">
                     Taille
                   </option>
-                  {name &&
-                    articleData[grade][sex][brand][name]["size"].map((size) => (
-                      <option key={size} value={size}>
-                        {size}
-                      </option>
-                    ))}
+                  {grade && sex && name.brand &&
+                    articleData[grade][sex][name.brand][name.name]["size"].map(
+                      (size) => (
+                        <option key={size} value={size}>
+                          {size}
+                        </option>
+                      )
+                    )}
                 </select>
               </td>
               <td>
@@ -159,9 +164,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Quantité
                   </option>
-                  {name &&
-                    brand &&
-                    size &&
+                  {grade && sex && name.brand && size &&
                     Array.from({ length: 5 }, (_, i) => (
                       <option key={i + 1} value={i + 1}>
                         {i + 1}
