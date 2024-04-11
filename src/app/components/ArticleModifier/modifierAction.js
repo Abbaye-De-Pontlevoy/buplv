@@ -12,6 +12,7 @@ export const updateArticle = async (data) => {
         brand: data.brand,
         name: data.name,
         size: data.size,
+        state: parseInt(data.state),
       },
     });
 

@@ -17,14 +17,13 @@ const ArticleModifier = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
     const result = await updateArticle(articleData);
-    if(result)
-      alert("Article modifié avec succès.");
-    else
-      setError("Erreur lors de la modification de l'article.");
+    if (result) alert("Article modifié avec succès.");
+    else setError("Erreur lors de la modification de l'article.");
     setIsLoading(false);
-  }
+  };
 
   return (
     <>
@@ -40,7 +39,9 @@ const ArticleModifier = () => {
                 name="brand"
                 key="brand"
                 value={articleData.brand}
-                onChange={(e) => setArticleData({ ...articleData, brand: e.target.value })}
+                onChange={(e) =>
+                  setArticleData({ ...articleData, brand: e.target.value })
+                }
               >
                 {articleJSONData.brand.map((brand) => (
                   <option key={brand} value={brand}>
@@ -58,7 +59,9 @@ const ArticleModifier = () => {
                 name="name"
                 key="name"
                 value={articleData.name}
-                onChange={(e) => setArticleData({ ...articleData, name: e.target.value })}
+                onChange={(e) =>
+                  setArticleData({ ...articleData, name: e.target.value })
+                }
               >
                 {articleJSONData.name.map((name) => (
                   <option key={name} value={name}>
@@ -69,7 +72,6 @@ const ArticleModifier = () => {
             </label>
           </span>
 
-
           <span>
             <label>
               Taille
@@ -77,7 +79,9 @@ const ArticleModifier = () => {
                 name="size"
                 key="size"
                 value={articleData.size}
-                onChange={(e) => setArticleData({ ...articleData, size: e.target.value })}
+                onChange={(e) =>
+                  setArticleData({ ...articleData, size: e.target.value })
+                }
               >
                 {articleJSONData.size.map((size) => (
                   <option key={size} value={size}>
@@ -88,7 +92,33 @@ const ArticleModifier = () => {
             </label>
           </span>
 
-          <button type="submit" disabled={isLoading}>{isLoading ? "Chargement..." : "Modifier"}</button>
+          <span>
+            <label>
+              État
+              <select
+                name="state"
+                key="state"
+                value={articleData.state}
+                onChange={(e) =>
+                  setArticleData({ ...articleData, state: e.target.value })
+                }
+              >
+                <option key="0" value="0">
+                  Enregistré
+                </option>
+                <option key="1" value="1">
+                  Inventorié
+                </option>
+                <option key="2" value="2">
+                  Vendu
+                </option>
+              </select>
+            </label>
+          </span>
+
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Chargement..." : "Modifier"}
+          </button>
           <p className="error">{error}</p>
         </form>
       )}

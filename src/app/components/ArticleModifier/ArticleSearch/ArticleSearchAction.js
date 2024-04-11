@@ -12,6 +12,7 @@ export const getArticleByID = async (ID) => {
       brand: true,
       name: true,
       size: true,
+      state: true
     },
   });
 
