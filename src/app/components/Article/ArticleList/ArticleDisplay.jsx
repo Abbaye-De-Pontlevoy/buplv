@@ -13,7 +13,7 @@ export const ArticleDisplay = ({
     e.preventDefault();
     setIsDisabled(true);
     await callAfterDelete(article.id);
-    //setIsDisabled(false);
+    setIsDisabled(false);
   };
 
   return (
@@ -32,12 +32,12 @@ export const ArticleDisplay = ({
       </td>
       <td>{article.price} €</td>
       <td className="tdDeleteButton">
-        {article.state === 1 ? (
+        {article.state === 1 || enabledRemoveButton? (
           <form className="deleteButtonForm" onSubmit={deleteHandler}>
             <button
               type="submit"
               className="deleteButton"
-              disabled={isDisabled || !enabledRemoveButton}
+              disabled={isDisabled}
             >
               x
             </button>

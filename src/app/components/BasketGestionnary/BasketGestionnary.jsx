@@ -33,10 +33,10 @@ const BasketGestionnary = () => {
     }
 
     switch (articleData.state) {
-      case 0:
+      case 1:
         alert("Article non inventorié.");
         return false;
-      case 2:
+      case 3:
         alert("Article déjà vendu.");
         return false;
       default:
@@ -68,6 +68,7 @@ const BasketGestionnary = () => {
         articleList={basket}
         callAfterDelete={removeArticle}
         displayTotal={true}
+        enabledRemoveButton={true}
       />
 
       <span id="validateAndScanSpan">
