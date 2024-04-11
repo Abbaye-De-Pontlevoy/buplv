@@ -14,18 +14,21 @@ const ArticleScanner = () => {
   const [qrCodeData, setQRCodeData] = useState({});
 
   const displayModal = async (qrCode) => {
-    qrCode = JSON.parse(qrCode);
-
-    const state = await getArticleState(qrCode.id);
-
-    qrCode.state = parseInt(state);
-
-    setQRCodeData(qrCode);
+    try {
+      qrCode = JSON.parse(qrCode);
+      const state = await getArticleState(qrCode.id);
+      qrCode.state = parseInt(state);
+      setQRCodeData(qrCode);
+      return true;
+    } catch (e) {
+      alert("Erreur lors de la lecture du QR Code.");
+      return false;
+    }
   };
 
-  const handleQRCodeRead = (qrCode) => {
-    displayModal(qrCode);
-    setShowModal(true);
+  const handleQRCodeRead = async (qrCode) => {
+    if (await displayModal(qrCode)) setShowModal(true);
+    else closeModal();
   };
 
   const closeModal = () => {
@@ -45,12 +48,8 @@ const ArticleScanner = () => {
       >
         <h2>Article scanné !</h2>
         <ul>
-          <li>
-            Article : {qrCodeData.name ? qrCodeData.name : "chargement..."}
-          </li>
-          <li>
-            Marque : {qrCodeData.brand ? qrCodeData.brand : "chargement..."}
-          </li>
+          <li>Article : {qrCodeData.name || "chargement..."}</li>
+          <li>Marque : {qrCodeData.brand || "chargement..."}</li>
           <li>
             Prix :{" "}
             {qrCodeData.price ? qrCodeData.price + " €" : "chargement..."}
