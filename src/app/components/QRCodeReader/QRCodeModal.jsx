@@ -6,7 +6,9 @@ import QRCodeReader from "./QRCodeReader";
 
 Modal.setAppElement("#root");
 
-const AQRModal = ({onQRCodeRead, disabled}) => {
+import "./styles.css";
+
+const AQRModal = ({ onQRCodeRead, disabled }) => {
   const [showModal, setShowModal] = useState(false);
   const [qrCodeValue, setQRCodeValue] = useState("");
 
@@ -20,14 +22,17 @@ const AQRModal = ({onQRCodeRead, disabled}) => {
 
   return (
     <div>
-      <button onClick={() => setShowModal(true)} disabled={disabled}>Scanner un article</button>
+      <button onClick={() => setShowModal(true)} disabled={disabled}>
+        Scanner un article
+      </button>
       <Modal
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel="Scan Articles"
       >
         <QRCodeReader onQRCodeRead={handleModalClose} />
-        <button onClick={() => handleModalClose(null)}>Fermer</button>
+        <button 
+        id="qrModalButton" onClick={() => handleModalClose(null)}>Fermer</button>
       </Modal>
     </div>
   );
