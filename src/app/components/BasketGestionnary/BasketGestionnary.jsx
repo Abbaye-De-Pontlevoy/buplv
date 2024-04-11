@@ -10,6 +10,7 @@ import "./styles.css";
 const BasketGestionnary = () => {
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const checkArticle = async (article) => {
     article = JSON.parse(article);
@@ -32,6 +33,13 @@ const BasketGestionnary = () => {
       return false;
     }
 
+    if(article.name === undefined){
+      article.name = articleData.name;
+      article.brand = articleData.brand;
+      article.price = articleData.price;
+      article.state = articleData.state;
+    }
+
     switch (articleData.state) {
       case 1:
         alert("Article non inventorié.");
@@ -52,8 +60,10 @@ const BasketGestionnary = () => {
 
   const handleValidate = async (e) => {
     e.preventDefault();
-    
-    const confirmValidation = window.confirm("Êtes-vous sûr de vouloir valider le panier ?");
+
+    const confirmValidation = window.confirm(
+      "Êtes-vous sûr de vouloir valider le panier ?"
+    );
     if (confirmValidation) {
       setValidatingBasket(true);
       await validateBasket(basket);
@@ -71,11 +81,30 @@ const BasketGestionnary = () => {
         enabledRemoveButton={true}
       />
 
+      <form
+        id="addArticleManuallyForm"
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setIsLoading(true);
+          await checkArticle(`{ "id": ${e.target.articleId.value} }`);
+          e.target.articleId.value = "";
+          setIsLoading(false);
+        }}
+      >
+        <span>
+          <input type="number" name="articleId" placeholder="Ajouter par ID" />
+          <button type="submit" disabled={isLoading}>{isLoading ? "Chargement..." : 'Ajouter'}</button>
+        </span>
+      </form>
+
       <span id="validateAndScanSpan">
         <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket} />
 
         <form onSubmit={handleValidate}>
-          <button type="submit" disabled={basket.length === 0 || validatingBasket}>
+          <button
+            type="submit"
+            disabled={basket.length === 0 || validatingBasket}
+          >
             Valider le panier
           </button>
         </form>
