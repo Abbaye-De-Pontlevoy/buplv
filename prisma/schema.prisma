@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,29 +8,37 @@ datasource db {
 }
 
 model Seller {
-  id                  String  @id @default(uuid())
-  admin               Boolean @default(false)
-  firstname           String
-  name                String 
-  email               String  @unique
-  phone               String
-  address             String
-  password            String
-  iban                String
-  bic                 String
-  return_articles     Boolean @default(false)
-  articles            Article[]
+  id              String    @id @default(uuid())
+  ref             String    @default(dbgenerated("generate_custom_uuid()")) @unique
+  admin           Boolean   @default(false)
+  firstname       String
+  name            String
+  email           String    @unique
+  phone           String
+  address         String
+  password        String
+  iban            String
+  bic             String
+  return_articles Boolean   @default(false)
+  articles        Article[]
 }
 
 // 123 hash = $2a$08$YD44SouaLEXujaNSa1NfJeKy9FaR5Z3qTz57WyPdntvLZelHbcFwW
 
 model Article {
-  id          Int       @id @default(autoincrement())
-  seller_id   String
-  brand       String
-  name        String
-  size        String
-  price       Float
-  state       Int
-  seller      Seller    @relation(fields: [seller_id], references: [id])
+  id        Int    @id @default(autoincrement())
+  seller_id String
+  brand     String
+  name      String
+  size      String
+  price     Float
+  state     Int
+  seller    Seller @relation(fields: [seller_id], references: [id])
+}
+
+model Transaction {
+  id               Int    @id @default(autoincrement())
+  paiement_method  String
+  paiement_date    DateTime @default(now())
+  paiement_amount  Float
 }
