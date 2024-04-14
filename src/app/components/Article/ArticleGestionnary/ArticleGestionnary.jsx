@@ -50,7 +50,7 @@ const ArticleGestionnary = ({
               title="Ajouter un article"
               callAfterSubmit={updateArticleList}
             />
-          ): <p className="error">Periode d'ajout/modification des article terminée.</p>}
+          ): <p className="error">Periode d'ajout/modification des articles terminée.</p>}
 
           {articleList.length != 0 && <QRCodePDFGenerator data={articleList} />}
         </>

@@ -8,8 +8,7 @@ datasource db {
 }
 
 model Seller {
-  id              String    @id @default(uuid())
-  ref             String    @default(dbgenerated("generate_custom_uuid()")) @unique
+  id              String    @id @default(dbgenerated("generate_custom_uuid()"))
   admin           Boolean   @default(false)
   firstname       String
   name            String

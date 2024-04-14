@@ -29,8 +29,8 @@ export async function generatePDF(data) {
     doc.setFontSize(12);
     doc.text(
       50,
-      y + 15,
-      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nREF : ${data[i].id}  `
+      y + 11,
+      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nREF : ${data[i].id}\nRef vendeur: ${data[i].seller_id}`
     );
     y += 40;
 
