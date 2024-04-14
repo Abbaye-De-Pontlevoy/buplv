@@ -1,13 +1,15 @@
 
 import { useState } from "react";
 import { generatePDF } from "./generatePDF";
+import { getUserInfos } from "@/app/helpers/getUserInfos";
 
 const QRCodePDFGenerator = ({ data }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleClick = async () => {
     setIsDisabled(true);
-    await generatePDF( data );
+    const sellerInfos = await getUserInfos();
+    await generatePDF( data, sellerInfos );
     setIsDisabled(false);
   };
 
