@@ -1,3 +1,12 @@
+#qrModal{
+  height: fit-content;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 #qrModalButton{
+  margin-top: 10px;
   width: 100%;
 }

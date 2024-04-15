@@ -29,6 +29,7 @@ const AQRModal = ({ onQRCodeRead, disabled }) => {
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel="Scan Articles"
+        id="qrModal"
       >
         <QRCodeReader onQRCodeRead={handleModalClose} />
         <button 
