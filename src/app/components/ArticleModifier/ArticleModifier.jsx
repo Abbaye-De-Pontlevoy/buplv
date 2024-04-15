@@ -103,14 +103,20 @@ const ArticleModifier = () => {
                   setArticleData({ ...articleData, state: e.target.value })
                 }
               >
-                <option key="0" value="0">
+                <option key="1" value="1">
                   Enregistré
                 </option>
-                <option key="1" value="1">
+                <option key="2" value="2">
                   Inventorié
                 </option>
-                <option key="2" value="2">
+                <option key="3" value="3">
                   Vendu
+                </option>
+                <option key="0" value="0">
+                  Supprimé
+                </option>
+                <option key="-1" value="-1">
+                  Invendable
                 </option>
               </select>
             </label>
