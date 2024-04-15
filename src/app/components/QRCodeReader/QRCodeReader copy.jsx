@@ -9,22 +9,27 @@ const QRCodeReader = ({ onQRCodeRead }) => {
   const qrBoxEl = useRef(null);
   const [qrOn, setQrOn] = useState(true);
 
-  const onScanFail = (err) => {
-    console.log(err);
-    handleScan();
+  const audioSuccessRef = new Audio(
+    "https://lasonotheque.org/UPLOAD/mp3/1417.mp3"
+  );
+  const audioErrorRef = new Audio(
+    "https://lasonotheque.org/UPLOAD/mp3/1684.mp3"
+  );
+
+  const onScanSuccess = async (result) => {
+    if (result) {
+      onQRCodeRead(result.data);
+      audioSuccessRef.play();
+    } else audioErrorRef.play();
   };
 
-  const handleScan = async (result) => {
-    if(!result) return;
-
-    scanner.current.stop();
-    await onQRCodeRead(result?.data);
-    scanner.current.start();
+  const onScanFail = (err) => {
+    console.log(err);
   };
 
   useEffect(() => {
     if (videoEl?.current && !scanner.current) {
-      scanner.current = new QrScanner(videoEl?.current, handleScan, {
+      scanner.current = new QrScanner(videoEl?.current, onScanSuccess, {
         onDecodeError: onScanFail,
         // This is the camera facing mode. In mobile devices, "environment" means back camera and "user" means front camera.
         preferredCamera: "environment",

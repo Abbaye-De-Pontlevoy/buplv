@@ -5,9 +5,9 @@ import Modal from "react-modal";
 import ArticleList from "../Article/ArticleList/ArticleList";
 import AQRModal from "../QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
+import { getSettings } from "@/app/config/settings";
 
 import "./styles.css";
-import { getSettings } from "@/app/config/settings";
 
 const BasketGestionnary = () => {
   const [basket, setBasket] = useState([]);
@@ -16,7 +16,11 @@ const BasketGestionnary = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState("");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+
+  const audioSuccess = new Audio(
+    "https://lasonotheque.org/UPLOAD/mp3/1417.mp3"
+  );
+  const audioError = new Audio("https://lasonotheque.org/UPLOAD/mp3/1684.mp3");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,43 +31,46 @@ const BasketGestionnary = () => {
   }, []);
 
   const checkArticle = async (article) => {
-    article = JSON.parse(article);
-    // if article in basket
-    for (let i = 0; i < basket.length; i++) {
-      if (basket[i].id === article.id) {
-        // article already in basket
-        const remove = window.confirm(
-          "Article déjà dans le panier, voulez-vous l'en enlever ?"
-        );
-        if (remove) removeArticle(article.id);
-        return false;
-      }
-    }
-
-    // article is a not in basket
-    const articleData = await getArticleData(article.id);
-    if (!articleData) {
-      alert("Article non trouvé.");
+    try {
+      article = await JSON.parse(article);
+    } catch (e) {
+      audioError.play();
+      alert("QR code invalide.");
       return false;
     }
 
-    if (article.name === undefined) {
-      article.name = articleData.name;
-      article.brand = articleData.brand;
-      article.price = articleData.price;
-      article.state = articleData.state;
-    }
+    try {
+      // if article in basket
+      for (let i = 0; i < basket.length; i++) {
+        if (basket[i].id === article.id) 
+          throw new Error("Article déjà dans le panier.");
+      }
 
-    switch (articleData.state) {
-      case 1:
-        alert("Article non inventorié.");
-        return false;
-      case 3:
-        alert("Article déjà vendu.");
-        return false;
-      default:
-        setBasket([...basket, article]);
-        return true;
+      // article is a not in basket
+      const articleData = await getArticleData(article.id);
+      if (!articleData) throw new Error("Article non trouvé.");
+
+      if (article.name === undefined) {
+        article.name = articleData.name;
+        article.brand = articleData.brand;
+        article.price = articleData.price;
+        article.state = articleData.state;
+      }
+
+      switch (articleData.state) {
+        case 2:
+          setBasket([...basket, article]);
+          audioSuccess.play();
+          return true;
+        case 3:
+          throw new Error("Article déjà vendu.");
+        default:
+          throw new Error("Article non inventorié.");
+      }
+    } catch (e) {
+      audioError.play();
+      alert(e.message);
+      return false;
     }
   };
 
@@ -101,7 +108,11 @@ const BasketGestionnary = () => {
         onSubmit={async (e) => {
           e.preventDefault();
           setIsLoading(true);
-          await checkArticle(`{ "id": ${e.target.articleId.value} }`);
+
+          const result = await checkArticle(
+            `{ "id": ${e.target.articleId.value} }`
+          );
+          
           e.target.articleId.value = "";
           setIsLoading(false);
         }}
@@ -115,7 +126,7 @@ const BasketGestionnary = () => {
       </form>
 
       <span id="validateAndScanSpan">
-        <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket} />
+        <AQRModal onQRCodeRead={checkArticle} />
 
         <button
           onClick={() => setIsModalOpen(true)}

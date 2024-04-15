@@ -10,13 +10,11 @@ import "./styles.css";
 
 const AQRModal = ({ onQRCodeRead, disabled }) => {
   const [showModal, setShowModal] = useState(false);
-  const [qrCodeValue, setQRCodeValue] = useState("");
 
-  const handleModalClose = (value) => {
-    setShowModal(false);
+  const handleModalClose = async (value) => {
     if (value) {
-      setQRCodeValue(value);
-      onQRCodeRead(value);
+      await onQRCodeRead(value);
+      setShowModal(false);
     }
   };
 
@@ -32,8 +30,9 @@ const AQRModal = ({ onQRCodeRead, disabled }) => {
         id="qrModal"
       >
         <QRCodeReader onQRCodeRead={handleModalClose} />
-        <button 
-        id="qrModalButton" onClick={() => handleModalClose(null)}>Fermer</button>
+        <button id="qrModalButton" onClick={() => handleModalClose(null)}>
+          Fermer
+        </button>
       </Modal>
     </div>
   );
