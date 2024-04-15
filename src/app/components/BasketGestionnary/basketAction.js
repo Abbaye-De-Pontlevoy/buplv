@@ -12,17 +12,41 @@ export const getArticleData = async (productId) => {
 	return article;
 }
 
-export const validateBasket = async (basket) => {
-	// set state of all article in basket to 2
-	const articleIds = basket.map((article) => article.id);
-	const articles = await prisma.article.updateMany({
-		where: {
-			id: {
-				in: articleIds
+export const validateBasket = async (basket, paymentMethod) => {
+	let transaction = null;
+
+	try{
+		transaction = await prisma.transaction.create({
+			data: {
+				payment_method: paymentMethod,
+				payment_amount: basket.reduce((acc, article) => acc + article.price, 0),
 			}
-		},
-		data: {
-			state: 2
+		});
+
+		// set state of all article in basket to 2
+		const articleIds = basket.map((article) => article.id);
+		const articles = await prisma.article.updateMany({
+			where: {
+				id: {
+					in: articleIds
+				}
+			},
+			data: {
+				state: 3
+			}
+		});
+
+		console.log("Transaction created and articles updated");
+	}
+	catch(e){
+		console.error(e);
+		if(transaction){
+			await prisma.transaction.delete({
+				where: {
+					id: transaction.id
+				}
+			});
 		}
-	});
+	}
+
 }

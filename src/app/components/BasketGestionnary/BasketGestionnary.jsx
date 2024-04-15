@@ -1,16 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
 import ArticleList from "../Article/ArticleList/ArticleList";
 import AQRModal from "../QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
 
 import "./styles.css";
+import { getSettings } from "@/app/config/settings";
 
 const BasketGestionnary = () => {
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentMethods, setPaymentMethods] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const settings = await getSettings();
+      setPaymentMethods(settings.paymentMethods);
+    };
+    fetchData();
+  }, []);
 
   const checkArticle = async (article) => {
     article = JSON.parse(article);
@@ -33,7 +47,7 @@ const BasketGestionnary = () => {
       return false;
     }
 
-    if(article.name === undefined){
+    if (article.name === undefined) {
       article.name = articleData.name;
       article.brand = articleData.brand;
       article.price = articleData.price;
@@ -61,15 +75,16 @@ const BasketGestionnary = () => {
   const handleValidate = async (e) => {
     e.preventDefault();
 
-    const confirmValidation = window.confirm(
-      "Êtes-vous sûr de vouloir valider le panier ?"
-    );
-    if (confirmValidation) {
-      setValidatingBasket(true);
-      await validateBasket(basket);
-      setBasket([]);
-      setValidatingBasket(false);
-    }
+    console.log(e.target.paymentMethod.value);
+
+    const paymentMethod = e.target.paymentMethod.value;
+
+    setValidatingBasket(true);
+    await validateBasket(basket, paymentMethod);
+    setBasket([]);
+    setValidatingBasket(false);
+
+    setIsModalOpen(false);
   };
 
   return (
@@ -93,22 +108,40 @@ const BasketGestionnary = () => {
       >
         <span>
           <input type="number" name="articleId" placeholder="Ajouter par ID" />
-          <button type="submit" disabled={isLoading}>{isLoading ? "Chargement..." : 'Ajouter'}</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Chargement..." : "Ajouter"}
+          </button>
         </span>
       </form>
 
       <span id="validateAndScanSpan">
         <AQRModal onQRCodeRead={checkArticle} disabled={validatingBasket} />
 
-        <form onSubmit={handleValidate}>
-          <button
-            type="submit"
-            disabled={basket.length === 0 || validatingBasket}
-          >
-            Valider le panier
-          </button>
-        </form>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          disabled={basket.length === 0 || validatingBasket}
+        >
+          Valider le panier
+        </button>
       </span>
+
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+        >
+          <form onSubmit={handleValidate}>
+            <h1>Sélectionnez un moyen de paiement</h1>
+            {paymentMethods.map((method, index) => (
+              <div>
+                <input type="radio" name="paymentMethod" value={method} />
+                <label>{method}</label>
+              </div>
+            ))}
+            <button type="submit">Valider</button>
+          </form>
+        </Modal>
+      )}
     </div>
   );
 };
