@@ -22,8 +22,6 @@ model Seller {
   articles        Article[]
 }
 
-// 123 hash = $2a$08$YD44SouaLEXujaNSa1NfJeKy9FaR5Z3qTz57WyPdntvLZelHbcFwW
-
 model Article {
   id        Int    @id @default(autoincrement())
   seller_id String
@@ -37,7 +35,9 @@ model Article {
 
 model Transaction {
   id               Int    @id @default(autoincrement())
-  paiement_method  String
-  paiement_date    DateTime @default(now())
-  paiement_amount  Float
+  payment_method  String
+  payment_date    DateTime @default(now())
+  payment_amount  Float  
 }
+
+// 123 hash = $2a$08$YD44SouaLEXujaNSa1NfJeKy9FaR5Z3qTz57WyPdntvLZelHbcFwW

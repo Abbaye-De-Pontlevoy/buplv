@@ -1,0 +1,31 @@
+-- DROP FUNCTION public.generate_custom_uuid();
+
+-- 20240411232306_custom_uuid.sql
+
+CREATE OR REPLACE FUNCTION public.generate_custom_uuid()
+RETURNS TEXT AS $$
+DECLARE
+    letters TEXT := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    custom_key TEXT;
+    random_index INTEGER;
+BEGIN
+    -- Générer 3 lettres aléatoires
+    random_index := FLOOR(random() * 26 + 1);
+    custom_key := substr(letters, random_index, 1);
+
+    random_index := FLOOR(random() * 26 + 1);
+    custom_key := custom_key || substr(letters, random_index, 1);
+
+    random_index := FLOOR(random() * 26 + 1);
+    custom_key := custom_key || substr(letters, random_index, 1);
+
+    -- Ajouter un tiret
+    custom_key := custom_key || '-';
+
+    -- Générer 3 chiffres aléatoires
+    custom_key := custom_key || LPAD(FLOOR(random() * 1000)::TEXT, 3, '0');
+
+    RETURN custom_key;
+END;
+$$ LANGUAGE plpgsql;
+;
