@@ -4,6 +4,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { getArticleState, updateArticleField } from "./scanActions";
 import QRCodeReader from "../QRCodeReader/QRCodeReader";
+import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 import "./styles.css";
 
@@ -14,6 +15,7 @@ const ArticleScanner = () => {
   const [qrCodeData, setQRCodeData] = useState({});
 
   const displayModal = async (qrCode) => {
+    setShowModal(true);
     try {
       qrCode = JSON.parse(qrCode);
       const state = await getArticleState(qrCode.id);
@@ -22,13 +24,9 @@ const ArticleScanner = () => {
       return true;
     } catch (e) {
       alert("Erreur lors de la lecture du QR Code.");
+      closeModal();
       return false;
     }
-  };
-
-  const handleQRCodeRead = async (qrCode) => {
-    if (await displayModal(qrCode)) setShowModal(true);
-    else closeModal();
   };
 
   const closeModal = () => {
@@ -38,7 +36,9 @@ const ArticleScanner = () => {
 
   return (
     <div>
-      {!showModal && <QRCodeReader onQRCodeRead={handleQRCodeRead} />}
+      {!showModal && <QRCodeReader onQRCodeRead={displayModal} />}
+
+      <ArticleSearch onArticleSearch={(e) => displayModal(JSON.stringify(e))} />
 
       <Modal
         className="scannerModal"
