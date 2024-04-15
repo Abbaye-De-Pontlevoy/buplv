@@ -6,3 +6,20 @@
 	justify-content: center;
 	margin-top: 5px;
 }
+
+#validateBasketModal{
+	height: fit-content;
+	width: fit-content;
+	padding: 10px;
+	border-radius: 8px;
+	margin: auto;
+}
+
+#validateBasketModal table{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#validateBasketModal button{
+	width: 100%;
+}

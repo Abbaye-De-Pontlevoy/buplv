@@ -42,7 +42,7 @@ const BasketGestionnary = () => {
     try {
       // if article in basket
       for (let i = 0; i < basket.length; i++) {
-        if (basket[i].id === article.id) 
+        if (basket[i].id === article.id)
           throw new Error("Article déjà dans le panier.");
       }
 
@@ -82,7 +82,7 @@ const BasketGestionnary = () => {
   const handleValidate = async (e) => {
     e.preventDefault();
 
-    console.log(e.target.paymentMethod.value);
+    e.target.disabled = true;
 
     const paymentMethod = e.target.paymentMethod.value;
 
@@ -112,7 +112,7 @@ const BasketGestionnary = () => {
           const result = await checkArticle(
             `{ "id": ${e.target.articleId.value} }`
           );
-          
+
           e.target.articleId.value = "";
           setIsLoading(false);
         }}
@@ -140,16 +140,30 @@ const BasketGestionnary = () => {
         <Modal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
+          contentLabel="Valider le panier"
+          id="validateBasketModal"
         >
+          <h2>Sélectionnez un moyen de paiement</h2>
+
           <form onSubmit={handleValidate}>
-            <h1>Sélectionnez un moyen de paiement</h1>
-            {paymentMethods.map((method, index) => (
-              <div>
-                <input type="radio" name="paymentMethod" value={method} />
-                <label>{method}</label>
-              </div>
-            ))}
-            <button type="submit">Valider</button>
+            <table>
+              <tbody>
+                {paymentMethods.map((method, index) => (
+                  <tr key={index}>
+                    <td>
+                      <label>
+                        {method.charAt(0).toUpperCase() + method.slice(1)}
+                      </label>
+                    </td>
+                    <td>
+                      <input type="radio" name="paymentMethod" value={method}/>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <button type="submit" disabled={validateBasket}>Valider</button>
           </form>
         </Modal>
       )}

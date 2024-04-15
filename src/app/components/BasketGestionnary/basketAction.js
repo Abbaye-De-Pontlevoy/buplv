@@ -35,8 +35,6 @@ export const validateBasket = async (basket, paymentMethod) => {
 				state: 3
 			}
 		});
-
-		console.log("Transaction created and articles updated");
 	}
 	catch(e){
 		console.error(e);
