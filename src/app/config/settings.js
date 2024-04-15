@@ -4,6 +4,7 @@ let settings = {
   publicAccess: true,
   allowArticleRegistration: false,
   endRegisterDate: "2025-01-01",
+  paymentMethods: ["espèces", "carte banquaire", "chèque"],
 };
 
 export const getSettings = async () => {
