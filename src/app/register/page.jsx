@@ -2,14 +2,14 @@
 
 import { useRef, useState } from "react";
 import registerAction from "./registerAction";
-import "../globals.css";
-import "./styles.css";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 import Header from "../components/Header/Header";
+
+import "./styles.css";
 
 export default function Register() {
   const formRef = useRef(null); // Reference for the form element
@@ -30,7 +30,7 @@ export default function Register() {
     city: "",
     iban: "",
     bic: "",
-    return_articles: false,
+    don_apel: true,
   });
 
   // Function to handle changes in form inputs
@@ -145,6 +145,7 @@ export default function Register() {
     // Create processed data object for registration
     const processedData = {
       ...formData,
+      return_articles: !formData.don_apel,
       address,
     };
 
@@ -180,8 +181,8 @@ export default function Register() {
             {step === 1 && (
               <>
                 <span>
-                  <label>
-                    Prénom:
+                  <div style={{ width: "100%" }}>
+                    <label>Prénom :</label>
                     <input
                       type="text"
                       name="firstname"
@@ -189,9 +190,9 @@ export default function Register() {
                       onChange={handleChange}
                       required
                     />
-                  </label>
-                  <label>
-                    Nom:
+                  </div>
+                  <div style={{ width: "100%" }}>
+                    <label>Nom :</label>
                     <input
                       type="text"
                       name="name"
@@ -199,79 +200,67 @@ export default function Register() {
                       onChange={handleChange}
                       required
                     />
-                  </label>
+                  </div>
                 </span>
 
-                <label>
-                  Email:
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  N° de téléphone:
-                  <input
-                    type="text"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
+                <label>Email :</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+                <label>N° de téléphone :</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
 
-                <label>
-                  Mot de passe:
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
+                <label>Mot de passe :</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
                 <PasswordStrengthMeter password={formData.password} />
-                <label>
-                  Vérification du mot de passe:
-                  <input
-                    type="password"
-                    name="password2"
-                    value={formData.password2}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
+                <label>Vérification du mot de passe :</label>
+                <input
+                  type="password"
+                  name="password2"
+                  value={formData.password2}
+                  onChange={handleChange}
+                  required
+                />
 
                 <button onClick={() => handleStepChange(2)}>Suivant</button>
               </>
             )}
             {step === 2 && (
               <>
-                <label>
-                  N° et nom de la rue:
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Complément d'adresse:
-                  <input
-                    type="text"
-                    name="comp_address"
-                    value={formData.comp_address}
-                    onChange={handleChange}
-                  />
-                </label>
+                <label>N° et nom de la rue :</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Complément d'adresse :</label>
+                <input
+                  type="text"
+                  name="comp_address"
+                  value={formData.comp_address}
+                  onChange={handleChange}
+                />
                 <span>
-                  <label>
-                    Code postal:
+                  <div style={{ width: "100%" }}>
+                    <label>Code postal :</label>
                     <input
                       type="text"
                       name="zip"
@@ -279,9 +268,9 @@ export default function Register() {
                       onChange={handleChange}
                       required
                     />
-                  </label>
-                  <label>
-                    Ville:
+                  </div>
+                  <div style={{ width: "100%" }}>
+                    <label>Ville:</label>
                     <input
                       type="text"
                       name="city"
@@ -289,7 +278,7 @@ export default function Register() {
                       onChange={handleChange}
                       required
                     />
-                  </label>
+                  </div>
                 </span>
 
                 <span className="buttonSpan">
@@ -302,54 +291,63 @@ export default function Register() {
             )}
             {step === 3 && (
               <>
-                <label>
-                  IBAN:
-                  <input
-                    type="text"
-                    name="iban"
-                    value={formData.iban}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Bic:
-                  <input
-                    type="text"
-                    name="bic"
-                    value={formData.bic}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
+                <label>IBAN :</label>
+                <input
+                  type="text"
+                  name="iban"
+                  value={formData.iban}
+                  onChange={handleChange}
+                  required
+                />
+                <label>Bic:</label>
+                <input
+                  type="text"
+                  name="bic"
+                  value={formData.bic}
+                  onChange={handleChange}
+                  required
+                />
 
                 <div id="checkboxesDiv">
-                  <label>
-                    <span>
-                      <input
-                        type="checkbox"
-                        name="return_articles"
-                        id="returnCheckBox"
-                        checked={formData.return_articles}
-                        onChange={() =>
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            return_articles: !prevFormData.return_articles,
-                          }))
-                        }
-                      />
-                      Je souhaite que mes articles invendus me soient retournés
-                      par voie postale (frais à ma charge).
-                    </span>
-                  </label>
+                  <span>
+                    <input
+                      type="checkbox"
+                      name="don_apel"
+                      id="donApelCheckBox"
+                      checked={formData.don_apel}
+                      onChange={() =>
+                        setFormData((prevFormData) => ({
+                          ...prevFormData,
+                          don_apel: !prevFormData.don_apel,
+                        }))
+                      }
+                    />
+                    <label>
+                      Je souhaite faire don de mes invendus à l'APEL.
+                    </label>
+                  </span>
 
-                  <label>
+                  {!formData.don_apel && (
                     <span>
-                      <input type="checkbox" required id="cguCheckBox"/>
-                      J'accepte les{" "}
-                      <a href="/cgu" target="_blank">conditions générales d'utilisation.</a>
+                      <input type="checkbox" id="donApelCheckBox" required />
+                      <label style={{color: "red"}}>
+                        J'ai conscience qu'en refusant de faire don de mes
+                        invendus à l'APEL je demande à ce que ceux-ci me soient
+                        renvoyés à mes frais (frais automatiquement déduits de mes
+                        ventes).
+                      </label>
                     </span>
-                  </label>
+                  )}
+
+                  <span>
+                    <input type="checkbox" required id="cguCheckBox" />
+                    <label>
+                      J'accepte les{" "}
+                      <a href="/cgu" target="_blank">
+                        conditions générales d'utilisation.
+                      </a>
+                    </label>
+                  </span>
                 </div>
 
                 <span className="buttonSpan">
