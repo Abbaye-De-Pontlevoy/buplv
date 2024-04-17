@@ -364,7 +364,7 @@ export default function Register() {
               </>
             )}
           </form>
-          <p className="errorMessage">{error}</p>
+          <p className="error">{error}</p>
           <p id="loginLink">
             Déjà inscrit ? <a href="/login">Je me connecte</a>
           </p>

@@ -66,8 +66,24 @@ button.redButton{
   background-color: rgb(189, 51, 51);
 }
 
+button.redButton:hover{
+  background-color: rgb(153, 40, 40);
+}
+
+button.redButton:disabled{
+  background-color: rgb(92, 24, 24);
+}
+
 button.greenButton{
   background-color: rgb(2, 109, 2);
+}
+
+button.greenButton:hover{
+  background-color: rgb(2, 89, 2);
+}
+
+button.greenButton:disabled{
+  background-color: rgb(1, 56, 1);
 }
 
 .button:hover,
@@ -147,12 +163,6 @@ span {
 
 .formContainer form {
   padding: 0px;
-}
-
-.errorMessage {
-  color: red;
-  text-align: center;
-  padding-bottom: 10px;
 }
 
 table {

@@ -81,7 +81,7 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="errorMessage">{error}</p>
+          <p className="error">{error}</p>
           <a href="/register">Pas encore inscrit ?</a>
         </div>
         <ReturnMenuButton />

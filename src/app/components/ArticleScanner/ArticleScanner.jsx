@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import Modal from "react-modal";
-import { getArticleState, updateArticleField } from "./scanActions";
+import {
+  cancelArticleSell,
+  getArticleState,
+  updateArticleField,
+} from "./scanActions";
 import QRCodeReader from "../QRCodeReader/QRCodeReader";
 import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
@@ -13,14 +17,16 @@ Modal.setAppElement("#root");
 const ArticleScanner = () => {
   const [showModal, setShowModal] = useState(false);
   const [qrCodeData, setQRCodeData] = useState({});
+  const [modalError, setModalError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const displayModal = async (qrCode) => {
-    setShowModal(true);
     try {
       qrCode = JSON.parse(qrCode);
       const state = await getArticleState(qrCode.id);
       qrCode.state = parseInt(state);
       setQRCodeData(qrCode);
+      setShowModal(true);
       return true;
     } catch (e) {
       alert("Erreur lors de la lecture du QR Code.");
@@ -39,7 +45,6 @@ const ArticleScanner = () => {
       {!showModal && <QRCodeReader onQRCodeRead={displayModal} />}
 
       <ArticleSearch onArticleSearch={(e) => displayModal(JSON.stringify(e))} />
-
 
       <Modal
         className="scannerModal"
@@ -72,52 +77,85 @@ const ArticleScanner = () => {
         </ul>
 
         <div id="buttonDiv">
-          {qrCodeData.state >= 2 && (
+          {qrCodeData.state === 2 && (
             <button
-              onClick={() => {
-                updateArticleField(
+              onClick={async () => {
+                setIsLoading(true);
+                const result = await updateArticleField(
                   qrCodeData.id,
                   "state",
-                  qrCodeData.state - 1
+                  1
                 );
-                closeModal();
+                if (result.success) closeModal();
+                else setModalError(result.msg);
+                setIsLoading(false);
               }}
               className="redButton"
+              disabled={isLoading}
             >
-              {qrCodeData.state === 2
-                ? "Enlever de l'inventaire"
-                : qrCodeData.state === 3
-                ? "Annuler la vente"
-                : ""}
+              Enlever de l'inventaire
             </button>
           )}
 
+          {qrCodeData.state === 3 && (
+            <button
+              onClick={async () => {
+                setIsLoading(true);
+                const result = await cancelArticleSell(
+                  qrCodeData.id,
+                  qrCodeData.price
+                );
+                if (result.success) closeModal();
+                else setModalError(result.msg);
+                setIsLoading(false);
+              }}
+              className="redButton"
+              disabled={isLoading}
+            >
+              Annuler la vente
+            </button>
+          )}
           {qrCodeData.state <= 1 && (
             <button
-              onClick={() => {
-                updateArticleField(qrCodeData.id, "state", 2);
-                closeModal();
+              onClick={async () => {
+                setIsLoading(true);
+                const result = await updateArticleField(
+                  qrCodeData.id,
+                  "state",
+                  2
+                );
+                if (result.success) closeModal();
+                else setModalError(result.msg);
+                setIsLoading(false);
               }}
               className="greenButton"
+              disabled={isLoading}
             >
               Inventorier
             </button>
           )}
-
           {qrCodeData.state >= 1 && qrCodeData.state <= 2 && (
             <button
-              onClick={() => {
-                updateArticleField(qrCodeData.id, "state", -1);
-                closeModal();
+              onClick={async () => {
+                setIsLoading(true);
+                const result = await updateArticleField(qrCodeData.id, "state", -1);
+                if (result.success) closeModal();
+                else setModalError(result.msg);
+                setIsLoading(false);
               }}
               className="redButton"
+              disabled={isLoading}
             >
               Déclarer invendable
             </button>
           )}
         </div>
 
-        <button onClick={() => setShowModal(false)}>Retour</button>
+        <p className="error">{modalError}</p>
+
+        <button onClick={() => setShowModal(false)} disabled={isLoading}>
+          Retour
+        </button>
       </Modal>
     </div>
   );

@@ -19,15 +19,20 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-scannerModal p {
+.scannerModal p {
 	text-decoration: none;
+}
+
+.scannerModal button{
+  width: 100%;
 }
 
 #buttonDiv{
   display: flex;
   flex-direction: column;
   gap: 5px;
-  justify-content: stretch;
+  
+  width: 100%;
 
   margin-top: 10px;
 }
