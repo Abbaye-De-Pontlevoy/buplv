@@ -20,6 +20,11 @@ export async function getRapportTreso() {
     gains[transaction.payment_method].amount += transaction.payment_amount;
   });
 
+  gains["Total"] = {
+    nbTransaction: transactions.length,
+    amount: transactions.reduce((acc, transaction) => acc + transaction.payment_amount, 0),
+  };
+
   return {
     nbSeller,
     nbArticle,

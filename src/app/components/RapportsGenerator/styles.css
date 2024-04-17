@@ -34,3 +34,7 @@
 	padding: 8px; /* Ajout de l'espacement entre les colonnes */
 	text-align: left;
 }
+
+#total{
+	font-weight: bold;
+}

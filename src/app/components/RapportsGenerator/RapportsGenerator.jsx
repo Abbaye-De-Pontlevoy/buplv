@@ -18,8 +18,8 @@ const RapportsGenerator = () => {
       const data = await getRapportTreso();
       setRapportTreso(
         <div className="overFlowSlider">
-          <p>Nombre de vendeurs: {data.nbSeller}</p>
-          <p>Nombre d'articles: {data.nbArticle}</p>
+          <p>Nombre de vendeurs : {data.nbSeller}</p>
+          <p>Nombre d'articles : {data.nbArticle}</p>
           <table id="rapportTresoTable">
             <thead>
               <tr>
@@ -30,7 +30,7 @@ const RapportsGenerator = () => {
             </thead>
             <tbody>
               {Object.keys(data.gains).map((key) => (
-                <tr key={key}>
+                <tr key={key} id={key==="Total" ? "total": ""}>
                   <td>{key}</td>
                   <td>{data.gains[key].nbTransaction}</td>
                   <td>{data.gains[key].amount} €</td>
@@ -60,7 +60,7 @@ const RapportsGenerator = () => {
           <DownloadCSVButton
             dataGetterFunction={getRapportsIBAN}
             filename="DESTINATAIRES_VIREMENTS"
-            buttonText="Liste des virements"
+            buttonText="Destinataires des virements"
           />
 
           <DownloadCSVButton
