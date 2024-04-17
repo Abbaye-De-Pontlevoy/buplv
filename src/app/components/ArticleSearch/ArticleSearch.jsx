@@ -3,14 +3,16 @@ import { getArticleByID } from "../../helpers/getArticleByID";
 
 import "./styles.css";
 
-const ArticleSearch = ({ onArticleSearch }) => {
-  const [articleID, setArticleID] = useState(0);
+const ArticleSearch = ({ onArticleSearch, placeholder="Rechercher par ID", buttonText="Rechercher"}) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const articleID = e.target.articleId.value;
+
     try {
       const result = await getArticleByID(articleID);
       if (!result) setError("Article non trouvé.");
@@ -19,30 +21,21 @@ const ArticleSearch = ({ onArticleSearch }) => {
       setError(e.message);
     }
 
+    e.target.articleId.value = "";
+
     setIsLoading(false);
   };
 
   return (
-    <>
-      {/* Searc Form */}
-      <form onSubmit={handleSearch} id="articleSearchForm">
-        <span>
-          <label>ID :</label>
-          <input
-            type="number"
-            value={articleID}
-            onChange={(e) => {
-              setError("");
-              setArticleID(e.target.value);
-            }}
-          ></input>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Chargement..." : "Rechercher"}
-          </button>
-        </span>
-        <p className="error">{error}</p>
-      </form>
-    </>
+    <form onSubmit={handleSearch} id="articleSearchForm">
+      <span>
+        <input type="number" name="articleId" placeholder={placeholder}></input>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Chargement..." : buttonText}
+        </button>
+      </span>
+      <p className="error">{error}</p>
+    </form>
   );
 };
 

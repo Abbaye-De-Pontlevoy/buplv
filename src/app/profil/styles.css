@@ -31,7 +31,7 @@ span button{
   width: 100%;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .bandeau-rangement {
     padding: 0;
     padding-top: 20px;

@@ -8,6 +8,7 @@ import { getArticleData, validateBasket } from "./basketAction";
 import { getSettings } from "@/app/config/settings";
 
 import "./styles.css";
+import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 const BasketGestionnary = () => {
   const [basket, setBasket] = useState([]);
@@ -95,35 +96,21 @@ const BasketGestionnary = () => {
   };
 
   return (
-    <div className="overFlowSlider">
-      <ArticleList
-        articleList={basket}
-        callAfterDelete={removeArticle}
-        displayTotal={true}
-        enabledRemoveButton={true}
+    <>
+      <div className="overFlowSlider">
+        <ArticleList
+          articleList={basket}
+          callAfterDelete={removeArticle}
+          displayTotal={true}
+          enabledRemoveButton={true}
+        />
+      </div>
+
+      <ArticleSearch
+        placeholder="Ajouter par ID"
+        buttonText="Ajouter"
+        onArticleSearch={(e) => checkArticle(JSON.stringify(e))}
       />
-
-      <form
-        id="addArticleManuallyForm"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          setIsLoading(true);
-
-          const result = await checkArticle(
-            `{ "id": ${e.target.articleId.value} }`
-          );
-
-          e.target.articleId.value = "";
-          setIsLoading(false);
-        }}
-      >
-        <span>
-          <input type="number" name="articleId" placeholder="Ajouter par ID" />
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Chargement..." : "Ajouter"}
-          </button>
-        </span>
-      </form>
 
       <span id="validateAndScanSpan">
         <AQRModal onQRCodeRead={checkArticle} />
@@ -131,6 +118,7 @@ const BasketGestionnary = () => {
         <button
           onClick={() => setIsModalOpen(true)}
           disabled={basket.length === 0 || validatingBasket}
+          id="validate"
         >
           Valider le panier
         </button>
@@ -156,18 +144,20 @@ const BasketGestionnary = () => {
                       </label>
                     </td>
                     <td>
-                      <input type="radio" name="paymentMethod" value={method}/>
+                      <input type="radio" name="paymentMethod" value={method} />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <button type="submit" disabled={validateBasket}>Valider</button>
+            <button type="submit" disabled={validateBasket}>
+              Valider
+            </button>
           </form>
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 

@@ -35,7 +35,7 @@
 	padding: 20px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
 	#corpus-div{
 		width: 90%;
 	}

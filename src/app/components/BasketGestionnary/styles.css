@@ -1,25 +1,34 @@
-#addArticleManuallyForm{
-	margin-top: 20px;
+#addArticleManuallyForm {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-#validateAndScanSpan{
-	justify-content: center;
-	margin-top: 5px;
+#validateAndScanSpan {
+  justify-content: center;
 }
 
-#validateBasketModal{
-	height: fit-content;
-	width: fit-content;
-	padding: 10px;
-	border-radius: 8px;
-	margin: auto;
+
+#validateAndScanSpan #validate{
+	background-color: rgb(2, 109, 2);
 }
 
-#validateBasketModal table{
-	margin-top: 10px;
-	margin-bottom: 10px;
+#validateAndScanSpan #validate:disabled{
+	background-color: var(--main-blue);
 }
 
-#validateBasketModal button{
-	width: 100%;
+#validateBasketModal {
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 8px;
+  margin: auto;
+}
+
+#validateBasketModal table {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#validateBasketModal button {
+  width: 100%;
 }

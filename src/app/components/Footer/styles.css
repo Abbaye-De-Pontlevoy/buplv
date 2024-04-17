@@ -55,7 +55,7 @@ footer {
   align-items: flex-end;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .footer {
     flex-direction: column;
     gap: 20px;

@@ -40,6 +40,7 @@ const ArticleScanner = () => {
 
       <ArticleSearch onArticleSearch={(e) => displayModal(JSON.stringify(e))} />
 
+
       <Modal
         className="scannerModal"
         isOpen={showModal}
