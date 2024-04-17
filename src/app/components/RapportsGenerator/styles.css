@@ -1,0 +1,23 @@
+#rapportsContainer{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	text-align: left;
+	padding: 10px;
+}
+
+#rapportsContainer h2{
+	margin-bottom: 10px;
+}
+
+#rapportsContainer li{
+	list-style-type: none;
+	margin-bottom: 10px;
+}
+
+#rapportTreso{
+	border: 1px solid var(--main-blue);
+	border-radius: 8px;
+	padding: 10px;
+}

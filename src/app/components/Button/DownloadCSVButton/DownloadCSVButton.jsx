@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { downloadCSV } from "./downloadcsv";
 
-const DownloadCSVButton = ({ dataGetterFunction, filename }) => {
+const DownloadCSVButton = ({ dataGetterFunction, filename, buttonText }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,7 +23,7 @@ const DownloadCSVButton = ({ dataGetterFunction, filename }) => {
     <div>
       <form onSubmit={download}>
         <button type="submit" disabled={loading}>
-          {loading ? "Téléchargement..." : "Télécharger CSV"}
+          {loading ? "Téléchargement..." : buttonText}
         </button>
         <p className="error">{error}</p>
       </form>
