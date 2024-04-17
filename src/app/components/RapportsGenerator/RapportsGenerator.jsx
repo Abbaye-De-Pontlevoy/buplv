@@ -9,17 +9,39 @@ import {
 import "./styles.css";
 
 const RapportsGenerator = () => {
-  const [rapportTreso, setRapportTreso] = useState({});
+  const [rapportTreso, setRapportTreso] = useState(<></>);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const data = await getRapportTreso();
-      setRapportTreso(data);
-      setIsLoading(false);
+      setRapportTreso(
+        <div className="overFlowSlider">
+          <p>Nombre de vendeurs: {data.nbSeller}</p>
+          <p>Nombre d'articles: {data.nbArticle}</p>
+          <table id="rapportTresoTable">
+            <thead>
+              <tr>
+                <th>Moyen de paiement</th>
+                <th>Nombre de transactions</th>
+                <th>Montant total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(data.gains).map((key) => (
+                <tr key={key}>
+                  <td>{key}</td>
+                  <td>{data.gains[key].nbTransaction}</td>
+                  <td>{data.gains[key].amount} €</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
 
-      getUnsoldArticles();
+      setIsLoading(false);
     };
     fetchData();
   }, []);
@@ -32,23 +54,19 @@ const RapportsGenerator = () => {
         <div id="rapportsContainer">
           <div id="rapportTreso">
             <h2>Rapport de trésorerie</h2>
-            <ul>
-              <li>Nombre de vendeurs : {rapportTreso?.nbSeller}</li>
-              <li>Nombre d'articles : {rapportTreso?.nbArticle}</li>
-              <li>Gains totaux : {rapportTreso?.totalGains} €</li>
-            </ul>
+            {rapportTreso}
           </div>
 
           <DownloadCSVButton
             dataGetterFunction={getRapportsIBAN}
-            filename="RAPPORT_IBAN"
-            buttonText="Rapport IBAN"
+            filename="DESTINATAIRES_VIREMENTS"
+            buttonText="Liste des virements"
           />
 
           <DownloadCSVButton
             dataGetterFunction={getUnsoldArticlesToReturn}
-            filename="UNSOLD_ARTICLES"
-            buttonText="Rapport des invendus"
+            filename="LISTE_INVENDUS_A_RETOURNER"
+            buttonText="Liste des invendus à renvoyer"
           />
         </div>
       )}
