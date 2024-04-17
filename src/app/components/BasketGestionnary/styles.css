@@ -7,11 +7,6 @@
   justify-content: center;
 }
 
-
-#validateAndScanSpan #validate{
-	background-color: rgb(2, 109, 2);
-}
-
 #validateAndScanSpan #validate:disabled{
 	background-color: var(--main-blue);
 }

@@ -118,7 +118,7 @@ const BasketGestionnary = () => {
         <button
           onClick={() => setIsModalOpen(true)}
           disabled={basket.length === 0 || validatingBasket}
-          id="validate"
+          className="greenButton"
         >
           Valider le panier
         </button>

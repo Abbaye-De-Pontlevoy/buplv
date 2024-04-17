@@ -82,6 +82,7 @@ const ArticleScanner = () => {
                 );
                 closeModal();
               }}
+              className="redButton"
             >
               {qrCodeData.state === 2
                 ? "Enlever de l'inventaire"
@@ -97,6 +98,7 @@ const ArticleScanner = () => {
                 updateArticleField(qrCodeData.id, "state", 2);
                 closeModal();
               }}
+              className="greenButton"
             >
               Inventorier
             </button>
@@ -108,6 +110,7 @@ const ArticleScanner = () => {
                 updateArticleField(qrCodeData.id, "state", -1);
                 closeModal();
               }}
+              className="redButton"
             >
               Déclarer invendable
             </button>
