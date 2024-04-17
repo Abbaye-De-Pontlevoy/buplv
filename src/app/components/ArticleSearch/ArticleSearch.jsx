@@ -28,7 +28,7 @@ const ArticleSearch = ({ onArticleSearch, placeholder="Rechercher par ID", butto
 
   return (
     <form onSubmit={handleSearch} id="articleSearchForm">
-      <span>
+      <span id="articleSearchSpan">
         <input type="number" name="articleId" placeholder={placeholder}></input>
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Chargement..." : buttonText}

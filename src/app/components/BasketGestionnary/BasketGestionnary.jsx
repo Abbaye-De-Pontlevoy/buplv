@@ -106,11 +106,13 @@ const BasketGestionnary = () => {
         />
       </div>
 
-      <ArticleSearch
-        placeholder="Ajouter par ID"
-        buttonText="Ajouter"
-        onArticleSearch={(e) => checkArticle(JSON.stringify(e))}
-      />
+      <div style={{width:"100%"}}>
+        <ArticleSearch
+          placeholder="Ajouter par ID"
+          buttonText="Ajouter"
+          onArticleSearch={(e) => checkArticle(JSON.stringify(e))}
+        />
+      </div>
 
       <span id="validateAndScanSpan">
         <AQRModal onQRCodeRead={checkArticle} />

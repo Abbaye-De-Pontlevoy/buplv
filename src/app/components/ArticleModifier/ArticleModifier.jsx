@@ -36,6 +36,22 @@ const ArticleModifier = () => {
         <form id="modificationForm" onSubmit={handleSubmit}>
           <table id="modificationTable">
             <tbody>
+            <tr>
+                <td>
+                  <label htmlFor="id">ID : </label>
+                </td>
+                <td>
+                  <input
+                    name="id"
+                    id="id"
+                    className="modificationSelect"
+                    value={articleData.id}
+                    disabled={true}
+                  >
+                  </input>
+                </td>
+              </tr>
+
               <tr>
                 <td>
                   <label htmlFor="brand">Marque : </label>
