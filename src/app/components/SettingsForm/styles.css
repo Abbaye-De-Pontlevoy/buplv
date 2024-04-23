@@ -17,8 +17,13 @@ form span input {
   margin-top: 20px;
 }
 
+#paramForm{
+  width: 100%;
+}
+
 #paramDiv{
   display: flex;
   flex-direction: column;
-  gap: 30px
+  gap: 30px;
+  width: 100%;
 }

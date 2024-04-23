@@ -27,12 +27,23 @@ const SettingsForm = () => {
       setFormState((prevState) => ({
         ...prevState,
         allowArticleRegistration: false,
+        endRegisterDate: null,
         publicAccess: newValue,
       }));
-    } else {
+    } else if (name === "allowArticleRegistration" && !newValue) {
       setFormState((prevState) => ({
         ...prevState,
-        [name]: newValue,
+        endRegisterDate: null,
+        allowArticleRegistration: newValue,
+      }));
+    } else {
+      let updatedValue = newValue;
+      if (name === "endRegisterDate" && new Date(newValue) < new Date()) {
+        updatedValue = new Date().toISOString().split("T")[0]; // Date du jour au format YYYY-MM-DD
+      }
+      setFormState((prevState) => ({
+        ...prevState,
+        [name]: updatedValue,
       }));
     }
   };
@@ -40,13 +51,14 @@ const SettingsForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     formState.APELPart = formState.APELPart / 100;
+    console.log(formState);
     await updateSettings(formState);
     formState.APELPart *= 100;
     alert("Paramètres enregistrés avec succès!");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} id="paramForm">
       {isLoading ? (
         <p>Chargement...</p>
       ) : (
@@ -79,9 +91,9 @@ const SettingsForm = () => {
                 <label>Fin des enregistrements</label>
                 <input
                   type="date"
-                  name="closureDate"
+                  name="endRegisterDate"
                   value={
-                    formState.closureDate ||
+                    formState.endRegisterDate ||
                     new Date().toISOString().split("T")[0]
                   }
                   onChange={handleChange}
@@ -94,7 +106,7 @@ const SettingsForm = () => {
             <h3>Comptabilité</h3>
             <span>
               <label>Part de l'APEL</label>
-              <span style={{ width: "min-content"}}>
+              <span style={{ width: "min-content" }}>
                 <input
                   type="number"
                   name="APELPart"
