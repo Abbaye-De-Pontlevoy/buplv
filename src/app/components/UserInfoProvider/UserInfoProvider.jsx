@@ -10,6 +10,7 @@ export const UserInfoProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState({
     isConnected: false,
     isAdmin: false,
+    isBenevole: false,
     userID: null,
   })
 
@@ -19,6 +20,7 @@ export const UserInfoProvider = ({ children }) => {
     setUserInfo({
       isConnected: false,
       isAdmin: false,
+      isBenevole: false,
       userID: null
     });
   }
@@ -27,6 +29,7 @@ export const UserInfoProvider = ({ children }) => {
     setUserInfo({
       isConnected: true,
       isAdmin: data?.admin,
+      isBenevole: data?.benevole,
       userID: data?.id
     });
   }
@@ -37,6 +40,7 @@ export const UserInfoProvider = ({ children }) => {
       setUserInfo({
         isConnected: data?.connected,
         isAdmin: data?.admin,
+        isBenevole: data?.benevole,
         userID: data?.id
       });
       setIsLoaded(true);

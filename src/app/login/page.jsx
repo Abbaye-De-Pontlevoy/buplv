@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import loginAction from "./loginAction";
+import { useContext, useEffect, useRef, useState } from "react";
+import loginAction, { removeCookie } from "./loginAction";
 import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
 import Header from "../components/Header/Header";
 import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
@@ -24,6 +24,10 @@ export default function Login() {
 
   const { login } = useContext(UserInfoContext);
 
+  useEffect(() => {
+    removeCookie();
+  }, []);
+
   // Function to handle form submission
   const handleValidate = async (e) => {
     e.preventDefault();
@@ -33,6 +37,7 @@ export default function Login() {
     // Call loginAction function to validate user login
     const result = await loginAction(formData);
     if (result.access) {
+      console.log("Login successful");
       router.push("/dashboard");
       login(result);
     }

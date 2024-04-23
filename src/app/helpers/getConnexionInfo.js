@@ -16,11 +16,12 @@ export async function getConnexionInfo(request) {
 
   try {
     const { payload } = await jose.jwtVerify(jwt, secret, {});
-    const { id, admin } = payload.sub;
+    const { id, admin, benevole } = payload.sub;
 
     const result = {
       connected: true,
       admin: admin,
+      benevole: benevole,
       id: id,
     };
 
@@ -29,6 +30,7 @@ export async function getConnexionInfo(request) {
     return {
       connected: false,
       admin: false,
+      benevole: false,
       id: null,
     };
   }

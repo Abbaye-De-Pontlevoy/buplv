@@ -1,24 +1,46 @@
-"use client"
+"use client";
 
 import { useContext, useEffect, useState } from "react";
 import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
-const Menu = ({ current, hasAdminCookie }) => {
-	const { userInfo } = useContext(UserInfoContext);
+const Menu = ({ current }) => {
+  const { userInfo } = useContext(UserInfoContext);
 
   const menuContent = [
-    { name: "Comment faire ?", path: "/details", accessibility: "all" },
-    { name: "Mes articles", path: "/dashboard", accessibility: "all" },
-    { name: "Ventes", path: "/sales-panel", accessibility: "admin" },
-    { name: "Administration", path: "/admin-panel", accessibility: "admin"}
+    {
+      name: "Comment faire ?",
+      path: "/details",
+      accessibility: { public: true, benevole: true },
+    },
+    {
+      name: "Mes articles",
+      path: "/dashboard",
+      accessibility: { public: true, benevole: false },
+    },
+    {
+      name: "Ventes",
+      path: "/sales-panel",
+      accessibility: { public: false, benevole: true },
+    },
+    {
+      name: "Administration",
+      path: "/admin-panel",
+      accessibility: { public: false, benevole: false },
+    },
   ];
 
   return (
     <span className="menuSpan">
       {menuContent.map((item, index) => {
-        if (item.accessibility === "admin" && !(userInfo.isAdmin || hasAdminCookie)) return null;
+        if (!userInfo.isAdmin) {
+          if (userInfo.isBenevole) {
+            if (!item.accessibility.benevole) return null;
+          } else {
+            if (!item.accessibility.public) return null;
+          }
+        }
         return (
           <a
             key={index}

@@ -1,12 +1,15 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import validateEmail from "@/app/helpers/validateEmail";
 import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
 import { getSettings } from "../config/settings";
+
+export const removeCookie = () => {
+  cookies().delete("buConnectedToken");
+}
 
 export default async function loginAction(formData) {
   cookies().delete("buConnectedToken");
@@ -47,6 +50,7 @@ export default async function loginAction(formData) {
     const jwtData = {
       id: seller.id,
       admin: seller.admin,
+      benevole: seller.benevole,
     };
 
     const jwt = await new jose.SignJWT({})
@@ -81,6 +85,7 @@ export default async function loginAction(formData) {
     access: true,
     id: seller.id,
     admin: seller.admin,
+    benevole: seller.benevole,
     msg: "Authentification réussie. Redirection en cours...",
   };
 }

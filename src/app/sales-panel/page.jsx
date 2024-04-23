@@ -28,7 +28,7 @@ const SalesPanel = () => {
   return (
     <>
       <Header hasConnectedToken={true} displayAccountButton={true} />
-      <Menu current="/sales-panel" hasAdminCookie={true} />
+      <Menu current="/sales-panel" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">
           <TabsMenu

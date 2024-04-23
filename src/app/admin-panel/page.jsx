@@ -32,7 +32,7 @@ const SiteSettings = () => {
   return (
     <>
       <Header hasConnectedToken={true} displayAccountButton={true} />
-      <Menu current="/admin-panel" hasAdminCookie={true} />
+      <Menu current="/admin-panel"/>
       <div className="bandeau-rangement">
         <div className="mainContainer" id="settingsContainer">
           <TabsMenu
