@@ -14,7 +14,7 @@ export async function middleware(request) {
     if (restrictedPaths.includes(request.nextUrl.pathname)) {
       return NextResponse.redirect(URL + "/dashboard");
     }
-    if (request.nextUrl.pathname === "/dashboard" && benevole)
+    if (request.nextUrl.pathname === "/dashboard" && !admin && benevole)
       return NextResponse.redirect(URL + "/sales-panel");
   } else {
     const restrictedPaths = ["/dashboard", "/profil", "/sales-panel"];
