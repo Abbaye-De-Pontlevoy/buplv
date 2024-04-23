@@ -82,7 +82,7 @@ const SettingsForm = () => {
                 <input
                   type="date"
                   name="closureDate"
-                  value={formState.closureDate || ""}
+                  value={formState.closureDate || new Date().toISOString().split("T")[0]}
                   onChange={handleChange}
                 />
               </span>

@@ -3,7 +3,7 @@
 let settings = {
   publicAccess: true,
   allowArticleRegistration: false,
-  endRegisterDate: "2025-01-01",
+  endRegisterDate: null,
   paymentMethods: ["espèces", "carte banquaire", "chèque"],
 };
 
@@ -24,7 +24,6 @@ export const verifySettings = async () => {
   // Verify if the register is closed
   const endRegisterDate = new Date(settings.endRegisterDate);
   if (Date.now() >= endRegisterDate) {
-    settings.publicAccess = false;
     settings.allowArticleRegistration = false;
   }
 };
