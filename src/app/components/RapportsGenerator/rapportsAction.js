@@ -37,9 +37,10 @@ export async function getRapportsIBAN() {
   const rapportData = data.map((seller) => {
     return {
       Nom: seller.name,
-      Prénom: seller.firstname,
+      "Code Pays": seller.iban.substring(0, 2),
       IBAN: seller.iban,
       BIC: seller.bic,
+      "Nom Liste": seller.name + " " + seller.firstname,
     };
   });
 
