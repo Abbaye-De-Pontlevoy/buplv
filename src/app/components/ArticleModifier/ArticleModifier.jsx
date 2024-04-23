@@ -64,6 +64,7 @@ const ArticleModifier = () => {
                     onChange={(e) =>
                       setArticleData({ ...articleData, brand: e.target.value })
                     }
+                    disabled={articleData.state === 3}
                   >
                     {articleJSONData.brand.map((brand) => (
                       <option key={brand} value={brand}>
@@ -87,6 +88,7 @@ const ArticleModifier = () => {
                     onChange={(e) =>
                       setArticleData({ ...articleData, name: e.target.value })
                     }
+                    disabled={articleData.state === 3}
                   >
                     {articleJSONData.name.map((name) => (
                       <option key={name} value={name}>
