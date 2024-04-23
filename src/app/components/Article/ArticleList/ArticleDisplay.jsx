@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
@@ -6,8 +7,10 @@ export const ArticleDisplay = ({
   article,
   enabledRemoveButton,
   callAfterDelete,
+  priceFactor = 1,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
+	const { userInfo } = useContext(UserInfoContext);
 
   const deleteHandler = async (e) => {
     e.preventDefault();
@@ -30,7 +33,7 @@ export const ArticleDisplay = ({
           ? "Vendu"
           : "Enregistré"}
       </td>
-      <td>{article.price} €</td>
+      <td>{article.price * priceFactor} €</td>
       <td className="tdDeleteButton">
         {article.state === 1 || enabledRemoveButton? (
           <form className="deleteButtonForm" onSubmit={deleteHandler}>

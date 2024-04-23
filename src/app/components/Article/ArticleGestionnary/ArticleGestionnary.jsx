@@ -43,6 +43,7 @@ const ArticleGestionnary = ({
               await removeArticleAction({ id: articleId });
               updateArticleList();
             }}
+            priceFactor={userInfo.isBenevole ? 1 : 1 - settings.APELPart}
           />
 
           {(settings.allowArticleRegistration || userInfo.isAdmin) ? (

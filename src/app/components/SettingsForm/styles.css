@@ -16,3 +16,9 @@ form span input {
 #SubmitSettingsChanges{
   margin-top: 20px;
 }
+
+#paramDiv{
+  display: flex;
+  flex-direction: column;
+  gap: 30px
+}

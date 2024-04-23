@@ -5,6 +5,7 @@ let settings = {
   allowArticleRegistration: false,
   endRegisterDate: null,
   paymentMethods: ["espèces", "carte banquaire", "chèque"],
+  APELPart: 0.1,
 };
 
 export const getSettings = async () => {

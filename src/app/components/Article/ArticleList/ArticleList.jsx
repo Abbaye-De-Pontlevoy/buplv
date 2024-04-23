@@ -5,6 +5,7 @@ const ArticleList = ({
   enabledRemoveButton,
   callAfterDelete,
   displayTotal = false,
+  priceFactor = 1,
 }) => {
   return (
     <div className="overFlowSlider">
@@ -26,6 +27,7 @@ const ArticleList = ({
               article={article}
               enabledRemoveButton={enabledRemoveButton}
               callAfterDelete={callAfterDelete}
+              priceFactor={priceFactor}
             />
           ))}
           {displayTotal && (
