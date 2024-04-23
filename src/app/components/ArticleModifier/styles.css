@@ -1,5 +1,6 @@
 #modificationForm {
 	width: 100%;
+	max-width: 400px;
 	gap: 20px;
 }
 
@@ -9,4 +10,16 @@
 
 .modificationSelect {
 	width: 100%;
+}
+
+#articleSearchForm{
+	width: 100%;
+}
+
+#articleSearchSpan input{
+	width: 100%;
+}
+
+p.error {
+	text-align: center;
 }

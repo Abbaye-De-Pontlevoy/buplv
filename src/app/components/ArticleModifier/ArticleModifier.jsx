@@ -36,7 +36,7 @@ const ArticleModifier = () => {
         <form id="modificationForm" onSubmit={handleSubmit}>
           <table id="modificationTable">
             <tbody>
-            <tr>
+              <tr>
                 <td>
                   <label htmlFor="id">ID : </label>
                 </td>
@@ -47,8 +47,7 @@ const ArticleModifier = () => {
                     className="modificationSelect"
                     value={articleData.id}
                     disabled={true}
-                  >
-                  </input>
+                  ></input>
                 </td>
               </tr>
 
@@ -134,15 +133,18 @@ const ArticleModifier = () => {
                     onChange={(e) =>
                       setArticleData({ ...articleData, state: e.target.value })
                     }
+                    disabled={articleData.state === 3}
                   >
+                    {articleData.state === 3 && (
+                      <option key="3" value="3">
+                        Vendu
+                      </option>
+                    )}
                     <option key="1" value="1">
                       Enregistré
                     </option>
                     <option key="2" value="2">
                       Inventorié
-                    </option>
-                    <option key="3" value="3">
-                      Vendu
                     </option>
                     <option key="0" value="0">
                       Supprimé
@@ -155,6 +157,13 @@ const ArticleModifier = () => {
               </tr>
             </tbody>
           </table>
+
+          {articleData.state === 3 && (
+            <p className="error">
+              Article déjà vendu, veuillez passer par la section
+              'Vente/Inventaire' pour modifier son état.
+            </p>
+          )}
 
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Chargement..." : "Modifier"}
