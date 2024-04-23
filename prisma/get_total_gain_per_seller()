@@ -1,0 +1,34 @@
+CREATE OR REPLACE FUNCTION public.get_total_gain_per_seller(apelpart numeric)
+ RETURNS json
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    results_json json;
+BEGIN
+    SELECT json_agg(json_build_object(
+        'ID Vendeur', s.id,
+        'Nom', CONCAT(s.firstname, ' ', s.name),
+        'Gains Totaux', COALESCE(total.total_price, 0),
+        'Part Vendeur', ROUND((COALESCE(total.total_price, 0) - ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2))::numeric, 2),
+        'Part APEL', ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) -- Convertit le résultat en double précision avant d'appeler ROUND()
+    ))
+    INTO results_json
+    FROM
+        "Seller" s
+    LEFT JOIN
+        (
+            SELECT 
+                a.seller_id,
+                SUM(a.price) AS total_price
+            FROM
+                "Article" a
+            WHERE
+                a.state = 3
+            GROUP BY
+                a.seller_id
+        ) AS total ON s.id = total.seller_id;
+
+    RETURN results_json;
+END;
+$function$
+;

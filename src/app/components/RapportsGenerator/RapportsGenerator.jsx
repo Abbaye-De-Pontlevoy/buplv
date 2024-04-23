@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DownloadCSVButton from "../Button/DownloadCSVButton/DownloadCSVButton";
 import {
+  getRapportSeller,
   getRapportsIBAN,
   getRapportTreso,
   getUnsoldArticlesToReturn,
@@ -67,6 +68,12 @@ const RapportsGenerator = () => {
             dataGetterFunction={getUnsoldArticlesToReturn}
             filename="LISTE_INVENDUS_A_RETOURNER"
             buttonText="Liste des invendus à renvoyer"
+          />
+
+          <DownloadCSVButton
+            dataGetterFunction={getRapportSeller}
+            filename="LISTE_GAIN_PAR_VENDEUR"
+            buttonText="Liste des gains par vendeur"
           />
         </div>
       )}
