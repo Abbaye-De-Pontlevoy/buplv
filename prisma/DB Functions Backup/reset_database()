@@ -1,0 +1,26 @@
+-- DROP FUNCTION public.reset_database();
+
+CREATE OR REPLACE FUNCTION public.reset_database()
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    admin_id TEXT;
+BEGIN
+    -- Récupérer l'ID de l'utilisateur ayant admin=true
+    SELECT id INTO admin_id FROM "Seller" WHERE admin = TRUE LIMIT 1;
+
+    -- Supprimer tous les articles ayant un statut différent de 2
+    DELETE FROM "Article" WHERE state <> 2;
+
+    -- Mettre à jour les articles restants pour les attribuer à l'administrateur
+    UPDATE "Article" SET seller_id = admin_id;
+
+    -- Supprimer tous les utilisateurs sauf ceux étant admin ou bénévole
+    DELETE FROM "Seller" WHERE NOT (admin OR benevole);
+
+    -- Effacer toute la table "Transaction"
+    DELETE FROM "Transaction";
+END;
+$function$
+;
