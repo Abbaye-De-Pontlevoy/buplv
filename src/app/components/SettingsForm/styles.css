@@ -1,13 +1,18 @@
-form{
+
+#paramForm{
   display: flex;
   flex-direction: column;
   justify-content: left;
+  width: 100%;
 }
 
-form span {
+#paramForm span {
   justify-content: space-between;
 }
 
+#paramForm p{
+  align-self: center;
+}
 
 form span input {
   width: min-content;
@@ -15,10 +20,6 @@ form span input {
 
 #SubmitSettingsChanges{
   margin-top: 20px;
-}
-
-#paramForm{
-  width: 100%;
 }
 
 #paramDiv{
