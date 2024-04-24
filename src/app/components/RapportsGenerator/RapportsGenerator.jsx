@@ -14,7 +14,6 @@ import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 const RapportsGenerator = () => {
   const [rapportTreso, setRapportTreso] = useState(<></>);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State pour gérer l'ouverture/fermeture de la modale
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,14 +48,6 @@ const RapportsGenerator = () => {
     };
     fetchData();
   }, []);
-
-  const handleResetButtonClick = () => {
-    setIsModalOpen(true); // Ouvrir la modale lorsque le bouton est cliqué
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false); // Fermer la modale lorsque le bouton "Valider" est cliqué
-  };
 
   return (
     <>
