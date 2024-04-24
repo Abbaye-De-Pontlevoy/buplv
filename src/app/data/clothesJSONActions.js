@@ -1,5 +1,6 @@
 "use server";
 
+import { promises as fs } from 'fs';
 import { clothesJSON } from "./clothesJSON";
 
 export async function getAllClothesInfo() {
@@ -31,4 +32,23 @@ export async function getAllClothesInfo() {
     name: nameArray,
     size: sizeArray,
   };
+}
+
+export async function updateClothesJSON(newClothesJSONString) {
+  const data = "export let clothesJSON = " + newClothesJSONString + ";";
+
+  try {
+    await fs.writeFile(process.cwd() + '/src/app/data/clothesJSON.js', data, 'utf8');
+
+    return {
+      success: true,
+      msg: "Les données ont été mises à jour.",
+    };
+  } catch (e) {
+    console.log(e.message);
+    return {
+      success: false,
+      msg: e.message,
+    };
+  }
 }
