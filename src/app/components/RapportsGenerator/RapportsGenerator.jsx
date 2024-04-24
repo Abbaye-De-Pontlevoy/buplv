@@ -8,10 +8,13 @@ import {
 } from "./rapportsAction";
 
 import "./styles.css";
+import { exportArticles, exportSellers } from "./bddActions";
+import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 
 const RapportsGenerator = () => {
   const [rapportTreso, setRapportTreso] = useState(<></>);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State pour gérer l'ouverture/fermeture de la modale
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +34,7 @@ const RapportsGenerator = () => {
             </thead>
             <tbody>
               {Object.keys(data.gains).map((key) => (
-                <tr key={key} id={key==="Total" ? "total": ""}>
+                <tr key={key} id={key === "Total" ? "total" : ""}>
                   <td>{key}</td>
                   <td>{data.gains[key].nbTransaction}</td>
                   <td>{data.gains[key].amount} €</td>
@@ -46,6 +49,14 @@ const RapportsGenerator = () => {
     };
     fetchData();
   }, []);
+
+  const handleResetButtonClick = () => {
+    setIsModalOpen(true); // Ouvrir la modale lorsque le bouton est cliqué
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false); // Fermer la modale lorsque le bouton "Valider" est cliqué
+  };
 
   return (
     <>
@@ -75,6 +86,25 @@ const RapportsGenerator = () => {
             filename="LISTE_GAIN_PAR_VENDEUR"
             buttonText="Liste des gains par vendeur"
           />
+
+          <div className="separator"></div>
+
+          <div id="BDDDiv">
+            <h2>Base de données</h2>
+
+            <DownloadCSVButton
+              dataGetterFunction={exportSellers}
+              filename="BDD_LISTE_VENDEURS"
+              buttonText="Exporter la liste des vendeurs"
+            />
+
+            <DownloadCSVButton
+              dataGetterFunction={exportArticles}
+              filename="BDD_LISTE_ARTICLES"
+              buttonText="Exporter la liste des articles"
+            />
+            <ResetBDDButton />
+          </div>
         </div>
       )}
     </>

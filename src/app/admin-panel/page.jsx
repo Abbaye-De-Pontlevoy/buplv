@@ -25,7 +25,7 @@ const SiteSettings = () => {
     <>
       <h1>Rechercher un article</h1>
       <ArticleModifier/>
-    </>
+    </>,
   ];
 
   const [activeTab, setActiveTab] = useState(tabList[0]);
