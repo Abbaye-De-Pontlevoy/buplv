@@ -59,7 +59,6 @@ export async function getRapportSeller() {
   const queryResult =
     await prisma.$queryRaw`SELECT public.get_total_gain_per_seller(${settings.APELPart}) as total_gain_per_seller`;
 
-  console.log(queryResult[0].total_gain_per_seller);
   return queryResult[0].total_gain_per_seller;
 
 }

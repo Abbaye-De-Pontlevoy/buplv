@@ -4,7 +4,6 @@ import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export default async function updateAction({ password, data }) {
-  console.log("update", data);
   // Get the data off the form
   const { firstname, name, email, phone, address, iban, bic } = data;
 

@@ -37,7 +37,6 @@ export default function Login() {
     // Call loginAction function to validate user login
     const result = await loginAction(formData);
     if (result.access) {
-      console.log("Login successful");
       router.push("/dashboard");
       login(result);
     }

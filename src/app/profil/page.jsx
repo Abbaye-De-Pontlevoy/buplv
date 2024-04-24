@@ -114,7 +114,6 @@ const ProfilePage = () => {
 
   // Clear input validation messages
   const clearInputValidation = (name) => {
-    console.log("clearing validation message for", name);
     formRef.current
       .querySelector(`input[name="${name}"]`)
       .setCustomValidity("");
