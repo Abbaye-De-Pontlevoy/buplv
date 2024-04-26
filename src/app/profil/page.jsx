@@ -153,7 +153,7 @@ const ProfilePage = () => {
   // JSX for the component
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={true} />
+      <Header  />
       <Menu current="/profil" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="mainContainerProfile">

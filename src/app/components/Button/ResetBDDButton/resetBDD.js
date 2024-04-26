@@ -4,6 +4,7 @@ import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export async function resetBDD(id, password) {
+  // Verify user id and password
   try {
     const seller = await prisma.seller.findFirst({
       where: {
@@ -20,8 +21,9 @@ export async function resetBDD(id, password) {
     // If password is incorrect, return error message
     if (!isCorrectPassword) throw new Error("Mot de passe incorrect.");
 
+    // Reset the database
     await prisma.$executeRaw`SELECT public.reset_database()`;
-
+    
     console.log("La base de données a été réinitialisée");
 
     return {

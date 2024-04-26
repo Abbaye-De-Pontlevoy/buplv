@@ -4,8 +4,10 @@ import { generatePDF } from "./generatePDF";
 import { getUserInfos } from "@/app/helpers/getUserInfos";
 
 const QRCodePDFGenerator = ({ data }) => {
+  // Initialize state variables
   const [isDisabled, setIsDisabled] = useState(false);
 
+  // Handle button click
   const handleClick = async () => {
     setIsDisabled(true);
     const sellerInfos = await getUserInfos();

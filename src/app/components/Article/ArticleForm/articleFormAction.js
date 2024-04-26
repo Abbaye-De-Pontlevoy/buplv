@@ -4,20 +4,23 @@ import { getConnexionInfo } from "@/app/helpers/getConnexionInfo";
 import prisma from "@/app/lib/prisma";
 
 export const addArticle = async (e) => {
+  // Extract data from the event
   const brand = e.brand;
   const name = e.name;
   const size = e.size;
   const quantity = e.quantity;
   const price = e.price;
 
+  // Get the user ID and verify that it exists/is correct
   const { id } = await getConnexionInfo();
 
+  // Return false if the user ID is not found
   if (!id) return false;
 
-  // Créer un tableau pour stocker les promesses
+  // Create an array to store promises
   const createPromises = [];
 
-  // Créer les promesses pour chaque création de vente de produit
+  // Create promises for each product sale creation
   for (let i = 0; i < quantity; i++) {
     createPromises.push(
       prisma.article.create({
@@ -33,7 +36,7 @@ export const addArticle = async (e) => {
     );
   }
 
-  // Exécuter toutes les promesses en parallèle
+  // Execute all promises in parallel
   await Promise.all(createPromises);
 
   return true;

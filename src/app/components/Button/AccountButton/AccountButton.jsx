@@ -6,12 +6,14 @@ import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
-const AccountButton = ({ className, hasConnectedToken }) => {
-  const { isConnected } = useContext(UserInfoContext);
+// AccountButton component
+const AccountButton = ({ className }) => {
+  const { userInfo } = useContext(UserInfoContext);
 
   return (
     <div className={className} id="accountDiv">
-      {isConnected || hasConnectedToken ? (
+      {userInfo.isConnected ? (
+        // If user is connected, display link to profile
         <a href="/profil">
           <span id="accountSpan">
             Mon compte
@@ -19,6 +21,7 @@ const AccountButton = ({ className, hasConnectedToken }) => {
           </span>
         </a>
       ) : (
+        // If user is not connected, display link to login
         <a href="/login">
           <span id="accountSpan">
             Me connecter

@@ -8,7 +8,7 @@ import "./page.css";
 export default async function Page() {
   return (
     <>
-      <Header displayAccountButton={true} />
+      <Header  />
       <Menu current="/details" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="corpus-div">

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { addArticle } from "./articleFormAction";
 import { clothesJSON } from "@/app/data/clothesJSON";
@@ -5,6 +7,7 @@ import { clothesJSON } from "@/app/data/clothesJSON";
 import "./styles.css";
 
 const ArticleForm = ({ callAfterSubmit, title }) => {
+  // Initialize state variables
   const articleData = clothesJSON;
   const [grade, setGrade] = useState("");
   const [sex, setSex] = useState("");
@@ -14,13 +17,14 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   });
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(0);
-
   const [isLoading, setIsLoading] = useState(false);
 
+  // Reset the 'sex' state when 'grade' changes
   useEffect(() => {
     setSex("");
   }, [grade]);
 
+  // Reset the 'name' state when 'sex' changes
   useEffect(() => {
     setName({
       brand: "",
@@ -28,20 +32,23 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
     });
   }, [sex]);
 
+  // Reset the 'size' state when 'name' changes
   useEffect(() => {
     setSize("");
   }, [name]);
 
+  // Reset the 'quantity' state when 'size' changes
   useEffect(() => {
     setQuantity(0);
   }, [size]);
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
-    // add article to the server
+    // Prepare data to be submitted
     const submitData = {
       name: name.name,
       brand: name.brand,
@@ -49,11 +56,14 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
       quantity: quantity,
       price: articleData[grade][sex][name.brand][name.name]["price"],
     };
+
+    // Call the 'addArticle' function to add the article to the server
     const result = await addArticle(submitData);
 
-    // call the parent function
+    // Call the parent function if provided
     if (callAfterSubmit) await callAfterSubmit();
 
+    // Reset the 'grade' state
     setGrade("");
 
     setIsLoading(false);
@@ -67,6 +77,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
           <tbody>
             <tr>
               <td>
+                {/* Select the 'grade' */}
                 <select
                   name="grade"
                   key="grade"
@@ -77,6 +88,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Niveau
                   </option>
+                  {/* Render options for each grade */}
                   {Object.keys(articleData).map((grade) => (
                     <option key={grade} value={grade}>
                       {grade}
@@ -85,6 +97,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 </select>
               </td>
               <td>
+                {/* Select the 'sex' */}
                 <select
                   name="sex"
                   key="sex"
@@ -95,6 +108,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Sexe
                   </option>
+                  {/* Render options for each sex based on the selected grade */}
                   {grade &&
                     Object.keys(articleData[grade]).map((sex) => (
                       <option key={sex} value={sex}>
@@ -104,6 +118,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 </select>
               </td>
               <td>
+                {/* Select the 'name' */}
                 <select
                   name="name"
                   key="name"
@@ -117,7 +132,9 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Article
                   </option>
-                  {grade && sex &&
+                  {/* Render options for each article name based on the selected grade, sex, and brand */}
+                  {grade &&
+                    sex &&
                     Object.keys(articleData[grade][sex]).map((brand) =>
                       Object.keys(articleData[grade][sex][brand]).map(
                         (articleName) => (
@@ -133,6 +150,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 </select>
               </td>
               <td>
+                {/* Select the 'size' */}
                 <select
                   name="size"
                   key="size"
@@ -143,7 +161,10 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Taille
                   </option>
-                  {grade && sex && name.brand &&
+                  {/* Render options for each size based on the selected grade, sex, brand, and article name */}
+                  {grade &&
+                    sex &&
+                    name.brand &&
                     articleData[grade][sex][name.brand][name.name]["size"].map(
                       (size) => (
                         <option key={size} value={size}>
@@ -154,6 +175,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 </select>
               </td>
               <td>
+                {/* Select the 'quantity' */}
                 <select
                   name="quantity"
                   key="quantity"
@@ -164,7 +186,11 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                   <option key="default" value="">
                     Quantité
                   </option>
-                  {grade && sex && name.brand && size &&
+                  {/* Render options for quantity */}
+                  {grade &&
+                    sex &&
+                    name.brand &&
+                    size &&
                     Array.from({ length: 5 }, (_, i) => (
                       <option key={i + 1} value={i + 1}>
                         {i + 1}
@@ -173,6 +199,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
                 </select>
               </td>
               <td id="tdAddButton">
+                {/* Submit button */}
                 <button
                   id="addArticleButton"
                   type="submit"

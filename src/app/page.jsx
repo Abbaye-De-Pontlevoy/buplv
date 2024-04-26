@@ -8,7 +8,7 @@ import "./page.css";
 export default async function Page() {
   return (
     <>
-      <Header displayAccountButton={true} />
+      <Header  />
       <Menu current="/" />
       <div className="bandeau-rangement">
         <form action="/dashboard" className="buttonForm">

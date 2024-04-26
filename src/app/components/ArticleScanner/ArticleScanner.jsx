@@ -12,21 +12,28 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 import "./styles.css";
 
+// Set the root element for the modal
 Modal.setAppElement("#root");
 
 const ArticleScanner = () => {
+  // Initialize state variables
   const [showModal, setShowModal] = useState(false);
   const [qrCodeData, setQRCodeData] = useState({});
   const [modalError, setModalError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to display the modal when a QR code is read
   const displayModal = async (qrCode) => {
     try {
+      // Parse the QR code data and get the state of the article
       qrCode = JSON.parse(qrCode);
       const state = await getArticleState(qrCode.id);
       qrCode.state = parseInt(state);
+
+      // Set the state variables
       setQRCodeData(qrCode);
       setShowModal(true);
+
       return true;
     } catch (e) {
       alert("Erreur lors de la lecture du QR Code.");
@@ -35,6 +42,7 @@ const ArticleScanner = () => {
     }
   };
 
+  // Function to close the modal
   const closeModal = () => {
     setQRCodeData({});
     setShowModal(false);
@@ -42,10 +50,13 @@ const ArticleScanner = () => {
 
   return (
     <div>
+      {/* Display the QR code reader */}
       {!showModal && <QRCodeReader onQRCodeRead={displayModal} />}
 
+      {/* Display the article search component to search an article by ID */}
       <ArticleSearch onArticleSearch={(e) => displayModal(JSON.stringify(e))} />
 
+      {/* Modal to display the article data and actions */}
       <Modal
         className="scannerModal"
         isOpen={showModal}
@@ -53,6 +64,8 @@ const ArticleScanner = () => {
         contentLabel="QR Code Modal"
       >
         <h2>Article scanné !</h2>
+
+        {/* Display the article data */}
         <ul>
           <li>Article : {qrCodeData.name || "chargement..."}</li>
           <li>Marque : {qrCodeData.brand || "chargement..."}</li>
@@ -76,7 +89,9 @@ const ArticleScanner = () => {
           </li>
         </ul>
 
+        {/* Display the action buttons */}
         <div id="buttonDiv">
+          {/* if article is inventoried */}
           {qrCodeData.state === 2 && (
             <button
               onClick={async () => {
@@ -97,6 +112,7 @@ const ArticleScanner = () => {
             </button>
           )}
 
+          {/* if article is sold */}
           {qrCodeData.state === 3 && (
             <button
               onClick={async () => {
@@ -115,6 +131,8 @@ const ArticleScanner = () => {
               Annuler la vente
             </button>
           )}
+
+          {/* if article is not inventoried / removed / unsellable */}
           {qrCodeData.state <= 1 && (
             <button
               onClick={async () => {
@@ -134,25 +152,34 @@ const ArticleScanner = () => {
               Inventorier
             </button>
           )}
-          {qrCodeData.state >= 1 && qrCodeData.state <= 2 && (
-            <button
-              onClick={async () => {
-                setIsLoading(true);
-                const result = await updateArticleField(qrCodeData.id, "state", -1);
-                if (result.success) closeModal();
-                else setModalError(result.msg);
-                setIsLoading(false);
-              }}
-              className="redButton"
-              disabled={isLoading}
-            >
-              Déclarer invendable
-            </button>
-          )}
+
+          {/* if article is registred or inventoried */}
+          {qrCodeData.state === 1 ||
+            (qrCodeData.state === 2 && (
+              <button
+                onClick={async () => {
+                  setIsLoading(true);
+                  const result = await updateArticleField(
+                    qrCodeData.id,
+                    "state",
+                    -1
+                  );
+                  if (result.success) closeModal();
+                  else setModalError(result.msg);
+                  setIsLoading(false);
+                }}
+                className="redButton"
+                disabled={isLoading}
+              >
+                Déclarer invendable
+              </button>
+            ))}
         </div>
 
+        {/* Display the error message */}
         <p className="error">{modalError}</p>
 
+        {/* Display the close button */}
         <button onClick={() => setShowModal(false)} disabled={isLoading}>
           Retour
         </button>

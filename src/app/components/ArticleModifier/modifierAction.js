@@ -2,6 +2,7 @@
 
 import prisma from "@/app/lib/prisma";
 
+// Function to update an article in the database
 export const updateArticle = async (data) => {
   try {
     const article = await prisma.article.update({

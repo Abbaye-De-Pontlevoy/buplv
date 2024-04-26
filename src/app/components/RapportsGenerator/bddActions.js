@@ -2,7 +2,9 @@
 
 import prisma from "@/app/lib/prisma";
 
+// Function to export the list of sellers
 export async function exportSellers() {
+  // get the list of sellers with disired fields
   const result = await prisma.seller.findMany({
     select: {
       id: true,
@@ -22,6 +24,7 @@ export async function exportSellers() {
     },
   });
 
+  // rename the fields and format the data
   const sellers = result.map((seller) => {
     return {
       "ID Vendeur": seller.id,
@@ -39,7 +42,9 @@ export async function exportSellers() {
   return sellers;
 }
 
+// Function to export the list of articles
 export async function exportArticles() {
+  // get the list of articles with disired fields
   const result = await prisma.article.findMany({
     select: {
       id: true,
@@ -55,6 +60,7 @@ export async function exportArticles() {
     },
   });
 
+  // rename the fields and format the data
   const articles = result.map((article) => {
     return {
       "ID Article": article.id,
@@ -78,6 +84,7 @@ export async function exportArticles() {
   return articles;
 }
 
+// Function to reset the database
 export async function resetBDD() {
   try {
     await prisma.$queryRaw`SELECT public.reset_database()`;

@@ -29,12 +29,18 @@ const SiteSettings = () => {
   ];
 
   const [activeTab, setActiveTab] = useState(tabList[0]);
+
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={true} />
+      {/* Header component */}
+      <Header  />
+
+      {/* Menu component */}
       <Menu current="/admin-panel"/>
+
       <div className="bandeau-rangement">
         <div className="mainContainer" id="settingsContainer">
+          {/* TabsMenu component */}
           <TabsMenu
             tabs={tabList}
             tabsContents={tabsContents}

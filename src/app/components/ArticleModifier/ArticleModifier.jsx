@@ -6,17 +6,20 @@ import { updateArticle } from "./modifierAction";
 import "./styles.css";
 
 const ArticleModifier = () => {
+  // Initialize state variables
   const [articleJSONData, setArticleJSONData] = useState(null);
   const [articleData, setArticleData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch clothesJSON data when component mounts
   useEffect(() => {
     getAllClothesInfo().then((data) => {
       setArticleJSONData(data);
     });
   }, []);
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");

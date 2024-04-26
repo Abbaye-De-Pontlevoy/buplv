@@ -10,9 +10,15 @@ import { useRouter } from "next/navigation";
 import "./styles.css";
 
 export default function Login() {
+  // Get the router object
+  // Used to redirect the user after login
   const router = useRouter();
 
+  // Reference to the form
   const formRef = useRef(null);
+
+  // Get user information from the context
+  const { login } = useContext(UserInfoContext);
 
   // State variables
   const [formData, setFormData] = useState({
@@ -21,8 +27,6 @@ export default function Login() {
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const { login } = useContext(UserInfoContext);
 
   useEffect(() => {
     removeCookie();
@@ -55,7 +59,7 @@ export default function Login() {
   // Render the login form
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={false} />
+      <Header displayAccountButton={false} />
       <div id="loginContainer">
         <div className="formContainer">
           <h1 className="formTitle">Connexion</h1>

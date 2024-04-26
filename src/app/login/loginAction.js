@@ -12,6 +12,9 @@ export const removeCookie = () => {
 }
 
 export default async function loginAction(formData) {
+  // Remove the cookie
+  // Will be added again if login is successful
+  // This is to prevent the cookie from being set if the login fails
   cookies().delete("buConnectedToken");
 
   const connexionError = {
@@ -78,8 +81,6 @@ export default async function loginAction(formData) {
   } catch (e) {
     return connexionError;
   }
-
-  // Redirect user to dashboard after successful login
 
   return {
     access: true,

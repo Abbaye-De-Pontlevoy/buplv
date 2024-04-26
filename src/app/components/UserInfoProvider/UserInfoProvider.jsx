@@ -3,10 +3,11 @@
 import { getConnexionInfo } from "@/app/helpers/getConnexionInfo";
 import React, { createContext, useEffect, useState } from "react";
 
+// Create a context to store the user information
 export const UserInfoContext = createContext(null);
 
 export const UserInfoProvider = ({ children }) => {
-
+  // Initialize state variables
   const [userInfo, setUserInfo] = useState({
     isConnected: false,
     isAdmin: false,
@@ -16,6 +17,7 @@ export const UserInfoProvider = ({ children }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Function to update the user information when the user logs out
   const logout = () => {
     setUserInfo({
       isConnected: false,
@@ -25,6 +27,7 @@ export const UserInfoProvider = ({ children }) => {
     });
   }
 
+  // Function to update the user information when the user logs in
   const login = (data) => {
     setUserInfo({
       isConnected: true,
@@ -34,8 +37,10 @@ export const UserInfoProvider = ({ children }) => {
     });
   }
 
+  // Fetch user information when component mounts
   useEffect(() => {
     const fetchData = async () => {
+      // Fetch user information
       const data = await getConnexionInfo();
       setUserInfo({
         isConnected: data?.connected,

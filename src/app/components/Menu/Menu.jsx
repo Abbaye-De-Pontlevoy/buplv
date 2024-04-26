@@ -1,13 +1,15 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
 const Menu = ({ current }) => {
+  // Get user information
   const { userInfo } = useContext(UserInfoContext);
 
+  // Menu content
   const menuContent = [
     {
       name: "Comment faire ?",
@@ -33,6 +35,7 @@ const Menu = ({ current }) => {
 
   return (
     <span className="menuSpan">
+      {/* Display the menu items according to the user's role */}
       {menuContent.map((item, index) => {
         if (!userInfo.isAdmin) {
           if (userInfo.isBenevole) {

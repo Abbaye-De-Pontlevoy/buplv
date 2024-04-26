@@ -2,6 +2,7 @@
 
 import prisma from "@/app/lib/prisma";
 
+// Function to remove an article from the database
 export default async function removeArticleAction({ id }) {
   await prisma.article.update({
     where: {
@@ -13,11 +14,9 @@ export default async function removeArticleAction({ id }) {
   });
 }
 
+// Function to get the list of articles for a given user
 export async function getArticleList(userID) {
-
-  if (!userID) {
-    return;
-  }
+  if (!userID) return [];
 
   const articles = await prisma.article.findMany({
     where: {

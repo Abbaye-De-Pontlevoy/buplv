@@ -6,18 +6,21 @@ import {
   getRapportTreso,
   getUnsoldArticlesToReturn,
 } from "./rapportsAction";
-
-import "./styles.css";
 import { exportArticles, exportSellers } from "./bddActions";
 import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 
+import "./styles.css";
+
 const RapportsGenerator = () => {
+  // Initialize state variables
   const [rapportTreso, setRapportTreso] = useState(<></>);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch data for the 'Rapport de trésorerie' section when component mounts
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+
       const data = await getRapportTreso();
       setRapportTreso(
         <div className="overFlowSlider">
@@ -46,6 +49,7 @@ const RapportsGenerator = () => {
 
       setIsLoading(false);
     };
+
     fetchData();
   }, []);
 

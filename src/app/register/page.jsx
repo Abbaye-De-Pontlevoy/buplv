@@ -160,7 +160,7 @@ export default function Register() {
   // Return JSX for registration form
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={false} />
+      <Header displayAccountButton={false} />
       <div id="registerContainer">
         <div className="formContainer">
           <h1 className="formTitle">Créer un compte</h1>
@@ -330,11 +330,11 @@ export default function Register() {
                   {!formData.don_apel && (
                     <span>
                       <input type="checkbox" id="donApelCheckBox" required />
-                      <label style={{color: "red"}}>
+                      <label style={{ color: "red" }}>
                         J'ai conscience qu'en refusant de faire don de mes
                         invendus à l'APEL je demande à ce que ceux-ci me soient
-                        renvoyés à mes frais (frais automatiquement déduits de mes
-                        ventes).
+                        renvoyés à mes frais (frais automatiquement déduits de
+                        mes ventes).
                       </label>
                     </span>
                   )}

@@ -5,21 +5,21 @@ export async function generatePDF(data, sellerInfos) {
   const doc = new jsPDF();
   let margin = 15;
 
-  // Ajouter la page PETIT TRAIN
+  // Add the PETIT TRAIN page
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Informations vendeur à imprimer", 105, 20, null, null, "center");
+  doc.text("Seller Information to Print", 105, 20, null, null, "center");
 
-  // Ajouter les informations du vendeur
+  // Add seller information
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
-  doc.text(`Vendeur : ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
-  doc.text(`Email : ${sellerInfos.email}`, margin, 55, null, null);
-  doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 60, null, null);
-  doc.text(`Adresse : ${sellerInfos.address}`, margin, 65, null, null);
+  doc.text(`Seller: ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
+  doc.text(`Email: ${sellerInfos.email}`, margin, 55, null, null);
+  doc.text(`Phone: ${sellerInfos.phone}`, margin, 60, null, null);
+  doc.text(`Address: ${sellerInfos.address}`, margin, 65, null, null);
 
-  // Afficher les données sous forme de tableau
-  const columns = ["Article", "Marque", "Taille", "Prix", "Ref article"];
+  // Display data as a table
+  const columns = ["Item", "Brand", "Size", "Price", "Item Ref"];
   const rows = data.map(item => [item.name, item.brand, item.size, `${item.price}€`, item.id]);
   doc.autoTable({
     head: [columns],
@@ -27,27 +27,27 @@ export async function generatePDF(data, sellerInfos) {
     startY: 80,
   });
 
-  // display number of article in bold
+  // Display number of items in bold
   doc.setFont("helvetica", "bold");
-  doc.text(`Nombre d'articles : ${data.length}`, 15, doc.autoTable.previous.finalY + 10, null, null);
+  doc.text(`Number of items: ${data.length}`, 15, doc.autoTable.previous.finalY + 10, null, null);
   doc.setFont("helvetica", "normal");
 
-  // Ajouter une nouvelle page pour les QR codes
+  // Add a new page for the QR codes
   doc.addPage();
   margin = 20;
 
-  // Ajouter le titre du document
+  // Add the document title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Liste des QRCodes à imprimer", 105, 20, null, null, "center");
+  doc.text("List of QR Codes to Print", 105, 20, null, null, "center");
   doc.setFont("helvetica", "normal");
 
-  // Position initiale pour le premier QR code
+  // Initial position for the first QR code
   let y = 40;
 
-  // Boucle à travers chaque QR code
+  // Loop through each QR code
   for (let i = 0; i < data.length; i++) {
-    // Générer le QR code en tant qu'image
+    // Generate the QR code as an image
     const jsonString = JSON.stringify({
       id: data[i].id,
       name: data[i].name,
@@ -57,30 +57,30 @@ export async function generatePDF(data, sellerInfos) {
     });
     const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
 
-    // Ajouter le QR code à la position spécifiée dans le PDF
+    // Add the QR code at the specified position in the PDF
     doc.addImage(qrCodeDataURL, "PNG", margin, y + 8, 30, 30);
 
-    // Ajouter le titre du QR code à côté de celui-ci
+    // Add the QR code title next to it
     doc.setFontSize(12);
     doc.text(
       60,
       y + 11,
-      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nREF : ${data[i].id}\nRef vendeur: ${data[i].seller_id}`
+      `Item: ${data[i].name}\nBrand: ${data[i].brand}\nSize: ${data[i].size}\nPrice: ${data[i].price}€\nREF: ${data[i].id}\nSeller Ref: ${data[i].seller_id}`
     );
     y += 45;
 
-    // Dessiner une ligne sous le QRCode
+    // Draw a line under the QR code
     doc.setLineWidth(0.5);
     doc.line(15, y, 190, y);
 
-    // Ajouter une nouvelle page si nécessaire
+    // Add a new page if necessary
     if (y > 240) {
       doc.addPage();
       y = 10;
     }
   }
 
-  doc.save("QRCODES_BU_A_IMPRIMER.pdf");
+  doc.save("QRCODES_TO_PRINT.pdf");
 }
 
 const generateQRCodeDataURL = async (url) => {

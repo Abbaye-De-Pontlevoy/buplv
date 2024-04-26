@@ -27,7 +27,7 @@ const SalesPanel = () => {
 
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={true} />
+      <Header  />
       <Menu current="/sales-panel" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">

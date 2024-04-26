@@ -3,24 +3,34 @@ import { getArticleByID } from "../../helpers/getArticleByID";
 
 import "./styles.css";
 
-const ArticleSearch = ({ onArticleSearch, placeholder="Rechercher par ID", buttonText="Rechercher"}) => {
+const ArticleSearch = ({
+  onArticleSearch,
+  placeholder = "Rechercher par ID",
+  buttonText = "Rechercher",
+}) => {
+  // Initialize state variables
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Handle the search form submission
   const handleSearch = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
+    // Get the article ID from the form
     const articleID = e.target.articleId.value;
 
+    // Try to find it in the database
     try {
       const result = await getArticleByID(articleID);
       if (!result) setError("Article non trouvé.");
+      // if the article is found, call the onArticleSearch function
       await onArticleSearch(result);
     } catch (e) {
       setError(e.message);
     }
 
+    // Reset the form
     e.target.articleId.value = "";
 
     setIsLoading(false);

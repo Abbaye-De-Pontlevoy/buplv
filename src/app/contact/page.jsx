@@ -1,3 +1,5 @@
+"use server";
+
 import Header from "../components/Header/Header";
 import Menu from "../components/Menu/Menu";
 
@@ -10,7 +12,7 @@ const ContactPage = () => {
 
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={true} />
+      <Header />
       <Menu current="/contact" />
 
       <div className="bandeau-rangement">

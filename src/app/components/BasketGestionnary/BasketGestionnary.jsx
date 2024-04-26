@@ -3,26 +3,28 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import ArticleList from "../Article/ArticleList/ArticleList";
-import AQRModal from "../QRCodeReader/QRCodeModal";
+import QRCodeReaderModal from "../QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
 import { getSettings } from "@/app/config/settings";
-
-import "./styles.css";
 import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
+import "./styles.css";
+
 const BasketGestionnary = () => {
+  // Initialize state variables
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState("");
+  const [error, setError] = useState("");
 
+  // Add sound effects used for success and error while scanning
   const audioSuccess = new Audio(
     "https://lasonotheque.org/UPLOAD/mp3/1417.mp3"
   );
   const audioError = new Audio("https://lasonotheque.org/UPLOAD/mp3/1684.mp3");
 
+  // Fetch payment methods when component mounts
   useEffect(() => {
     const fetchData = async () => {
       const settings = await getSettings();
@@ -31,7 +33,11 @@ const BasketGestionnary = () => {
     fetchData();
   }, []);
 
+  // Function to check if the article is valid
+  // article is a JSON string received from the QR code scanner
   const checkArticle = async (article) => {
+    // Check if the article JSON is valid
+    // if not valid, display an error message
     try {
       article = await JSON.parse(article);
     } catch (e) {
@@ -40,29 +46,34 @@ const BasketGestionnary = () => {
       return false;
     }
 
+    // At this point the article JSON is valid and converted to an object
     try {
-      // if article in basket
+      // if article in basket, display an error message
       for (let i = 0; i < basket.length; i++) {
         if (basket[i].id === article.id)
           throw new Error("Article déjà dans le panier.");
       }
 
       // article is a not in basket
+      // get the article data from the database
       const articleData = await getArticleData(article.id);
       if (!articleData) throw new Error("Article non trouvé.");
 
-      if (article.name === undefined) {
-        article.name = articleData.name;
-        article.brand = articleData.brand;
-        article.price = articleData.price;
-        article.state = articleData.state;
-      }
+      // reassign the article object with the article data
+      // it prevents possible errors
+      // and allows to add the article to the basket using just the id (from the search bar)
+      article.name = articleData.name;
+      article.brand = articleData.brand;
+      article.price = articleData.price;
+      article.state = articleData.state;
 
       switch (articleData.state) {
+        // if article inventoried => add to basket
         case 2:
           setBasket([...basket, article]);
           audioSuccess.play();
           return true;
+        // if article sold or not inventoried => display an error message
         case 3:
           throw new Error("Article déjà vendu.");
         default:
@@ -70,33 +81,46 @@ const BasketGestionnary = () => {
       }
     } catch (e) {
       audioError.play();
-      alert(e.message);
+      setError(e.message);
       return false;
     }
   };
 
+  // Function to remove an article from the basket
   const removeArticle = (toremoveId) => {
     const newBasket = basket.filter((article) => article.id !== toremoveId);
     setBasket(newBasket);
   };
 
+  // Function to validate the basket
   const handleValidate = async (e) => {
     e.preventDefault();
 
+    // Disable the validate button to prevent multiple submissions
     e.target.disabled = true;
 
+    // Get the payment method from the form
     const paymentMethod = e.target.paymentMethod.value;
 
+    // Validate the basket
+    // Block the UI while validating
+    // If the validation is successful, empty the basket
+    // If not, display an error message
     setValidatingBasket(true);
-    await validateBasket(basket, paymentMethod);
-    setBasket([]);
+    const result = await validateBasket(basket, paymentMethod);
+    if(result.success)
+      setBasket([]);
+    else
+      alert(result.msg);
     setValidatingBasket(false);
 
+    // Close the modal
     setIsModalOpen(false);
   };
 
   return (
     <>
+      {/* Display the basket content */}
       <div className="overFlowSlider">
         <ArticleList
           articleList={basket}
@@ -106,7 +130,8 @@ const BasketGestionnary = () => {
         />
       </div>
 
-      <div style={{width:"100%"}}>
+      {/* Display the "by ID" search bar */}
+      <div style={{ width: "100%" }}>
         <ArticleSearch
           placeholder="Ajouter par ID"
           buttonText="Ajouter"
@@ -114,9 +139,15 @@ const BasketGestionnary = () => {
         />
       </div>
 
-      <span id="validateAndScanSpan">
-        <AQRModal onQRCodeRead={checkArticle} />
+      {/* Display the error message */}
+      <p className="error">{error}</p>
 
+      {/* Display the validate and scan buttons */}
+      <span id="validateAndScanSpan">
+        {/* QR code reader button*/}
+        <QRCodeReaderModal onQRCodeRead={checkArticle} />
+
+        {/* Validate basket button */}
         <button
           onClick={() => setIsModalOpen(true)}
           disabled={basket.length === 0 || validatingBasket}
@@ -126,6 +157,7 @@ const BasketGestionnary = () => {
         </button>
       </span>
 
+      {/* Display the modal to select the payment method */}
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}

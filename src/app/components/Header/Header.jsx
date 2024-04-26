@@ -4,14 +4,17 @@ import AccountButton from "../Button/AccountButton/AccountButton";
 
 import "./styles.css";
 
-const Header = ({hasConnectedToken, displayAccountButton, displayMenu}) => {
+// Header component
+const Header = ({displayAccountButton = true}) => {
   return (
     <div className="header">
-      { displayAccountButton && <AccountButton className="accountButton" hasConnectedToken={hasConnectedToken}/>}
+      { displayAccountButton && <AccountButton className="accountButton"/>}
       <a href="/" className="title">
         <div id="logoDiv">
+          {/* Logo image */}
           <Image src={logo_plv} alt="logo" id="plvlogo" priority={true} />
         </div>
+        {/* Title */}
         <h1>BOURSE À L'UNIFORME</h1>
       </a>
     </div>

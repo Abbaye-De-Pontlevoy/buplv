@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
+import { useState } from "react";
 
 import "./styles.css";
 
@@ -10,8 +9,8 @@ export const ArticleDisplay = ({
   priceFactor = 1,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
-	const { userInfo } = useContext(UserInfoContext);
 
+  // Function to handle the deletion of an article
   const deleteHandler = async (e) => {
     e.preventDefault();
     setIsDisabled(true);
@@ -35,7 +34,10 @@ export const ArticleDisplay = ({
       </td>
       <td>{article.price * priceFactor} €</td>
       <td className="tdDeleteButton">
-        {article.state === 1 || enabledRemoveButton? (
+        {/* Display the delete button if the user is allowed to remove articles */}
+        {/* Else, display a dash */}
+        {/* The delete button is disabled while the article is being deleted */}
+        {article.state === 1 || enabledRemoveButton ? (
           <form className="deleteButtonForm" onSubmit={deleteHandler}>
             <button
               type="submit"

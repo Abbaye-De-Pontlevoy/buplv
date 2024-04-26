@@ -7,10 +7,15 @@ const LogoutButton = () => {
 	const router = useRouter();
 	const { logout } = useContext(UserInfoContext);
 
+	// Function to handle the logout
 	const logoutHandler = async (e) => {
 		e.preventDefault();
+		
+		// Remove the cookie and update logout state in the context
 		await removeCookie();
 		await logout();
+
+		// Redirect to the home page
 		router.push('/');
 	}
 

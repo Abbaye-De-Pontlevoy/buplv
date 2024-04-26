@@ -5,17 +5,24 @@ import { resetBDD } from "./resetBDD";
 import "./styles.css";
 
 const ResetBDDButton = () => {
+  // Get user info from the context
   const { userInfo } = useContext(UserInfoContext);
+
+  // Initialize state variables
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState("");
+  // Step 0: Ask for confirmation
+  // Step 1: Ask for password
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Function to handle the reset button click
   const handleResetButtonClick = () => {
     setIsModalOpen(true);
   };
 
+  // Function to handle the modal close
   const handleModalClose = () => {
     setStep(0);
     setPassword("");
@@ -23,6 +30,7 @@ const ResetBDDButton = () => {
     setIsModalOpen(false);
   };
 
+  // Final validation of the reset
   const validateReset = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -39,10 +47,12 @@ const ResetBDDButton = () => {
 
   return (
     <>
+      {/* Reset Button */}
       <button id="resetButton" onClick={handleResetButtonClick}>
         Réinitialiser la base de données
       </button>
 
+      {/* Modal */}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">

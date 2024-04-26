@@ -10,8 +10,10 @@ import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider
 import "./styles.css";
 
 const Dashboard = () => {
+  // Get user information from the context
   const { userInfo, login } = useContext(UserInfoContext);
 
+  // Initialize state variables
   const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +21,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       if(!userInfo.userID){
-        //await refresh();
         return;
       }
       // Fetch user ID and article list
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header hasConnectedToken={true} displayAccountButton={true} />
+      <Header  />
       <Menu current="/dashboard" />
       <div className="bandeau-rangement">
         <div className="mainContainer" id="dashboardMainContainer">

@@ -1,10 +1,10 @@
 export const downloadCSV = async (data, fileName) => {
-  // Convertir les données en CSV
+  // Convert data to CSV
   const headers = Object.keys(data[0]).join(";");
   const rows = data.map((obj) => Object.values(obj).join(";")).join("\n");
   const csv = `${headers}\n${rows}`;
 
-  // Ajoute la date actuelle au nom du fichier
+  // Add current date to the file name
   const currentDate = new Date();
   const formattedDate = currentDate
     .toISOString()
@@ -12,22 +12,22 @@ export const downloadCSV = async (data, fileName) => {
     .slice(0, -5);
   fileName += `_${formattedDate}.csv`;
 
-  // Créer un objet Blob avec le contenu CSV
+  // Create a Blob object with the CSV content
   const blob = new Blob([csv], { type: "text/csv" });
 
-  // Créer un objet URL pour le Blob
+  // Create a URL object for the Blob
   const url = window.URL.createObjectURL(blob);
 
-  // Créer un élément d'ancre pour le téléchargement
+  // Create an anchor element for the download
   const link = document.createElement("a");
   link.href = url;
   link.setAttribute("download", fileName);
 
-  // Simuler un clic sur le lien pour déclencher le téléchargement
+  // Simulate a click on the link to trigger the download
   document.body.appendChild(link);
   link.click();
 
-  // Nettoyer après le téléchargement
+  // Clean up after the download
   document.body.removeChild(link);
   window.URL.revokeObjectURL(url);
 };

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 
 const QRCodeReader = ({ onQRCodeRead }) => {
+  // Initialize state variables
   const scanner = useRef(null);
   const videoEl = useRef(null);
   const qrBoxEl = useRef(null);
@@ -16,7 +17,6 @@ const QRCodeReader = ({ onQRCodeRead }) => {
 
   const handleScan = async (result) => {
     if(!result) return;
-
     scanner.current.stop();
     await onQRCodeRead(result?.data);
     scanner.current.start();

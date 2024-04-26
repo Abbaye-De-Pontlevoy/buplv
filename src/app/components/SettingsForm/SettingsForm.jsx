@@ -2,32 +2,45 @@
 
 import React, { useEffect, useState } from "react";
 import { getSettings, updateSettings } from "../../config/settings";
-
-import "./styles.css";
 import { clothesJSON } from "@/app/data/clothesJSON";
 import { updateClothesJSON } from "@/app/data/clothesJSONActions";
 
+import "./styles.css";
+
 const SettingsForm = () => {
+  // Initialize state variables
   const [formState, setFormState] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Fetch settings data when component mounts
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      // Fetch settings data
       const settingsData = await getSettings();
+      // format the APEL part to be displayed as a percentage
+      // (it is stored as a decimal in the database)
+      // add the clothesJSON data to the form state
       settingsData.APELPart *= 100;
+
+      // Fetch clothesJSON data
       settingsData.clothesJSON = JSON.stringify(clothesJSON, null, 4);
+
       setFormState(settingsData);
+
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
+  // Handle form changes
   const handleChange = (event) => {
+    // Extract the name, value, checked and type from the event target
     const { name, value, checked, type } = event.target;
     const newValue = type === "checkbox" ? checked : value;
 
+    // Check if the JSON is valid
     if (name == "clothesJSON") {
       try {
         JSON.parse(newValue);
@@ -37,6 +50,7 @@ const SettingsForm = () => {
       }
     }
 
+    // Update the form state
     if (name === "publicAccess" && !newValue) {
       setFormState((prevState) => ({
         ...prevState,
@@ -62,20 +76,27 @@ const SettingsForm = () => {
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Check if the JSON is valid (its the only field that can raise an error)
     if(error) return alert("Erreur dans le JSON des vêtements, veuillez corriger.");
 
+    // Update the clothesJSON if the checkbox is checked
     if (formState.clothesInputCheckbox)
       await updateClothesJSON(formState.clothesJSON);
 
+    // Remove the clothesJSON from the form state
     formState.clothesInputCheckbox = undefined;
     formState.clothesJSON = undefined;
 
+    // format the APEL part to be stored as a decimal
     formState.APELPart = formState.APELPart / 100;
     await updateSettings(formState);
+    // format the APEL part to be displayed as a percentage
     formState.APELPart *= 100;
+
     alert("Paramètres enregistrés avec succès!");
   };
 
@@ -85,6 +106,7 @@ const SettingsForm = () => {
         <p>Chargement...</p>
       ) : (
         <div id="paramDiv">
+          {/* Access parameters */}
           <div>
             <h3>Paramètres Généraux</h3>
             <span>
@@ -108,6 +130,7 @@ const SettingsForm = () => {
                 />
               </span>
             )}
+
             {formState.allowArticleRegistration && (
               <span>
                 <label>Fin des enregistrements</label>
@@ -124,6 +147,7 @@ const SettingsForm = () => {
             )}
           </div>
 
+          {/* Accounting parameters */}
           <div>
             <h3>Comptabilité</h3>
             <span>
@@ -143,6 +167,7 @@ const SettingsForm = () => {
             </span>
           </div>
 
+          {/* Clothes JSON */}
           <div>
             <h3>Liste des vêtements</h3>
             <span>
