@@ -4,8 +4,8 @@ import "./styles.css";
 
 export const ArticleDisplay = ({
   article,
-  enabledRemoveButton,
   callAfterDelete,
+  enabledRemoveButton=false,
   priceFactor = 1,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);

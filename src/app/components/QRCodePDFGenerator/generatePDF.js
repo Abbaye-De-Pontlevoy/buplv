@@ -8,18 +8,18 @@ export async function generatePDF(data, sellerInfos) {
   // Add the PETIT TRAIN page
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Seller Information to Print", 105, 20, null, null, "center");
+  doc.text("Petit Train (à imprimer)", 105, 20, null, null, "center");
 
   // Add seller information
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
-  doc.text(`Seller: ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
-  doc.text(`Email: ${sellerInfos.email}`, margin, 55, null, null);
-  doc.text(`Phone: ${sellerInfos.phone}`, margin, 60, null, null);
-  doc.text(`Address: ${sellerInfos.address}`, margin, 65, null, null);
+  doc.text(`Vendeur : ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
+  doc.text(`Mail : ${sellerInfos.email}`, margin, 55, null, null);
+  doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 60, null, null);
+  doc.text(`Adresse : ${sellerInfos.address}`, margin, 65, null, null);
 
   // Display data as a table
-  const columns = ["Item", "Brand", "Size", "Price", "Item Ref"];
+  const columns = ["Article", "Marque", "Taille", "Prix", "Ref Article"];
   const rows = data.map(item => [item.name, item.brand, item.size, `${item.price}€`, item.id]);
   doc.autoTable({
     head: [columns],
@@ -29,7 +29,7 @@ export async function generatePDF(data, sellerInfos) {
 
   // Display number of items in bold
   doc.setFont("helvetica", "bold");
-  doc.text(`Number of items: ${data.length}`, 15, doc.autoTable.previous.finalY + 10, null, null);
+  doc.text(`Nombre d'articles : ${data.length}`, 15, doc.autoTable.previous.finalY + 10, null, null);
   doc.setFont("helvetica", "normal");
 
   // Add a new page for the QR codes
@@ -39,7 +39,7 @@ export async function generatePDF(data, sellerInfos) {
   // Add the document title
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("List of QR Codes to Print", 105, 20, null, null, "center");
+  doc.text("Liste des QR codes (à imprimer)", 105, 20, null, null, "center");
   doc.setFont("helvetica", "normal");
 
   // Initial position for the first QR code
@@ -65,7 +65,7 @@ export async function generatePDF(data, sellerInfos) {
     doc.text(
       60,
       y + 11,
-      `Item: ${data[i].name}\nBrand: ${data[i].brand}\nSize: ${data[i].size}\nPrice: ${data[i].price}€\nREF: ${data[i].id}\nSeller Ref: ${data[i].seller_id}`
+      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nRef : ${data[i].id}\nRef Vendeur: ${data[i].seller_id}`
     );
     y += 45;
 
