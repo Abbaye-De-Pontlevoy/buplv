@@ -1,16 +1,35 @@
-CREATE OR REPLACE FUNCTION public.get_total_gain_per_seller(apelpart numeric)
+CREATE OR REPLACE FUNCTION public.get_total_gain_per_seller(apelpart numeric, fraisRenvois numeric)
  RETURNS json
  LANGUAGE plpgsql
 AS $function$
 DECLARE
-    results_json json;
+    results_json json; -- Variable to store the JSON result
+    frais_renvois_total numeric; -- Variable to store the total return fees
 BEGIN
+    -- Calculate the total return fees for each seller
+    SELECT COALESCE(SUM(CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state = 2) THEN fraisRenvois ELSE 0 END), 0)
+    INTO frais_renvois_total
+    FROM "Seller" s;
+
+    -- Construct the JSON result
     SELECT json_agg(json_build_object(
-        'ID Vendeur', s.id,
-        'Nom', CONCAT(s.firstname, ' ', s.name),
-        'Gains Totaux', COALESCE(total.total_price, 0),
-        'Part Vendeur', ROUND((COALESCE(total.total_price, 0) - ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2))::numeric, 2),
-        'Part APEL', ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) -- Convertit le résultat en double précision avant d'appeler ROUND()
+        'ID vendeur', s.id, -- Seller ID
+        'Nom', CONCAT(s.firstname, ' ', s.name), -- Seller Name
+        'Articles à renvoyer', 
+            CASE WHEN s.return_articles THEN 
+                (SELECT COUNT(*) FROM "Article" a WHERE a.seller_id = s.id AND a.state = 2)
+            ELSE 
+                0 
+            END, -- Number of articles to return
+        'Frais renvoi', fraisRenvois, -- Return fees
+        'Gains totaux', COALESCE(total.total_price, 0), -- Total earnings
+        'Part vendeur', 
+            ROUND((COALESCE(total.total_price, 0) - ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) - 
+                (CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state = 2) THEN fraisRenvois ELSE 0 END))
+            ::numeric, 2), -- Seller's share
+        'Part APEL', 
+            ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) +
+            (CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state = 2) THEN fraisRenvois ELSE 0 END) -- APEL's share
     ))
     INTO results_json
     FROM
@@ -28,7 +47,7 @@ BEGIN
                 a.seller_id
         ) AS total ON s.id = total.seller_id;
 
-    RETURN results_json;
+    RETURN results_json; -- Return the JSON result
 END;
 $function$
 ;

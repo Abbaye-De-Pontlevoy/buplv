@@ -6,6 +6,7 @@ let settings = {
   endRegisterDate: null,
   paymentMethods: ["espèces", "carte banquaire", "chèque"],
   APELPart: 0.1,
+  returnFees: 5,
 };
 
 export const getSettings = async () => {

@@ -165,6 +165,22 @@ const SettingsForm = () => {
                 %
               </span>
             </span>
+
+            <span>
+              <label>Frais de renvoi</label>
+              <span style={{ width: "min-content" }}>
+                <input
+                  type="number"
+                  name="returnFees"
+                  value={formState.returnFees}
+                  onChange={handleChange}
+                  min="0"
+                  max="100"
+                  style={{ textAlign: "right", maxWidth: "100px" }}
+                />
+                €
+              </span>
+            </span>
           </div>
 
           {/* Clothes JSON */}

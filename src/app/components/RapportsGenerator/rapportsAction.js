@@ -72,7 +72,7 @@ export async function getUnsoldArticlesToReturn() {
 export async function getRapportSeller() {
   const settings = await getSettings();
   const queryResult =
-    await prisma.$queryRaw`SELECT public.get_total_gain_per_seller(${settings.APELPart}) as total_gain_per_seller`;
+    await prisma.$queryRaw`SELECT public.get_total_gain_per_seller(${settings.APELPart}, ${settings.returnFees}) as total_gain_per_seller`;
 
   return queryResult[0].total_gain_per_seller;
 }
