@@ -9,7 +9,7 @@ import "./styles.css";
 // Set the root element for the modal
 Modal.setAppElement("#root");
 
-const QRCodeReaderModal = ({ onQRCodeRead, disabled }) => {
+const QRCodeReaderModal = ({ onQRCodeRead, disabled, className }) => {
   // Initialize state variables
   const [showModal, setShowModal] = useState(false);
 
@@ -21,7 +21,7 @@ const QRCodeReaderModal = ({ onQRCodeRead, disabled }) => {
   };
 
   return (
-    <div>
+    <div className={className}>
       {/* Display the button to open the modal */}
       <button onClick={() => setShowModal(true)} disabled={disabled}>
         Scanner un article

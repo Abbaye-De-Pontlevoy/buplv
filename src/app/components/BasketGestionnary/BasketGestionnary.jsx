@@ -145,13 +145,13 @@ const BasketGestionnary = () => {
       {/* Display the validate and scan buttons */}
       <span id="validateAndScanSpan">
         {/* QR code reader button*/}
-        <QRCodeReaderModal onQRCodeRead={checkArticle} />
+        <QRCodeReaderModal onQRCodeRead={checkArticle} className="sideToSideButton" />
 
         {/* Validate basket button */}
         <button
           onClick={() => setIsModalOpen(true)}
           disabled={basket.length === 0 || validatingBasket}
-          className="greenButton"
+          className="greenButton  sideToSideButton"
         >
           Valider le panier
         </button>
