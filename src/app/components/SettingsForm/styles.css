@@ -14,7 +14,7 @@
   align-self: center;
 }
 
-form span input {
+form span .checkbox {
   width: min-content;
 }
 

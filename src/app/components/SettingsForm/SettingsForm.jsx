@@ -118,6 +118,7 @@ const SettingsForm = () => {
                             <input
                                 type="checkbox"
                                 name="publicAccess"
+                                className="checkbox"
                                 checked={formState.publicAccess}
                                 onChange={handleChange}
                             />
@@ -131,6 +132,7 @@ const SettingsForm = () => {
                                 <input
                                     type="checkbox"
                                     name="allowArticleRegistration"
+                                    className="checkbox"
                                     checked={formState.allowArticleRegistration}
                                     onChange={handleChange}
                                 />
@@ -143,6 +145,7 @@ const SettingsForm = () => {
                                 <input
                                     type="date"
                                     name="endRegisterDate"
+                                    className="checkbox"
                                     value={
                                         formState.endRegisterDate ||
                                         new Date().toISOString().split("T")[0]
@@ -162,6 +165,7 @@ const SettingsForm = () => {
                                 <input
                                     type="number"
                                     name="APELPart"
+                                    className="checkbox"
                                     value={formState.APELPart}
                                     onChange={handleChange}
                                     min="0"
@@ -181,6 +185,7 @@ const SettingsForm = () => {
                                 <input
                                     type="number"
                                     name="returnFees"
+                                    className="checkbox"
                                     value={formState.returnFees}
                                     onChange={handleChange}
                                     min="0"
@@ -205,6 +210,7 @@ const SettingsForm = () => {
                             <input
                                 type="checkbox"
                                 name="clothesInputCheckbox"
+                                className="checkbox"
                                 checked={
                                     formState.clothesInputCheckbox || false
                                 }
