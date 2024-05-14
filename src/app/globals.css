@@ -98,6 +98,15 @@ button:disabled {
   background-color: var(--main-blue);
 }
 
+.sideToSideButton{
+  flex: 1;
+  width: 100%;
+}
+
+.sideToSideButton button{
+  width: 100%;
+}
+
 .formulaire {
   display: flex;
   flex-direction: column;

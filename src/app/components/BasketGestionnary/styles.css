@@ -27,11 +27,3 @@
 #validateBasketModal button {
   width: 100%;
 }
-
-.sideToSideButton{
-  flex: 1;
-}
-
-.sideToSideButton button{
-  width: 100%;
-}

@@ -304,6 +304,7 @@ const ProfilePage = () => {
                                             <span>
                                                 <button
                                                     type="button"
+                                                    className="sideToSideButton"
                                                     onClick={() =>
                                                         changeStep(0, false)
                                                     }
@@ -312,6 +313,7 @@ const ProfilePage = () => {
                                                 </button>
                                                 <button
                                                     type="submit"
+                                                    className="sideToSideButton"
                                                     disabled={
                                                         !editingMode ||
                                                         isUpdating
