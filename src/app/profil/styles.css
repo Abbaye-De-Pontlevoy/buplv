@@ -1,44 +1,44 @@
 .bandeau-rangement {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  width: 100%;
-  min-height: 50vh;
-  padding: 30px;
+    width: 100%;
+    min-height: 50vh;
+    padding: 30px;
 
-  background-image: url("../assets/BU_rangement.webp");
-  background-position: 50% 40%;
-  background-attachment: fixed;
-  background-size: cover;
+    background-image: url("../assets/BU_rangement.webp");
+    background-position: 50% 40%;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
-#mainContainerProfile{
-  width: 550px;
+#mainContainerProfile {
+    width: 550px;
 }
 
-#returnCheckBox{
-  width: fit-content;
-  margin: 30px 10px 30px 0px;
+#returnCheckBox {
+    width: fit-content;
+    margin: 30px 10px 30px 0px;
 }
 
-span label{
-  width: 100%;
+span label {
+    width: 100%;
 }
 
-span button{
-  width: 100%;
+span button {
+    width: 100%;
 }
 
 @media (max-width: 500px) {
-  .bandeau-rangement {
-    padding: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
+    .bandeau-rangement {
+        padding: 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 
-  #mainContainerProfile {
-    min-width: 0;
-  }
+    #mainContainerProfile {
+        min-width: 0;
+    }
 }
