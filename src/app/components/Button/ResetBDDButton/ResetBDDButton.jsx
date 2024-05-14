@@ -78,11 +78,11 @@ const ResetBDDButton = () => {
                 </>
               )}
               <span>
-                <button type="button" onClick={handleModalClose}>Annuler</button>
+                <button className="fullwidth" type="button" onClick={handleModalClose}>Annuler</button>
                 {step === 0 ? (
-                  <button onClick={() => setStep(1)}>Valider</button>
+                  <button className="fullwidth" onClick={() => setStep(1)}>Valider</button>
                 ) : (
-                  <button type="submit" disabled={isLoading || !password}>
+                  <button className="fullwidth" type="submit" disabled={isLoading || !password}>
                     {isLoading ? "Chargement..." : "Réinitialiser"}
                   </button>
                 )}

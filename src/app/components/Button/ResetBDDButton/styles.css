@@ -46,7 +46,7 @@
 	justify-content: stretch;
 }
 
-.modal-content span button{
+button.fullwidth{
 	width: 100%;
 }
 
