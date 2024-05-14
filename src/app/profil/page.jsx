@@ -171,8 +171,8 @@ const ProfilePage = () => {
                                         <>
                                             {/* Display user information */}
                                             <span>
-                                                <label>
-                                                    Prénom:
+                                                <label className="verticalLabel">
+                                                    Prénom :
                                                     <input
                                                         type="text"
                                                         name="firstname"
@@ -184,8 +184,8 @@ const ProfilePage = () => {
                                                         required
                                                     />
                                                 </label>
-                                                <label>
-                                                    Nom:
+                                                <label className="verticalLabel">
+                                                    Nom :
                                                     <input
                                                         type="text"
                                                         name="name"
@@ -198,7 +198,7 @@ const ProfilePage = () => {
                                             </span>
 
                                             <label>
-                                                Email:
+                                                Email :
                                                 <input
                                                     type="email"
                                                     name="email"
@@ -208,7 +208,7 @@ const ProfilePage = () => {
                                                 />
                                             </label>
                                             <label>
-                                                N° de téléphone:
+                                                N° de téléphone :
                                                 <input
                                                     type="text"
                                                     name="phone"
@@ -220,7 +220,7 @@ const ProfilePage = () => {
                                             </label>
 
                                             <label>
-                                                Adresse complète:
+                                                Adresse complète :
                                                 <input
                                                     type="text"
                                                     name="address"
@@ -232,7 +232,7 @@ const ProfilePage = () => {
                                             </label>
 
                                             <label>
-                                                IBAN:
+                                                IBAN :
                                                 <input
                                                     type="text"
                                                     name="iban"
@@ -243,7 +243,7 @@ const ProfilePage = () => {
                                                 />
                                             </label>
                                             <label>
-                                                Bic:
+                                                Bic :
                                                 <input
                                                     type="text"
                                                     name="bic"
