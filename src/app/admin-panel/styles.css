@@ -24,15 +24,6 @@ form{
   justify-content: left;
 }
 
-form span {
-  justify-content: space-between;
-}
-
-
-form span input {
-  width: min-content;
-}
-
 @media (max-width: 500px) {
   .bandeau-rangement {
     padding: 0;
