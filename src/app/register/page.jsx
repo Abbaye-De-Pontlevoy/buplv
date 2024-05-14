@@ -166,11 +166,11 @@ export default function Register() {
           <h1 className="formTitle">Créer un compte</h1>
 
           <span id="circleSpan">
-            <p className={`circle ${step >= 1 ? "active" : ""}`}>1</p>
-            <div className={`line ${step >= 2 ? "active" : ""}`}></div>
-            <p className={`circle ${step >= 2 ? "active" : ""}`}>2</p>
-            <div className={`line ${step >= 3 ? "active" : ""}`}></div>
-            <p className={`circle ${step >= 3 ? "active" : ""}`}>3</p>
+            <p className={`circle ${step >= 1 ? "activeCircle" : ""}`}>1</p>
+            <div className={`line ${step >= 2 ? "activeCircle" : ""}`}></div>
+            <p className={`circle ${step >= 2 ? "activeCircle" : ""}`}>2</p>
+            <div className={`line ${step >= 3 ? "activeCircle" : ""}`}></div>
+            <p className={`circle ${step >= 3 ? "activeCircle" : ""}`}>3</p>
           </span>
 
           <form
