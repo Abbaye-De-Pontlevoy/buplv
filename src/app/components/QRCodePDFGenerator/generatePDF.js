@@ -5,10 +5,15 @@ export async function generatePDF(data, sellerInfos) {
   const doc = new jsPDF();
   let margin = 15;
 
-  // Add the PETIT TRAIN page
+  // TITLE
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
-  doc.text("Petit Train (à imprimer)", 105, 20, null, null, "center");
+  doc.text("Récapitulatif (à imprimer)", 105, 20, null, null, "center");
+
+  // SUBTITLE
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(12);
+  doc.text("Imprimer et fixer fermement sur le sac contenant\nla TOTALITÉ des articles à vendre.", 105, 26, null, null, "center");
 
   // Add seller information
   doc.setFontSize(12);
@@ -36,12 +41,17 @@ export async function generatePDF(data, sellerInfos) {
   doc.addPage();
   margin = 20;
 
-  // Add the document title
+  // TITLE
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.text("Liste des QR codes (à imprimer)", 105, 20, null, null, "center");
-  doc.setFont("helvetica", "normal");
 
+  // SUBTITLE
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(12);
+  doc.text("QR codes et description à découper et à agrafer\nsur l'étiquette de chaque vêtement (cf. emplacement de l'agrafe)", 105, 26, null, null, "center");
+
+  doc.setFont("helvetica", "normal");
   // Initial position for the first QR code
   let y = 40;
 
@@ -58,19 +68,19 @@ export async function generatePDF(data, sellerInfos) {
     const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
 
     // Add the QR code at the specified position in the PDF
-    doc.addImage(qrCodeDataURL, "PNG", margin, y + 8, 30, 30);
+    doc.addImage(qrCodeDataURL, "PNG", margin, y + 5, 20, 20);
 
     // Add the QR code title next to it
-    doc.setFontSize(12);
+    doc.setFontSize(8);
     doc.text(
-      60,
-      y + 11,
+      50,
+      y + 8,
       `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nRef : ${data[i].id}\nRef Vendeur: ${data[i].seller_id}`
     );
-    y += 45;
+    y += 30;
 
     // Draw a line under the QR code
-    doc.setLineWidth(0.5);
+    doc.setLineWidth(0.3);
     doc.line(15, y, 190, y);
 
     // Add a new page if necessary
