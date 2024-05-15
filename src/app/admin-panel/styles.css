@@ -14,10 +14,6 @@
   background-size: cover;
 }
 
-#settingsContainer{
-  min-width: 400px;
-}
-
 form{
   display: flex;
   flex-direction: column;
@@ -29,9 +25,5 @@ form{
     padding: 0;
     padding-top: 20px;
     padding-bottom: 20px;
-  }
-
-  #settingsContainer{
-    min-width: 0;
   }
 }

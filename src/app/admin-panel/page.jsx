@@ -39,7 +39,7 @@ const SiteSettings = () => {
       <Menu current="/admin-panel"/>
 
       <div className="bandeau-rangement">
-        <div className="main-container width-500" id="settingsContainer">
+        <div className="main-container width-500">
           {/* TabsMenu component */}
           <TabsMenu
             tabs={tabList}

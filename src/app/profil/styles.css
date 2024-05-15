@@ -14,10 +14,6 @@
     background-size: cover;
 }
 
-.main-container {
-    width: 550px;
-}
-
 @media (max-width: 500px) {
     .bandeau-rangement {
         padding: 0;
