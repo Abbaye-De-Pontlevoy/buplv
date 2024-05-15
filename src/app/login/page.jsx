@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import loginAction, { removeCookie } from "./loginAction";
-import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
+import ReturnArrowButton from "../components/Button/ReturnArrowButton/ReturnArrowButton";
 import Header from "../components/Header/Header";
 import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
 import { useRouter } from "next/navigation";
@@ -92,7 +92,7 @@ export default function Login() {
           <p className="error">{error}</p>
           <a href="/register">Pas encore inscrit ?</a>
         </div>
-        <ReturnMenuButton />
+        <ReturnArrowButton text="Retour à l'accueil" link="/"/>
       </div>
     </>
   );

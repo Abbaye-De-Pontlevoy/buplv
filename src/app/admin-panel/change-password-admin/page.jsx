@@ -1,5 +1,6 @@
 import Header from "@/app/components/Header/Header";
 import PasswordChanger from "@/app/components/PasswordChanger/PasswordChanger";
+import ReturnArrowButton from "@/app/components/Button/ReturnArrowButton/ReturnArrowButton";
 
 import "./styles.css";
 
@@ -13,6 +14,7 @@ const ChangePasswordPage = () => {
                     <PasswordChanger modifiedAccount="admin" />
                 </div>
             </div>
+            <ReturnArrowButton className="marginTop-10px" text="Retour aux paramètres" link="/admin-panel"/>
         </div>
     );
 };

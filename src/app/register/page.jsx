@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import registerAction from "./registerAction";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
-import ReturnMenuButton from "../components/Button/ReturnMenuButton/returnMenuButton";
+import ReturnArrowButton from "../components/Button/ReturnArrowButton/ReturnArrowButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
@@ -369,7 +369,7 @@ export default function Register() {
             Déjà inscrit ? <a href="/login">Je me connecte</a>
           </p>
         </div>
-        <ReturnMenuButton />
+        <ReturnArrowButton text="Retour à l'accueil" link="/"/>
       </div>
     </>
   );
