@@ -105,7 +105,6 @@ const BasketGestionnary = ({className}) => {
     // Get the payment method from the form
     const paymentMethod = e.target.paymentMethod.value;
 
-
     // Validate the basket
     // Block the UI while validating
     // If the validation is successful, empty the basket
@@ -183,14 +182,18 @@ const BasketGestionnary = ({className}) => {
                       </label>
                     </td>
                     <td>
-                      <input type="radio" name="paymentMethod" value={method} />
+                      <input type="radio" name="paymentMethod" value={method} checked="checked" onChange={(e) => {
+                        if(e.target.checked)
+                          e.target.checked = true;
+
+                      }}/>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <button type="submit" disabled={validateBasket} className="width-full">
+            <button type="submit" disabled={validatingBasket} className="width-full">
               Valider
             </button>
           </form>
