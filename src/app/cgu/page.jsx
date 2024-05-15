@@ -9,9 +9,9 @@ export default async function Page() {
   return (
     <>
       <Header  />
-      <Menu current="/details" />
+      <Menu />
       <div className="bandeau-rangement">
-        <div className="main-container" className="main-container">
+        <div className="main-container text-justify">
           <h1>Conditions Générales d'Utilisation</h1>
           <p>
             Ci-dessous beaucoup de choses pour te dire qu'en gros tu n'as pas le

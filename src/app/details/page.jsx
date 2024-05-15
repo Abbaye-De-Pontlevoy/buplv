@@ -11,7 +11,7 @@ export default async function Page() {
       <Header  />
       <Menu current="/details" />
       <div className="bandeau-rangement">
-        <div className="main-container">
+        <div className="main-container text-justify">
           <h1 className="margin-20">La bourse à l'uniforme</h1>
           <p>
             La bourse à l'uniforme est un événement organisé par l'association
