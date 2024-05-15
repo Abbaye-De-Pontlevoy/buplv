@@ -6,6 +6,7 @@ import ReturnArrowButton from "../components/Button/returnArrowButton/ReturnArro
 import Header from "../components/Header/Header";
 import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
 import { useRouter } from "next/navigation";
+import PasswordInput from "../components/PasswordInput/PasswordInput";
 
 export default function Login() {
     // Get the router object
@@ -78,12 +79,11 @@ export default function Login() {
                         </label>
                         <label>
                             Mot de Passe:
-                            <input
-                                type="password"
+                            <PasswordInput
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                required
+                                required={true}
                             />
                         </label>
                         <button type="submit" disabled={isLoading}>

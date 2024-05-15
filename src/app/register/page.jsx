@@ -8,6 +8,7 @@ import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
 import Header from "../components/Header/Header";
+import PasswordInput from "../components/PasswordInput/PasswordInput";
 
 import "./styles.css";
 
@@ -221,12 +222,11 @@ export default function Register() {
                 />
 
                 <label>Mot de passe :</label>
-                <input
-                  type="password"
+                <PasswordInput
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  required
+                  required={true}
                 />
                 <PasswordStrengthMeter password={formData.password} />
                 <label>Vérification du mot de passe :</label>

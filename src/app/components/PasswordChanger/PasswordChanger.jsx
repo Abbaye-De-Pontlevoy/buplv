@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 import changePassword from "./passwordChangerAction";
+import PasswordInput from "../PasswordInput/PasswordInput";
 
 const PasswordChanger = ({ className, modifiedAccount }) => {
     const formRef = useRef(null);
@@ -41,11 +42,12 @@ const PasswordChanger = ({ className, modifiedAccount }) => {
         const passwordInput = formRef.current.querySelector(
             'input[name="password"]',
         );
+
         const password2Input = formRef.current.querySelector(
             'input[name="password2"]',
         );
         const passwordStrengthComponent = formRef.current.querySelector(
-            ".password-strength-meter .progress",
+            ".progress",
         );
         const passwordStrength = parseInt(passwordStrengthComponent.value);
 
@@ -72,21 +74,21 @@ const PasswordChanger = ({ className, modifiedAccount }) => {
                 router.push("/admin-panel");
             } else {
                 setError(result.message);
-                setIsLoading(false);
             }
         }
+
+        setIsLoading(false);
     };
 
     return (
         <div className={className}>
             <form ref={formRef} onSubmit={handleSubmit}>
                 <label>Nouveau mot de passe :</label>
-                <input
-                    type="password"
+                <PasswordInput
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    required
+                    required={true}
                 />
                 <PasswordStrengthMeter password={formData.password} />
                 <label>Vérification du mot de passe :</label>
