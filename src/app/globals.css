@@ -194,6 +194,10 @@
     width: 100%;
 }
 
+.max-width-90p {
+    max-width: 90%;
+}
+
 .width-100 {
     width: 100px;
 }
@@ -449,6 +453,7 @@ span {
     padding: 20px;
 
     width: 500px;
+    max-width: 100%;
 }
 
 .form-container form {
@@ -478,10 +483,6 @@ td {
 @media (max-width: 500px) {
     .main-container {
         width: 95%;
-    }
-
-    .form-container {
-        width: 90%;
     }
 
     h1 {
