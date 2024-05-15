@@ -18,6 +18,7 @@ const BasketGestionnary = ({className}) => {
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentModalStep, setPaymentModalStep] = useState(0);
   const [paymentMethods, setPaymentMethods] = useState("");
   const [error, setError] = useState("");
 
@@ -169,34 +170,48 @@ const BasketGestionnary = ({className}) => {
           contentLabel="Valider le panier"
           id="validateBasketModal"
         >
-          <h2>Sélectionnez un moyen de paiement</h2>
+          {paymentModalStep === 0 ?
+            <>
+              <h2 className="text-center">Encaissement</h2>
+              <p className="error margin-top-20 text-center"> {"L'encaissement de " + basket.reduce((acc, article) => acc + article.price, 0) + " € a t'il bien été effectué ?"}</p>
+              <span className="margin-top-20 sideToSideButton">
+                <button onClick={() => setIsModalOpen(false)} className="width-full redButton">Non</button>
+                <button onClick={() => setPaymentModalStep(1)} className="width-full greenButton">Oui</button>
+              </span>
+            </>
+            :
+            (<>
+                <h2>Sélectionnez un moyen de paiement</h2>
+                <form ref={formRef} onSubmit={handleValidate}>
+                  <table className="margin-top-10 margin-bottom-10">
+                    <tbody>
+                      {paymentMethods.map((method, index) => (
+                        <tr key={index}>
+                          <td>
+                            <label>
+                              {method.charAt(0).toUpperCase() + method.slice(1)}
+                            </label>
+                          </td>
+                          <td>
+                            <input type="radio" name="paymentMethod" value={method} checked="checked" onChange={(e) => {
+                              if(e.target.checked)
+                                e.target.checked = true;
+      
+                            }}/>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+      
+                  <button type="submit" disabled={validatingBasket} className="width-full">
+                    Valider
+                  </button>
+                  
+                </form>
+            </>)
+          }
 
-          <form ref={formRef} onSubmit={handleValidate}>
-            <table className="margin-top-10 margin-bottom-10">
-              <tbody>
-                {paymentMethods.map((method, index) => (
-                  <tr key={index}>
-                    <td>
-                      <label>
-                        {method.charAt(0).toUpperCase() + method.slice(1)}
-                      </label>
-                    </td>
-                    <td>
-                      <input type="radio" name="paymentMethod" value={method} checked="checked" onChange={(e) => {
-                        if(e.target.checked)
-                          e.target.checked = true;
-
-                      }}/>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <button type="submit" disabled={validatingBasket} className="width-full">
-              Valider
-            </button>
-          </form>
         </Modal>
       )}
     </div>

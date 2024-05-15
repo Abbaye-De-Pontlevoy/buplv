@@ -83,19 +83,3 @@ export async function exportArticles() {
 
   return articles;
 }
-
-// Function to reset the database
-export async function resetBDD() {
-  try {
-    await prisma.$queryRaw`SELECT public.reset_database()`;
-    return {
-      success: true,
-      msg: "La base de données a été réinitialisée",
-    };
-  } catch (e) {
-    return {
-      success: false,
-      msg: e,
-    };
-  }
-}
