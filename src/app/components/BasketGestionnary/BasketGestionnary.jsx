@@ -176,7 +176,7 @@ const BasketGestionnary = ({className}) => {
               <p className="error margin-top-20 text-center"> {"L'encaissement de " + basket.reduce((acc, article) => acc + article.price, 0) + " € a t'il bien été effectué ?"}</p>
               <span className="margin-top-20 sideToSideButton">
                 <button onClick={() => {setPaymentMethods(0); setIsModalOpen(false)}} className="width-full redButton">Non</button>
-                <button onClick={() => setPaymentModalStep(1)} className="width-full greenButton">Oui</button>
+                <button onClick={() => setPaymentModalStep(1)} className="width-full">Oui</button>
               </span>
             </>
             :
