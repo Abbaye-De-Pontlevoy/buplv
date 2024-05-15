@@ -13,7 +13,6 @@ export default async function Page() {
       <div className="bandeau-rangement">
         <form action="/dashboard" className="buttonForm">
           <button type="submit" id="participeButton">
-            {" "}
             Je participe à la bourse !
           </button>
         </form>
