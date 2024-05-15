@@ -161,7 +161,7 @@ export default function Register() {
   return (
     <>
       <Header displayAccountButton={false} />
-      <div className="flex-column flex-center margin-bottom-50">
+      <div className="flex-column flex-center margin-bottom-50  max-width-90p">
         <div className="form-container">
           <h1 className="padding-30">Créer un compte</h1>
 
