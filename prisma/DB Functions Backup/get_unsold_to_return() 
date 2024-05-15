@@ -1,19 +1,17 @@
+-- DROP FUNCTION public.get_unsold_to_return();
+
 CREATE OR REPLACE FUNCTION public.get_unsold_to_return()
-    RETURNS json
-    LANGUAGE plpgsql
+ RETURNS json
+ LANGUAGE plpgsql
 AS $function$
 DECLARE
     results_json json;
 BEGIN
     SELECT json_agg(json_build_object(
-        'seller_id', s.id,
-        'seller_name', s.name,
-        'article_id', a.id,
-        'brand', a.brand,
-        'article_name', a.name,
-        'size', a.size,
-        'price', a.price,
-        'state', a.state
+        'ID Vendeur', s.id,
+        'Nom', CONCAT(s.firstname, ' ', s.name),
+        'ID Article', a.id,
+        'Article', a.name
     ))
     INTO results_json
     FROM
@@ -26,4 +24,5 @@ BEGIN
 
     RETURN results_json;
 END;
-$function$;
+$function$
+;

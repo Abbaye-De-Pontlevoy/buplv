@@ -153,7 +153,7 @@ const ArticleModifier = ({className}) => {
                       Supprimé
                     </option>
                     <option key="-1" value="-1">
-                      Invendableœ
+                      Invendable
                     </option>
                   </select>
                 </td>

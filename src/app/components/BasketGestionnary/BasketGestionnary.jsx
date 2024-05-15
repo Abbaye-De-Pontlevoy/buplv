@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
 import ArticleList from "../Article/ArticleList/ArticleList";
 import QRCodeReaderModal from "../QRCodeReader/QRCodeModal";
@@ -11,6 +11,9 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 import "./styles.css";
 
 const BasketGestionnary = ({className}) => {
+  // Form ref
+  const formRef = useRef(null);
+
   // Initialize state variables
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
@@ -102,6 +105,7 @@ const BasketGestionnary = ({className}) => {
     // Get the payment method from the form
     const paymentMethod = e.target.paymentMethod.value;
 
+
     // Validate the basket
     // Block the UI while validating
     // If the validation is successful, empty the basket
@@ -168,7 +172,7 @@ const BasketGestionnary = ({className}) => {
         >
           <h2>Sélectionnez un moyen de paiement</h2>
 
-          <form onSubmit={handleValidate}>
+          <form ref={formRef} onSubmit={handleValidate}>
             <table className="margin-top-10 margin-bottom-10">
               <tbody>
                 {paymentMethods.map((method, index) => (

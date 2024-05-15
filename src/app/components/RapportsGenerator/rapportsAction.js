@@ -65,6 +65,14 @@ export async function getRapportsIBAN() {
 export async function getUnsoldArticlesToReturn() {
   const queryResult =
     await prisma.$queryRaw`SELECT public.get_unsold_to_return() as unsold_articles`;
+  if(!queryResult[0].unsold_articles){
+    return [{
+      "ID Vendeur": "Aucun article à retourner",
+      "Nom": "",
+      "ID Article": "",
+      "Article": "",
+    }];
+  }
   return queryResult[0].unsold_articles;
 }
 
@@ -73,6 +81,8 @@ export async function getRapportSeller() {
   const settings = await getSettings();
   const queryResult =
     await prisma.$queryRaw`SELECT public.get_total_gain_per_seller(${settings.APELPart}, ${settings.returnFees}) as total_gain_per_seller`;
+
+  // Cannot be empty because of the admin and the benevole
 
   return queryResult[0].total_gain_per_seller;
 }
