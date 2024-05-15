@@ -38,10 +38,6 @@
 	width: fit-content;
 }
 
-.modal-content .error{
-	color: red;
-}
-
 .modal-content span{
 	justify-content: stretch;
 }

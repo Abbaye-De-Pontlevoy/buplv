@@ -140,6 +140,7 @@ h3 {
 
 p.error {
   color: red;
+	text-align: center;
 }
 
 .formTitle {
@@ -172,6 +173,10 @@ span {
 
 .formContainer form {
   padding: 0px;
+}
+
+.checkbox {
+  width: min-content;
 }
 
 table {

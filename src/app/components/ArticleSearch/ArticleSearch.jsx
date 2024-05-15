@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { getArticleByID } from "../../helpers/getArticleByID";
 
-import "./styles.css";
-
 const ArticleSearch = ({
     onArticleSearch,
     placeholder = "Rechercher par ID",
