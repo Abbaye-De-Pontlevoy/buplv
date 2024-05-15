@@ -12,7 +12,7 @@ const ChangePasswordPage = () => {
                     <h1 className="margin-bottom-20">
                         Modification du mot de passe Bénévole
                     </h1>
-                    <PasswordChanger modifiedAccount="benevole" />
+                    <PasswordChanger modifiedAccount="benevole" className="width-full"/>
                 </div>
 
                 <ReturnArrowButton

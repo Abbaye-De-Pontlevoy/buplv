@@ -12,7 +12,7 @@ const ChangePasswordPage = () => {
                     <h1 className="margin-bottom-20">
                         Modification du mot de passe Adminitrateur
                     </h1>
-                    <PasswordChanger modifiedAccount="admin" />
+                    <PasswordChanger modifiedAccount="admin" className="width-full"/>
                 </div>
 
                 <ReturnArrowButton
