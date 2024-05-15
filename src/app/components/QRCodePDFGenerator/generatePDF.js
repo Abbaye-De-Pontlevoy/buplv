@@ -71,13 +71,19 @@ export async function generatePDF(data, sellerInfos) {
     doc.addImage(qrCodeDataURL, "PNG", margin, y + 5, 20, 20);
 
     // Add the QR code title next to it
+    // Add staple illustration
+    doc.setLineWidth(0.5);
+    doc.line(50, y+4, 52, y+4);
+    doc.line(53, y+4, 55, y+4);
+
+    // QR code data
     doc.setFontSize(8);
     doc.text(
       50,
       y + 8,
       `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nRef : ${data[i].id}\nRef Vendeur: ${data[i].seller_id}`
     );
-    y += 30;
+    y += 26;
 
     // Draw a line under the QR code
     doc.setLineWidth(0.3);
