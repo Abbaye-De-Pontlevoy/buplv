@@ -73,26 +73,54 @@ export async function generatePDF(data, sellerInfos) {
     // Add the QR code title next to it
     // Add staple illustration
     doc.setLineWidth(0.5);
-    doc.line(50, y+4, 52, y+4);
-    doc.line(53, y+4, 55, y+4);
+    doc.line(margin+30, y+3, margin+32, y+3);
+    doc.line(margin+33, y+3, margin+32, y+3);
 
     // QR code data
     doc.setFontSize(8);
     doc.text(
-      50,
+      margin + 30,
       y + 8,
       `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nRef : ${data[i].id}\nRef Vendeur: ${data[i].seller_id}`
     );
-    y += 26;
+
+    // Draw a line over the QR code
+    doc.setLineWidth(0.3);
+    doc.line(margin-5, y, margin+70, y);
+
+    // Draw a line at left and right of the QR code
+    doc.setLineWidth(0.3);
+    doc.line(margin-5, y, margin-5, y+27);
+    doc.line(margin+70, y, margin+70, y+27);
+
+    y += 27;
 
     // Draw a line under the QR code
     doc.setLineWidth(0.3);
-    doc.line(15, y, 190, y);
+    doc.line(margin-5, y, margin+70, y);
 
-    // Add a new page if necessary
+    // if we are on the bottom of the page, use the next side
+    // if we are already on the next side, add a new page
     if (y > 240) {
-      doc.addPage();
-      y = 10;
+      if(margin === 20)
+        margin = 100;
+      else{
+        doc.addPage();
+        margin = 20;
+        // add title and subtitle again
+        // TITLE
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Liste des QR codes (à imprimer)", 105, 20, null, null, "center");
+
+        // SUBTITLE
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(12);
+        doc.text("QR codes et description à découper et à agrafer\nsur l'étiquette de chaque vêtement (cf. emplacement de l'agrafe)", 105, 26, null, null, "center");
+
+        doc.setFont("helvetica", "normal");
+      }
+      y = 40;
     }
   }
 
