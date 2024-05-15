@@ -1,74 +1,29 @@
-#registerContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  gap: 20px;
-	padding: 20px;
-	max-width: 95%;
-}
-
-#circleSpan{
-	padding-top: 10px;
-	padding-bottom: 20px;
-	justify-content: center;
-}
-
 .line {
-  height: 2px; 
-  width: 80px; 
-  background-color: var(--main-blue); 
-  position: relative; 
+    height: 2px;
+    width: 80px;
+    background-color: var(--main-blue);
+    position: relative;
 }
 
 .active.line {
-  background-color: var(--main-blue);
-	height: 4px;
+    background-color: var(--main-blue);
+    height: 4px;
 }
-
-.circleSpan {
-  display: flex;
-  align-items: center;
-}
-
 .circle {
-  width: 40px; /* Largeur du cercle */
-  height: 40px; /* Hauteur du cercle */
-  border-radius: 50%; /* Bordure arrondie pour créer un cercle */
-  background-color: white; /* Couleur de fond blanc */
-  color: var(--main-blue); /* Couleur du texte bleu */
-  border: 2px solid var(--main-blue); /* Bordure bleue de 2px */
-  display: flex; /* Utilisation de Flexbox pour centrer le contenu */
-  justify-content: center; /* Centrer horizontalement */
-  align-items: center; /* Centrer verticalement */
-  font-size: 20px; /* Taille du texte */
-  position: relative; /* Positionnement relatif pour placer la ligne par rapport au cercle */
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: white;
+    color: var(--main-blue);
+    border: 2px solid var(--main-blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    position: relative;
 }
 
-#circleSpan .activeCircle {
-  background-color: var(--main-blue);
-  color: white;
-}
-
-.buttonSpan button{
-	width: 100%;
-}
-
-#loginLink{
-  padding-top: 20px;
-}
-
-/* media queries */
-@media (max-width: 500px) {
-  #registerMainContainer{
-    width: 100%;
-  }
-}
-
-#checkboxesDiv{
-  margin: 30px 10px 30px 0px;
-}
-
-#donApelCheckBox, #cguCheckBox{
-  width: 10px;
+.activeCircle {
+    background-color: var(--main-blue);
+    color: white;
 }

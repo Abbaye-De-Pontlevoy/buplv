@@ -155,7 +155,7 @@ const ProfilePage = () => {
             <Header />
             <Menu current="/profil" />
             <div className="bandeau-rangement">
-                <div className="mainContainer" id="mainContainerProfile">
+                <div className="main-container">
                     <h1>Mon profil</h1>
                     {isLoading ? (
                         <p>Chargement...</p>
@@ -171,7 +171,7 @@ const ProfilePage = () => {
                                         <>
                                             {/* Display user information */}
                                             <span>
-                                                <label className="verticalLabel">
+                                                <label className="width-full">
                                                     Prénom :
                                                     <input
                                                         type="text"
@@ -184,7 +184,7 @@ const ProfilePage = () => {
                                                         required
                                                     />
                                                 </label>
-                                                <label className="verticalLabel">
+                                                <label className="width-full">
                                                     Nom :
                                                     <input
                                                         type="text"
@@ -334,6 +334,7 @@ const ProfilePage = () => {
                                     <label>
                                         <input
                                             type="checkbox"
+                                            className="checbox margin-right-10"
                                             checked={editingMode}
                                             onChange={() =>
                                                 setEditingMode(!editingMode)

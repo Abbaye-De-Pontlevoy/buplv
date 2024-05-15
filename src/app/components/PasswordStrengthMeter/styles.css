@@ -1,7 +1,3 @@
-.password-strength-meter {
-  width: 100%;
-}
-
 progress[value] {
   --color: var(--main-blue); /* the progress color */
   --background: lightgrey; /* the background color */

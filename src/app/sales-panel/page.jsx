@@ -14,11 +14,11 @@ const SalesPanel = () => {
     const tabList = ["Caisse", "Inventaire"];
     const tabsContents = [
       <>
-        <h1 className="formTitle">Caisse</h1>
+        <h1 className="padding-30">Caisse</h1>
         <BasketGestionnary />
       </>,
       <>
-        <h1 className="formTitle">Inventaire</h1>
+        <h1 className="padding-30">Inventaire</h1>
         <ArticleScanner />
       </>
     ];
@@ -30,12 +30,13 @@ const SalesPanel = () => {
       <Header  />
       <Menu current="/sales-panel" />
       <div className="bandeau-rangement">
-        <div className="mainContainer" id="dashboardMainContainer">
+        <div className="main-container" id="dashboardmain-container">
           <TabsMenu
             tabs={tabList}
             tabsContents={tabsContents}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            className="width-full"
           />
         </div>
       </div>

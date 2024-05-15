@@ -11,7 +11,7 @@ export default async function Page() {
       <Header  />
       <Menu current="/details" />
       <div className="bandeau-rangement">
-        <div className="mainContainer" id="corpus-div">
+        <div className="main-container" className="main-container">
           <h1>Conditions Générales d'Utilisation</h1>
           <p>
             Ci-dessous beaucoup de choses pour te dire qu'en gros tu n'as pas le

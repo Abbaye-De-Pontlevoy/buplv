@@ -12,13 +12,13 @@ export default async function Page() {
       <Menu current="/" />
       <div className="bandeau-rangement">
         <form action="/dashboard" className="buttonForm">
-          <button type="submit" id="participeButton">
+          <button type="submit" className="padding-20">
             Je participe à la bourse !
           </button>
         </form>
       </div>
-      <div id="corpus-div">
-        <h1>La bourse à l'uniforme</h1>
+      <div className="max-width-800 text-justify margin-left-50 margin-right-50 margin-top-10 margin-bottom-20">
+        <h1 className="margin-20">La bourse à l'uniforme</h1>
         <p>
           La bourse à l'uniforme est un événement organisé par l'association des
           parents d'élèves de l'abbaye de Pontlevoy. C'est un moment de partage

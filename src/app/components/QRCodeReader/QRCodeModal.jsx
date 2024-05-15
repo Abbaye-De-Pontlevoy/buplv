@@ -35,7 +35,7 @@ const QRCodeReaderModal = ({ onQRCodeRead, disabled, className }) => {
         id="qrModal"
       >
         <QRCodeReader onQRCodeRead={handleModalClose} />
-        <button id="qrModalButton" onClick={() => setShowModal(false)}>
+        <button className="margin-top-10 width-full" onClick={() => setShowModal(false)}>
           Fermer
         </button>
       </Modal>

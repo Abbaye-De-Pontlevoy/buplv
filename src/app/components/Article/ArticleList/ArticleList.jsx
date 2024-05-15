@@ -9,7 +9,7 @@ const ArticleList = ({
   priceFactor = 1,
 }) => {
   return (
-    <div className={"overFlowSlider " + className}>
+    <div className={"overFlowXSlider width-full " + className}>
       <table id="articleTable">
         <thead>
           <tr>
@@ -18,7 +18,7 @@ const ArticleList = ({
             <th>Taille</th>
             <th>État</th>
             <th>Prix</th>
-            <th id="thDelete">Supprimer</th>
+            <th className="flex-column flex-center">Supprimer</th>
           </tr>
         </thead>
         <tbody>

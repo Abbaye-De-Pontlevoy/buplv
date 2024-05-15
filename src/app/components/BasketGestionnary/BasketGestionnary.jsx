@@ -121,12 +121,13 @@ const BasketGestionnary = ({className}) => {
   return (
     <div className={className}>
       {/* Display the basket content */}
-      <div className="overFlowSlider">
+      <div className="overFlowXSlider width-full">
         <ArticleList
           articleList={basket}
           callAfterDelete={removeArticle}
           displayTotal={true}
           enabledRemoveButton={true}
+          className="padding-bottom-10"
         />
       </div>
 
@@ -143,7 +144,7 @@ const BasketGestionnary = ({className}) => {
       <p className="error">{error}</p>
 
       {/* Display the validate and scan buttons */}
-      <span id="validateAndScanSpan">
+      <span className="margin-top-10">
         {/* QR code reader button*/}
         <QRCodeReaderModal onQRCodeRead={checkArticle} className="sideToSideButton" />
 
@@ -168,7 +169,7 @@ const BasketGestionnary = ({className}) => {
           <h2>Sélectionnez un moyen de paiement</h2>
 
           <form onSubmit={handleValidate}>
-            <table>
+            <table className="margin-top-10 margin-bottom-10">
               <tbody>
                 {paymentMethods.map((method, index) => (
                   <tr key={index}>
@@ -185,7 +186,7 @@ const BasketGestionnary = ({className}) => {
               </tbody>
             </table>
 
-            <button type="submit" disabled={validateBasket}>
+            <button type="submit" disabled={validateBasket} className="width-full">
               Valider
             </button>
           </form>

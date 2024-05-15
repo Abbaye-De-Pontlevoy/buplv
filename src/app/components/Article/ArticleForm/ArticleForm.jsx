@@ -70,17 +70,18 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
   };
 
   return (
-    <div className={"addArticleContainer " + className}>
-      <h3 id="articleFormTitle">{title}</h3>
-      <form onSubmit={handleSubmit} id="addArticleForm">
+    <div className={className}>
+      <h3>{title}</h3>
+      <form onSubmit={handleSubmit}>
         <table>
           <tbody>
-            <tr>
-              <td>
+            <tr className="flex-row flex-center">
+              <td className="width-full">
                 {/* Select the 'grade' */}
                 <select
                   name="grade"
                   key="grade"
+                  className="width-full"
                   value={grade}
                   onChange={(e) => setGrade(e.target.value)}
                   disabled={!articleData || isLoading}
@@ -96,11 +97,12 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                   ))}
                 </select>
               </td>
-              <td>
+              <td  className="width-full">
                 {/* Select the 'sex' */}
                 <select
                   name="sex"
                   key="sex"
+                  className="width-full"
                   value={sex}
                   onChange={(e) => setSex(e.target.value)}
                   disabled={!grade || isLoading}
@@ -117,11 +119,12 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                     ))}
                 </select>
               </td>
-              <td>
+              <td  className="width-full">
                 {/* Select the 'name' */}
                 <select
                   name="name"
                   key="name"
+                  className="width-full"
                   value={`${name.brand}-${name.name}`}
                   onChange={(e) => {
                     const [brand, articleName] = e.target.value.split("-");
@@ -149,11 +152,12 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                     )}
                 </select>
               </td>
-              <td>
+              <td  className="width-full">
                 {/* Select the 'size' */}
                 <select
                   name="size"
                   key="size"
+                  className="width-full"
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
                   disabled={!name.brand || isLoading}
@@ -174,11 +178,12 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                     )}
                 </select>
               </td>
-              <td>
+              <td  className="width-full">
                 {/* Select the 'quantity' */}
                 <select
                   name="quantity"
                   key="quantity"
+                  className="width-full"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
                   disabled={!size || isLoading}
@@ -202,6 +207,7 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                 {/* Submit button */}
                 <button
                   id="addArticleButton"
+                  className="margin-left-10"
                   type="submit"
                   disabled={!quantity || isLoading}
                 >

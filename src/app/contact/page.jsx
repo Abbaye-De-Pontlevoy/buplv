@@ -16,7 +16,7 @@ const ContactPage = () => {
       <Menu current="/contact" />
 
       <div className="bandeau-rangement">
-        <div className="mainContainer">
+        <div className="main-container">
           <h1>Page de contact</h1>
           <p>Name: {randomName}</p>
           <p>Email: {randomEmail}</p>

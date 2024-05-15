@@ -20,7 +20,7 @@ export const ArticleDisplay = ({
   };
 
   return (
-    <tr className={"articleLine " + className}>
+    <tr className={className} class="articleLine">
       <td>{article.name}</td>
       <td>{article.brand}</td>
       <td>{article.size}</td>
@@ -34,7 +34,7 @@ export const ArticleDisplay = ({
           : "Enregistré"}
       </td>
       <td>{article.price * priceFactor} €</td>
-      <td className="tdDeleteButton">
+      <td className="flex-column flex-center">
         {/* Display the delete button if the user is allowed to remove articles */}
         {/* Else, display a dash */}
         {/* The delete button is disabled while the article is being deleted */}

@@ -48,7 +48,7 @@ const Menu = ({ className, current }) => {
           <a
             key={index}
             href={item.path}
-            className={current === item.path ? "item active" : "item"}
+            className={(current === item.path ? "item active" : "item") + " decoration-none font-weight-bold"}
           >
             {item.name}
           </a>

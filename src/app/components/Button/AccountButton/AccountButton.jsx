@@ -4,17 +4,15 @@ import { useContext } from "react";
 import { MdAccountCircle } from "react-icons/md";
 import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
-import "./styles.css";
-
 // AccountButton component
 const AccountButton = ({ className }) => {
   const { userInfo } = useContext(UserInfoContext);
 
   return (
-    <div className={className} id="accountDiv">
+    <div className={className}>
       {userInfo.isConnected ? (
         // If user is connected, display link to profile
-        <a href="/profil">
+        <a href="/profil" className="decoration-none">
           <span id="accountSpan">
             Mon compte
             <MdAccountCircle size={32} />
@@ -22,7 +20,7 @@ const AccountButton = ({ className }) => {
         </a>
       ) : (
         // If user is not connected, display link to login
-        <a href="/login">
+        <a href="/login" className="decoration-none">
           <span id="accountSpan">
             Me connecter
             <MdAccountCircle size={32} />

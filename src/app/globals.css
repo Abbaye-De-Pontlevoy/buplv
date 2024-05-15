@@ -1,218 +1,499 @@
 @import url("https://fonts.googleapis.com/css2?family=Tauri&display=swap");
 
 :root {
-  --main-blue: #123554;
-  --main-blue-rgb: 18, 53, 84;
-  --light-main-blue: rgba(18, 53, 84, 0.8);
+    --main-blue: #123554;
+    --main-blue-rgb: 18, 53, 84;
+    --light-main-blue: rgba(18, 53, 84, 0.8);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Tauri", sans-serif;
-  color: var(--main-blue);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Tauri", sans-serif;
+    color: var(--main-blue);
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Global classes */
+.padding-10 {
+    padding: 10px;
+}
 
-  width: 100%;
+.padding-vertical-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padding-horizontal-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.padding-bottom-10 {
+    padding-bottom: 10px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-vertical-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.padding-horizontal-20 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.padding-top-20 {
+    padding-top: 20px;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
+}
+
+.padding-30 {
+    padding: 30px;
+}
+
+.margin-10 {
+    margin: 10px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.margin-20 {
+    margin: 20px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.margin-right-20 {
+    margin-right: 20px;
+}
+
+.margin-50 {
+    margin: 50px;
+}
+
+.margin-top-50 {
+    margin-top: 50px;
+}
+
+.margin-bottom-50 {
+    margin-bottom: 50px;
+}
+
+.margin-left-50 {
+    margin-left: 50px;
+}
+
+.margin-right-50 {
+    margin-right: 50px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+.flex-align-right {
+    align-items: flex-end;
+}
+
+.flex-align-left {
+    align-items: flex-start;
+}
+
+.flex-justify-space-between {
+    justify-content: space-between;
+}
+
+.flex-justify-stretch {
+    justify-content: stretch;
+}
+
+.flex-justify-space-around {
+    justify-content: space-around;
+}
+
+.flex-left {
+    justify-content: flex-start;
+}
+
+.flex-right {
+    justify-content: flex-end;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-no-wrap {
+    flex-wrap: nowrap;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+.width-full {
+    width: 100%;
+}
+
+.width-100 {
+    width: 100px;
+}
+
+.width-500 {
+    width: 500px;
+}
+
+.min-width-500 {
+    min-width: 500px;
+}
+
+.max-width-500 {
+    max-width: 500px;
+}
+
+.width-800 {
+    width: 800px;
+}
+
+.min-width-800 {
+    min-width: 800px;
+}
+
+.max-width-800 {
+    max-width: 800px;
+}
+
+.height-full {
+    height: 100%;
+}
+
+.height-100 {
+    height: 100px;
+}
+
+.height-200 {
+    height: 200px;
+}
+
+.self-center {
+    align-self: center;
+}
+
+.self-left {
+    align-self: flex-start;
+}
+
+.self-right {
+    align-self: flex-end;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.overFlowXSlider {
+    overflow-x: auto;
+}
+
+.decoration-none {
+    text-decoration: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-black {
+    color: black;
+}
+
+.background-white {
+    background-color: white;
+}
+
+.object-fit-contain {
+    object-fit: contain;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}
+
+.font-weight-lighter {
+    font-weight: lighter;
+}
+
+.list-style-type-none {
+    list-style-type: none;
+}
+
+/* Global classes */
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
 }
 
 .pageCorpusContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 100vh;
 }
 
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-  gap: 20px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  max-width: 95%;
-  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.2);
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px !important;
+    gap: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 8px;
+    max-width: 95%;
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.2);
+    text-align: justify;
 }
 
-.overFlowSlider {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.button,
 button {
-  border: none;
-  outline: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 8px;
 
-  background-color: var(--light-main-blue);
+    background-color: var(--light-main-blue);
 
-  font-size: large;
-  color: white;
+    font-size: large;
+    color: white;
 }
 
-button.redButton{
-  background-color: rgb(189, 51, 51);
+button.redButton {
+    background-color: rgb(189, 51, 51);
 }
 
-button.redButton:hover{
-  background-color: rgb(153, 40, 40);
+button.redButton:hover {
+    background-color: rgb(153, 40, 40);
 }
 
-button.redButton:disabled{
-  background-color: rgb(92, 24, 24);
+button.redButton:disabled {
+    background-color: rgb(92, 24, 24);
 }
 
-button.greenButton{
-  background-color: rgb(2, 109, 2);
+button.greenButton {
+    background-color: rgb(2, 109, 2);
 }
 
-button.greenButton:hover{
-  background-color: rgb(2, 89, 2);
+button.greenButton:hover {
+    background-color: rgb(2, 89, 2);
 }
 
-button.greenButton:disabled{
-  background-color: rgb(1, 56, 1);
+button.greenButton:disabled {
+    background-color: rgb(1, 56, 1);
 }
 
-.button:hover,
 button:hover {
-  cursor: pointer;
-  background-color: var(--main-blue);
+    cursor: pointer;
+    background-color: var(--main-blue);
 }
 
 button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: var(--main-blue);
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--main-blue);
 }
 
-.sideToSideButton{
-  flex: 1;
-  width: 100%;
+.sideToSideButton {
+    flex: 1;
+    width: 100%;
 }
 
-.sideToSideButton button{
-  width: 100%;
+.sideToSideButton button {
+    width: 100%;
 }
 
 .formulaire {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
 
-  width: 100%;
+    width: 100%;
 }
 
 form input {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid var(--main-blue);
-  width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid var(--main-blue);
+    width: 100%;
 }
 
 form input:disabled {
-  background-color: #f0f0f0;
-  border-color: white;
+    background-color: #f0f0f0;
+    border-color: white;
 }
 
 h1 {
-  font-size: 2em;
-  text-align: center;
+    font-size: 2em;
+    text-align: center;
 }
 
 h3 {
-  align-self: flex-start;
+    align-self: flex-start;
 }
 
 p.error {
-  color: red;
-	text-align: center;
-}
-
-.formTitle {
-  padding: 30px;
+    color: red;
+    text-align: center;
 }
 
 span {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 5px;
-  width: 100%;
-  align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
 }
 
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  background-color: white;
+    background-color: white;
 
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 20px;
 
-  width: 500px;
+    width: 500px;
 }
 
-.formContainer form {
-  padding: 0px;
+.form-container form {
+    padding: 0px;
 }
 
 .checkbox {
-  width: min-content;
+    width: min-content;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  padding: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    padding: 20px;
 }
 
 th,
 td {
-  text-align: left;
-  vertical-align: middle;
+    text-align: left;
+    vertical-align: middle;
 }
 
-.phoneOnly {
-  display: none !important;
+.phone-only {
+    display: none !important;
 }
 
 @media (max-width: 500px) {
-  .mainContainer {
-    width: 95%;
-  }
+    .main-container {
+        width: 95%;
+    }
 
-  .formContainer {
-    width: 90%;
-  }
+    .form-container {
+        width: 90%;
+    }
 
-  h1 {
-    font-size: 1.5em;
-  }
+    h1 {
+        font-size: 1.5em;
+    }
 
-  .phoneOnly {
-    display: flex !important;
-  }
-  
-  .desktopOnly {
-    display: none !important;
-  }
+    .phone-only {
+        display: flex !important;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
 }

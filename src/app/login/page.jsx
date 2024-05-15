@@ -7,8 +7,6 @@ import Header from "../components/Header/Header";
 import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
 import { useRouter } from "next/navigation";
 
-import "./styles.css";
-
 export default function Login() {
   // Get the router object
   // Used to redirect the user after login
@@ -60,9 +58,9 @@ export default function Login() {
   return (
     <>
       <Header displayAccountButton={false} />
-      <div id="loginContainer">
-        <div className="formContainer">
-          <h1 className="formTitle">Connexion</h1>
+      <div className="flex-column flex-center margin-bottom-50">
+        <div className="form-container">
+          <h1 className="padding-30">Connexion</h1>
           <form ref={formRef} onSubmit={handleValidate} className="formulaire">
             <label>
               Email:
@@ -89,10 +87,10 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="error">{error}</p>
-          <a href="/register">Pas encore inscrit ?</a>
+          <p className="error margin-top-10">{error}</p>
+          <a href="/register" className="margin-top-10">Pas encore inscrit ?</a>
         </div>
-        <ReturnArrowButton text="Retour à l'accueil" link="/"/>
+        <ReturnArrowButton text="Retour à l'accueil" link="/" className="self-left margin-top-10"/>
       </div>
     </>
   );

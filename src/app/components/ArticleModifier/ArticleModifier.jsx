@@ -3,8 +3,6 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 import { getAllClothesInfo } from "@/app/data/clothesJSONActions";
 import { updateArticle } from "./modifierAction";
 
-import "./styles.css";
-
 const ArticleModifier = ({className}) => {
   // Initialize state variables
   const [articleJSONData, setArticleJSONData] = useState(null);
@@ -36,8 +34,8 @@ const ArticleModifier = ({className}) => {
 
       {/* Modification Form */}
       {articleData && articleJSONData && (
-        <form id="modificationForm" onSubmit={handleSubmit}>
-          <table id="modificationTable">
+        <form onSubmit={handleSubmit}>
+          <table>
             <tbody>
               <tr>
                 <td>
@@ -47,7 +45,7 @@ const ArticleModifier = ({className}) => {
                   <input
                     name="id"
                     id="id"
-                    className="modificationSelect"
+                    className="width-full"
                     value={articleData.id}
                     disabled={true}
                   ></input>
@@ -62,7 +60,7 @@ const ArticleModifier = ({className}) => {
                   <select
                     name="brand"
                     id="brand"
-                    className="modificationSelect"
+                    className="width-full"
                     value={articleData.brand}
                     onChange={(e) =>
                       setArticleData({ ...articleData, brand: e.target.value })
@@ -86,7 +84,7 @@ const ArticleModifier = ({className}) => {
                   <select
                     name="name"
                     id="name"
-                    className="modificationSelect"
+                    className="width-full"
                     value={articleData.name}
                     onChange={(e) =>
                       setArticleData({ ...articleData, name: e.target.value })
@@ -110,7 +108,7 @@ const ArticleModifier = ({className}) => {
                   <select
                     name="size"
                     id="size"
-                    className="modificationSelect"
+                    className="width-full"
                     value={articleData.size}
                     onChange={(e) =>
                       setArticleData({ ...articleData, size: e.target.value })
@@ -133,7 +131,7 @@ const ArticleModifier = ({className}) => {
                   <select
                     name="state"
                     id="state"
-                    className="modificationSelect"
+                    className="width-full"
                     value={articleData.state}
                     onChange={(e) =>
                       setArticleData({ ...articleData, state: e.target.value })
@@ -155,7 +153,7 @@ const ArticleModifier = ({className}) => {
                       Supprimé
                     </option>
                     <option key="-1" value="-1">
-                      Invendable
+                      Invendableœ
                     </option>
                   </select>
                 </td>

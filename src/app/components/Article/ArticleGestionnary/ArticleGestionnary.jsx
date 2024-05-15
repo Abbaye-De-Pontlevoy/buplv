@@ -35,9 +35,9 @@ const ArticleGestionnary = ({ className, articleList, setArticleList, isLoading 
   return (
     <div className={className}>
       {isLoading ? (
-        "Chargement..."
+        <p className="text-center">Chargement...</p>
       ) : (
-        <div className={className}>
+        <div className="flex-column gap-20">
           {/* Display the article list */}
           <ArticleList
             articleList={articleList}
@@ -64,7 +64,7 @@ const ArticleGestionnary = ({ className, articleList, setArticleList, isLoading 
             </p>
           )}
 
-          {articleList.length != 0 && <QRCodePDFGenerator data={articleList} />}
+          {articleList.length != 0 && <QRCodePDFGenerator data={articleList} className="self-center margin-top-10"/>}
         </div>
       )}
     </div>

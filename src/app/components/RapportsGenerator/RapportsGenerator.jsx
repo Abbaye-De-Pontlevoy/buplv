@@ -23,7 +23,7 @@ const RapportsGenerator = ({className}) => {
 
       const data = await getRapportTreso();
       setRapportTreso(
-        <div className="overFlowSlider">
+        <div className="overFlowXSlider width-full">
           <p>Nombre de vendeurs : {data.nbSeller}</p>
           <p>Nombre d'articles : {data.nbArticle}</p>
           <table id="rapportTresoTable">
@@ -36,7 +36,7 @@ const RapportsGenerator = ({className}) => {
             </thead>
             <tbody>
               {Object.keys(data.gains).map((key) => (
-                <tr key={key} id={key === "Total" ? "total" : ""}>
+                <tr key={key} className={key==="Total" ? "font-weight-bold" : ""}>
                   <td>{key}</td>
                   <td>{data.gains[key].nbTransaction}</td>
                   <td>{data.gains[key].amount} €</td>
@@ -56,11 +56,11 @@ const RapportsGenerator = ({className}) => {
   return (
     <div className={className}>
       {isLoading ? (
-        <p>Chargement...</p>
+        <p className="text-center">Chargement...</p>
       ) : (
-        <div id="rapportsContainer">
+        <div className="flex-column gap-10">
           <div id="rapportTreso">
-            <h2>Rapport de trésorerie</h2>
+            <h2 className="margin-bottom-10">Rapport de trésorerie</h2>
             {rapportTreso}
           </div>
 
@@ -84,7 +84,7 @@ const RapportsGenerator = ({className}) => {
 
           <div className="separator"></div>
 
-          <div id="BDDDiv">
+          <div className="flex-column gap-10 margin-top-20">
             <h2>Base de données</h2>
 
             <DownloadCSVButton
@@ -98,7 +98,7 @@ const RapportsGenerator = ({className}) => {
               filename="BDD_LISTE_ARTICLES"
               buttonText="Exporter la liste des articles"
             />
-            <ResetBDDButton />
+            <ResetBDDButton className="width-full" />
           </div>
         </div>
       )}

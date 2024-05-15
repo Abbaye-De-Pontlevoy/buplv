@@ -11,32 +11,3 @@
 	background-attachment: fixed; 
 	background-size: cover;
 }
-
-#corpus-div{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	text-align: justify;
-
-	margin-top: 50px;
-	margin-bottom: 50px;
-
-	max-width:800px;
-
-	background-color: white;
-}
-
-#corpus-div h1{
-	margin: 20px;
-}
-
-#participeButton{
-	padding: 20px;
-}
-
-@media (max-width: 500px) {
-	#corpus-div{
-		width: 90%;
-	}
-}

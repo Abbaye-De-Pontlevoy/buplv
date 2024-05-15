@@ -37,13 +37,14 @@ const Dashboard = () => {
       <Header  />
       <Menu current="/dashboard" />
       <div className="bandeau-rangement">
-        <div className="mainContainer" id="dashboardMainContainer">
-          <h1 className="formTitle">Liste des articles enregistrés</h1>
+        <div className="main-container">
+          <h1 className="padding-30">Liste des articles enregistrés</h1>
           <ArticleGestionnary
             articleList={articleList}
             setArticleList={setArticleList}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            className="width-full"
           />
         </div>
       </div>

@@ -90,7 +90,7 @@ const ArticleScanner = ({className}) => {
         </ul>
 
         {/* Display the action buttons */}
-        <div id="buttonDiv">
+        <div className="flex-column gap-10">
           {/* if article is inventoried */}
           {qrCodeData.state === 2 && (
             <button
@@ -105,7 +105,7 @@ const ArticleScanner = ({className}) => {
                 else setModalError(result.msg);
                 setIsLoading(false);
               }}
-              className="redButton"
+              className="redButton width-full"
               disabled={isLoading}
             >
               Enlever de l'inventaire
@@ -125,7 +125,7 @@ const ArticleScanner = ({className}) => {
                 else setModalError(result.msg);
                 setIsLoading(false);
               }}
-              className="redButton"
+              className="redButton width-full"
               disabled={isLoading}
             >
               Annuler la vente
@@ -146,7 +146,7 @@ const ArticleScanner = ({className}) => {
                 else setModalError(result.msg);
                 setIsLoading(false);
               }}
-              className="greenButton"
+              className="greenButton width-full"
               disabled={isLoading}
             >
               Inventorier
@@ -168,7 +168,7 @@ const ArticleScanner = ({className}) => {
                   else setModalError(result.msg);
                   setIsLoading(false);
                 }}
-                className="redButton"
+                className="redButton width-full"
                 disabled={isLoading}
               >
                 Déclarer invendable
@@ -180,7 +180,7 @@ const ArticleScanner = ({className}) => {
         <p className="error">{modalError}</p>
 
         {/* Display the close button */}
-        <button onClick={() => setShowModal(false)} disabled={isLoading}>
+        <button onClick={() => setShowModal(false)} disabled={isLoading} className="width-full">
           Retour
         </button>
       </Modal>

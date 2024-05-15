@@ -1,35 +1,3 @@
-
-#paramForm{
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  width: 100%;
-}
-
-#paramForm span {
-  justify-content: space-between;
-}
-
-#paramForm p{
-  align-self: center;
-}
-
-#SubmitSettingsChanges{
-  margin-top: 20px;
-}
-
-#paramDiv{
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-}
-
-textarea {
-  width: 100%;
-  height: 200px;
-}
-
 #changePasswordSpan {
   display: flex;
   flex-direction: column;
@@ -38,15 +6,8 @@ textarea {
 
   margin-top: 10px;
 }
-  
-#changePasswordSpan a{
-  margin-left: 10px;
-}
 
 @media (min-width: 600px) {
-  #paramForm{
-    width: 500px;
-  }
 
   #changePasswordSpan {
     flex-direction: row;

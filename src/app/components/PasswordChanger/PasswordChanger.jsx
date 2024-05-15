@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 import changePassword from "./passwordChangerAction";
 
-import "./styles.css";
-
 const PasswordChanger = ({ className, modifiedAccount }) => {
     const formRef = useRef(null);
     const router = useRouter();
@@ -81,7 +79,7 @@ const PasswordChanger = ({ className, modifiedAccount }) => {
 
     return (
         <div className={className}>
-            <form ref={formRef} id="passChangerForm" onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit}>
                 <label>Nouveau mot de passe :</label>
                 <input
                     type="password"
@@ -102,7 +100,7 @@ const PasswordChanger = ({ className, modifiedAccount }) => {
 
                 <p className="error">{error}</p>
 
-                <button type="submit" disabled={isLoading}>
+                <button type="submit" disabled={isLoading} className="margin-top-10 width-full">
                     Changer le mot de passe
                 </button>
             </form>

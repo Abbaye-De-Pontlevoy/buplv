@@ -5,20 +5,25 @@ import AccountButton from "../Button/AccountButton/AccountButton";
 import "./styles.css";
 
 // Header component
-const Header = ({className, displayAccountButton = true}) => {
-  return (
-    <div className={"header " + className}>
-      { displayAccountButton && <AccountButton className="accountButton"/>}
-      <a href="/" className="title">
-        <div id="logoDiv">
-          {/* Logo image */}
-          <Image src={logo_plv} alt="logo" id="plvlogo" priority={true} />
+const Header = ({ className, displayAccountButton = true }) => {
+    return (
+        <div className={"header " + className}>
+            {displayAccountButton && <AccountButton className="self-right" />}
+            <a href="/" className="decoration-none text-center">
+                <div className="width-full height-100">
+                    {/* Logo image */}
+                    <Image
+                        src={logo_plv}
+                        alt="logo"
+                        className="width-full height-full object-fit-contain"
+                        priority={true}
+                    />
+                </div>
+                {/* Title */}
+                <h1>BOURSE À L'UNIFORME</h1>
+            </a>
         </div>
-        {/* Title */}
-        <h1>BOURSE À L'UNIFORME</h1>
-      </a>
-    </div>
-  );
+    );
 };
 
 export default Header;

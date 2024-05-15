@@ -11,8 +11,8 @@ export default async function Page() {
       <Header  />
       <Menu current="/details" />
       <div className="bandeau-rangement">
-        <div className="mainContainer" id="corpus-div">
-          <h1>La bourse à l'uniforme</h1>
+        <div className="main-container">
+          <h1 className="margin-20">La bourse à l'uniforme</h1>
           <p>
             La bourse à l'uniforme est un événement organisé par l'association
             des parents d'élèves de l'abbaye de Pontlevoy. C'est un moment de
@@ -75,7 +75,7 @@ export default async function Page() {
           </p>        
 
           <form action="/dashboard" className="buttonForm">
-            <button type="submit" id="participeButton"> J'enregistre mes articles !</button>
+            <button type="submit" className="padding-20"> J'enregistre mes articles !</button>
           </form>
 
         </div>

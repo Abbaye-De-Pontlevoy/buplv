@@ -80,7 +80,7 @@ export default function Register() {
       'input[name="password2"]'
     );
     const passwordStrengthComponent = formRef.current.querySelector(
-      ".password-strength-meter .progress"
+      ".progress"
     );
     const passwordStrength = parseInt(passwordStrengthComponent.value);
     const phoneNumber = formRef.current.querySelector('input[name="phone"]');
@@ -161,11 +161,11 @@ export default function Register() {
   return (
     <>
       <Header displayAccountButton={false} />
-      <div id="registerContainer">
-        <div className="formContainer">
-          <h1 className="formTitle">Créer un compte</h1>
+      <div className="flex-column flex-center margin-bottom-50">
+        <div className="form-container">
+          <h1 className="padding-30">Créer un compte</h1>
 
-          <span id="circleSpan">
+          <span className="margin-top-10 margin-bottom-20 flex-center">
             <p className={`circle ${step >= 1 ? "activeCircle" : ""}`}>1</p>
             <div className={`line ${step >= 2 ? "activeCircle" : ""}`}></div>
             <p className={`circle ${step >= 2 ? "activeCircle" : ""}`}>2</p>
@@ -281,7 +281,7 @@ export default function Register() {
                   </div>
                 </span>
 
-                <span className="buttonSpan">
+                <span className="sideToSideButton margin-top-10">
                   <button onClick={() => handleStepChange(1, false)}>
                     Précédent
                   </button>
@@ -308,12 +308,12 @@ export default function Register() {
                   required
                 />
 
-                <div id="checkboxesDiv">
+                <div className="margin-bottom-10">
                   <span>
                     <input
                       type="checkbox"
                       name="don_apel"
-                      id="donApelCheckBox"
+                      className="checkbox"
                       checked={formData.don_apel}
                       onChange={() =>
                         setFormData((prevFormData) => ({
@@ -329,7 +329,7 @@ export default function Register() {
 
                   {!formData.don_apel && (
                     <span>
-                      <input type="checkbox" id="donApelCheckBox" required />
+                      <input type="checkbox" className="checkbox" required />
                       <label style={{ color: "red" }}>
                         J'ai conscience qu'en refusant de faire don de mes
                         invendus à l'APEL je demande à ce que ceux-ci me soient
@@ -340,7 +340,7 @@ export default function Register() {
                   )}
 
                   <span>
-                    <input type="checkbox" required id="cguCheckBox" />
+                    <input type="checkbox" className="checkbox" required/>
                     <label>
                       J'accepte les{" "}
                       <a href="/cgu" target="_blank">
@@ -350,7 +350,7 @@ export default function Register() {
                   </span>
                 </div>
 
-                <span className="buttonSpan">
+                <span className="sideToSideButton">
                   <button
                     onClick={() => handleStepChange(2, false)}
                     disabled={isLoading}
@@ -365,11 +365,11 @@ export default function Register() {
             )}
           </form>
           <p className="error">{error}</p>
-          <p id="loginLink">
+          <p className="margin-top-20">
             Déjà inscrit ? <a href="/login">Je me connecte</a>
           </p>
         </div>
-        <ReturnArrowButton text="Retour à l'accueil" link="/"/>
+        <ReturnArrowButton text="Retour à l'accueil" link="/" className="self-left margin-top-10"/>
       </div>
     </>
   );

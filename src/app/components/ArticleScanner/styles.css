@@ -23,20 +23,6 @@
 	text-decoration: none;
 }
 
-.scannerModal button{
-  width: 100%;
-}
-
-#buttonDiv{
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  
-  width: 100%;
-
-  margin-top: 10px;
-}
-
 @media (max-width: 500px) {
   .scannerModal {
     width: 80%;

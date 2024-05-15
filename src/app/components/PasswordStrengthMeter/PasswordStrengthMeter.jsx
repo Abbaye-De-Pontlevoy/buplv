@@ -7,7 +7,7 @@ const PasswordStrengthMeter = ({ className, password }) => {
     const strength = getPasswordStrength(password);
 
     return (
-        <div className={"password-strength-meter " + className}>
+        <div className={className}>
             <progress
                 className={`progress strength-${
                     strength <= 50 ? "red" : strength <= 80 ? "orange" : "green"

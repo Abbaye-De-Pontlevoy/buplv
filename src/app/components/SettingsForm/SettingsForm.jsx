@@ -8,7 +8,7 @@ import { updateClothesJSON } from "@/app/data/clothesJSONActions";
 import "./styles.css";
 import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 
-const SettingsForm = ({className}) => {
+const SettingsForm = ({ className }) => {
     // Initialize state variables
     const [formState, setFormState] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -105,145 +105,156 @@ const SettingsForm = ({className}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} id="paramForm" className={className}>
-            {isLoading ? (
-                <p>Chargement...</p>
-            ) : (
-                <div id="paramDiv">
-                    {/* Access parameters */}
-                    <div>
-                        <h3>Paramètres Généraux</h3>
-                        <span>
-                            <label>Site ouvert</label>
-                            <input
-                                type="checkbox"
-                                name="publicAccess"
-                                className="checkbox"
-                                checked={formState.publicAccess}
-                                onChange={handleChange}
-                            />
-                        </span>
-
-                        {formState.publicAccess && (
-                            <span>
-                                <label>
-                                    Autoriser l'ajout/modification d'articles
-                                </label>
+        <div className={className}>
+            <form onSubmit={handleSubmit} className="flex-column width-full">
+                {isLoading ? (
+                    <p className="text-center">Chargement...</p>
+                ) : (
+                    <div className="flex-column gap-30 width-full">
+                        {/* Access parameters */}
+                        <div>
+                            <h3>Paramètres Généraux</h3>
+                            <span className="flex-justify-space-between">
+                                <label>Site ouvert</label>
                                 <input
                                     type="checkbox"
-                                    name="allowArticleRegistration"
+                                    name="publicAccess"
                                     className="checkbox"
-                                    checked={formState.allowArticleRegistration}
+                                    checked={formState.publicAccess}
                                     onChange={handleChange}
                                 />
                             </span>
-                        )}
 
-                        {formState.allowArticleRegistration && (
-                            <span>
-                                <label>Fin des enregistrements</label>
+                            {formState.publicAccess && (
+                                 <span className="flex-justify-space-between">
+                                    <label>
+                                        Autoriser l'ajout/modification
+                                        d'articles
+                                    </label>
+                                    <input
+                                        type="checkbox"
+                                        name="allowArticleRegistration"
+                                        className="checkbox"
+                                        checked={
+                                            formState.allowArticleRegistration
+                                        }
+                                        onChange={handleChange}
+                                    />
+                                </span>
+                            )}
+
+                            {formState.allowArticleRegistration && (
+                                 <span className="flex-justify-space-between">
+                                    <label>Fin des enregistrements</label>
+                                    <input
+                                        type="date"
+                                        name="endRegisterDate"
+                                        className="checkbox"
+                                        value={
+                                            formState.endRegisterDate ||
+                                            new Date()
+                                                .toISOString()
+                                                .split("T")[0]
+                                        }
+                                        onChange={handleChange}
+                                    />
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Accounting parameters */}
+                        <div>
+                            <h3>Comptabilité</h3>
+                             <span className="flex-justify-space-between">
+                                <label>Part de l'APEL</label>
+                                <span style={{ width: "min-content" }}>
+                                    <input
+                                        type="number"
+                                        name="APELPart"
+                                        className="checkbox"
+                                        value={formState.APELPart}
+                                        onChange={handleChange}
+                                        min="0"
+                                        max="100"
+                                        style={{
+                                            textAlign: "right",
+                                            maxWidth: "100px",
+                                        }}
+                                    />
+                                    %
+                                </span>
+                            </span>
+
+                             <span className="flex-justify-space-between">
+                                <label>Frais de renvoi</label>
+                                <span style={{ width: "min-content" }}>
+                                    <input
+                                        type="number"
+                                        name="returnFees"
+                                        className="checkbox"
+                                        value={formState.returnFees}
+                                        onChange={handleChange}
+                                        min="0"
+                                        max="100"
+                                        style={{
+                                            textAlign: "right",
+                                            maxWidth: "100px",
+                                        }}
+                                    />
+                                    €
+                                </span>
+                            </span>
+                        </div>
+
+                        {/* Clothes JSON */}
+                        <div>
+                            <h3>Liste des vêtements</h3>
+                             <span className="flex-justify-space-between">
+                                <label>
+                                    Modifier le fichier JSON des vêtements :{" "}
+                                </label>
                                 <input
-                                    type="date"
-                                    name="endRegisterDate"
+                                    type="checkbox"
+                                    name="clothesInputCheckbox"
                                     className="checkbox"
-                                    value={
-                                        formState.endRegisterDate ||
-                                        new Date().toISOString().split("T")[0]
+                                    checked={
+                                        formState.clothesInputCheckbox || false
                                     }
                                     onChange={handleChange}
                                 />
                             </span>
-                        )}
-                    </div>
-
-                    {/* Accounting parameters */}
-                    <div>
-                        <h3>Comptabilité</h3>
-                        <span>
-                            <label>Part de l'APEL</label>
-                            <span style={{ width: "min-content" }}>
-                                <input
-                                    type="number"
-                                    name="APELPart"
-                                    className="checkbox"
-                                    value={formState.APELPart}
-                                    onChange={handleChange}
-                                    min="0"
-                                    max="100"
-                                    style={{
-                                        textAlign: "right",
-                                        maxWidth: "100px",
-                                    }}
-                                />
-                                %
-                            </span>
-                        </span>
-
-                        <span>
-                            <label>Frais de renvoi</label>
-                            <span style={{ width: "min-content" }}>
-                                <input
-                                    type="number"
-                                    name="returnFees"
-                                    className="checkbox"
-                                    value={formState.returnFees}
-                                    onChange={handleChange}
-                                    min="0"
-                                    max="100"
-                                    style={{
-                                        textAlign: "right",
-                                        maxWidth: "100px",
-                                    }}
-                                />
-                                €
-                            </span>
-                        </span>
-                    </div>
-
-                    {/* Clothes JSON */}
-                    <div>
-                        <h3>Liste des vêtements</h3>
-                        <span>
-                            <label>
-                                Modifier le fichier JSON des vêtements :{" "}
-                            </label>
-                            <input
-                                type="checkbox"
-                                name="clothesInputCheckbox"
-                                className="checkbox"
-                                checked={
-                                    formState.clothesInputCheckbox || false
-                                }
+                            <textarea
+                                type="text"
+                                name="clothesJSON"
+                                value={formState.clothesJSON}
                                 onChange={handleChange}
+                                disabled={!formState.clothesInputCheckbox}
+                                className="width-full height-200"
                             />
+                            <p className="error self-center">{error}</p>
+                        </div>
+
+                        {/* Change password */}
+                        <span id="changePasswordSpan">
+                            <h3>Changer le mot de passe</h3>
+                            <a href="/admin-panel/change-password-admin" className="margin-left-10">
+                                Aministrateur
+                            </a>
+                            <a href="/admin-panel/change-password-benevole" className="margin-left-10">
+                                Bénévole
+                            </a>
                         </span>
-                        <textarea
-                            type="text"
-                            name="clothesJSON"
-                            value={formState.clothesJSON}
-                            onChange={handleChange}
-                            disabled={!formState.clothesInputCheckbox}
-                        />
-                        <p className="error">{error}</p>
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                        >
+                            Enregistrer
+                        </button>
                     </div>
-
-                    {/* Change password */}
-                    <span id="changePasswordSpan">
-                        <h3>Changer le mot de passe</h3>
-                        <a href="/admin-panel/change-password-admin">Aministrateur</a>
-                        <a href="/admin-panel/change-password-benevole">Bénévole</a>
-                    </span>
-
-                    <button
-                        id="SubmitSettingsChanges"
-                        type="submit"
-                        disabled={isLoading}
-                    >
-                        Enregistrer
-                    </button>
-                </div>
-            )}
-        </form>
+                )}
+            </form>
+        </div>
     );
 };
 

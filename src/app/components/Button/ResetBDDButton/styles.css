@@ -37,15 +37,3 @@
 	border-radius: 8px;
 	width: fit-content;
 }
-
-.modal-content span{
-	justify-content: stretch;
-}
-
-button.fullwidth{
-	width: 100%;
-}
-
-form{
-	width: 100%;
-}

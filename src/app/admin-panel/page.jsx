@@ -15,15 +15,15 @@ const SiteSettings = () => {
   const tabList = ["Paramètres", "Rapports", "Recherche d'article"];
   const tabsContents = [
     <>
-      <h1 className="formTitle">Paramètres du site</h1>
+      <h1 className="padding-30">Paramètres du site</h1>
       <SettingsForm />
     </>,
     <>
-      <h1 className="formTitle">Rapports</h1>
+      <h1 className="padding-30">Rapports</h1>
       <RapportsGenerator />
     </>,
     <>
-      <h1>Rechercher un article</h1>
+      <h1 className="padding-30">Rechercher un article</h1>
       <ArticleModifier/>
     </>,
   ];
@@ -39,13 +39,14 @@ const SiteSettings = () => {
       <Menu current="/admin-panel"/>
 
       <div className="bandeau-rangement">
-        <div className="mainContainer" id="settingsContainer">
+        <div className="main-container width-500" id="settingsContainer">
           {/* TabsMenu component */}
           <TabsMenu
             tabs={tabList}
             tabsContents={tabsContents}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            className="width-full"
           />
         </div>
       </div>
