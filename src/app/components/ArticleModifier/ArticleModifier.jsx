@@ -168,7 +168,7 @@ const ArticleModifier = ({className}) => {
             </p>
           )}
 
-          <button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading} className="margin-top-10">
             {isLoading ? "Chargement..." : "Modifier"}
           </button>
           <p className="error">{error}</p>

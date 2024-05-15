@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addArticle } from "./articleFormAction";
 import { clothesJSON } from "@/app/data/clothesJSON";
 
 import "./styles.css";
 
 const ArticleForm = ({ className, callAfterSubmit, title }) => {
+  const formRef = useRef(null);
+
   // Initialize state variables
   const articleData = clothesJSON;
   const [grade, setGrade] = useState("");
@@ -42,6 +44,27 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
     setQuantity(0);
   }, [size]);
 
+  // When name options change, sort all options
+  useEffect(() => {
+    const nameOptions = formRef.current.querySelector("select[name=name]");
+    const options = Array.from(nameOptions.options);
+
+    // Sort options alphabetically by their text content
+    options.sort((a, b) => a.text.localeCompare(b.text));
+
+    // Remove existing options from select
+    while (nameOptions.firstChild) {
+        nameOptions.removeChild(nameOptions.firstChild);
+    }
+
+    // Append sorted options to select
+    options.forEach((option) => nameOptions.appendChild(option));
+
+    // Set the first option as selected
+    nameOptions.selectedIndex = 0;
+  }, [name]);
+
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +95,7 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
   return (
     <div className={className}>
       <h3>{title}</h3>
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         <table>
           <tbody>
             <tr className="flex-row flex-center">
@@ -125,9 +148,9 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                   name="name"
                   key="name"
                   className="width-full"
-                  value={`${name.brand}-${name.name}`}
+                  value={`${name.name}-${name.brand}`}
                   onChange={(e) => {
-                    const [brand, articleName] = e.target.value.split("-");
+                    const [articleName, brand] = e.target.value.split("-");
                     setName({ brand, name: articleName });
                   }}
                   disabled={!sex || isLoading}
@@ -142,10 +165,10 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
                       Object.keys(articleData[grade][sex][brand]).map(
                         (articleName) => (
                           <option
-                            key={brand + articleName}
-                            value={`${brand}-${articleName}`}
+                            key={articleName + brand}
+                            value={`${articleName}-${brand}`}
                           >
-                            {`(${brand}) ${articleName}`}
+                            {`${articleName} (${brand})`}
                           </option>
                         )
                       )

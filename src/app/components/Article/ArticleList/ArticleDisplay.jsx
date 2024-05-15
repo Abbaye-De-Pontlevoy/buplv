@@ -20,7 +20,7 @@ export const ArticleDisplay = ({
   };
 
   return (
-    <tr className={className} class="articleLine">
+    <tr className={"articleLine "+ className}>
       <td>{article.name}</td>
       <td>{article.brand}</td>
       <td>{article.size}</td>
