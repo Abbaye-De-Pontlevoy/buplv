@@ -34,7 +34,7 @@ const Menu = ({ className, current }) => {
   ];
 
   return (
-    <span className={"menuSpan " + className}>
+    <span className={"menuSpan width-full " + className}>
       {/* Display the menu items according to the user's role */}
       {menuContent.map((item, index) => {
         if (!userInfo.isAdmin) {
