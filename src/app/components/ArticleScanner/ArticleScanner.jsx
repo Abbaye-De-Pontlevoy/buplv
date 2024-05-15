@@ -90,7 +90,7 @@ const ArticleScanner = ({className}) => {
         </ul>
 
         {/* Display the action buttons */}
-        <div className="flex-column gap-10">
+        <div className="flex-column gap-10 width-full">
           {/* if article is inventoried */}
           {qrCodeData.state === 2 && (
             <button
