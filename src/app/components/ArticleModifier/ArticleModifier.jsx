@@ -5,7 +5,7 @@ import { updateArticle } from "./modifierAction";
 
 import "./styles.css";
 
-const ArticleModifier = () => {
+const ArticleModifier = ({className}) => {
   // Initialize state variables
   const [articleJSONData, setArticleJSONData] = useState(null);
   const [articleData, setArticleData] = useState(null);
@@ -31,7 +31,7 @@ const ArticleModifier = () => {
   };
 
   return (
-    <>
+    <div className={className}>
       <ArticleSearch onArticleSearch={setArticleData} />
 
       {/* Modification Form */}
@@ -176,7 +176,7 @@ const ArticleModifier = () => {
           <p className="error">{error}</p>
         </form>
       )}
-    </>
+    </div>
   );
 };
 

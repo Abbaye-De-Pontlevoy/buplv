@@ -4,7 +4,7 @@ import { resetBDD } from "./resetBDD";
 
 import "./styles.css";
 
-const ResetBDDButton = () => {
+const ResetBDDButton = ({className}) => {
   // Get user info from the context
   const { userInfo } = useContext(UserInfoContext);
 
@@ -46,7 +46,7 @@ const ResetBDDButton = () => {
   };
 
   return (
-    <>
+    <div className={className}>
       {/* Reset Button */}
       <button id="resetButton" onClick={handleResetButtonClick}>
         Réinitialiser la base de données
@@ -92,7 +92,7 @@ const ResetBDDButton = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

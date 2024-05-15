@@ -7,12 +7,12 @@ import changePassword from "./passwordChangerAction";
 
 import "./styles.css";
 
-const PasswordChanger = ({modifiedAccount}) => {
+const PasswordChanger = ({ className, modifiedAccount }) => {
     const formRef = useRef(null);
     const router = useRouter();
 
     const [formData, setFormData] = useState({
-		modifiedAccount: modifiedAccount,
+        modifiedAccount: modifiedAccount,
         password: "",
         password2: "",
     });
@@ -80,7 +80,7 @@ const PasswordChanger = ({modifiedAccount}) => {
     };
 
     return (
-        <>
+        <div className={className}>
             <form ref={formRef} id="passChangerForm" onSubmit={handleSubmit}>
                 <label>Nouveau mot de passe :</label>
                 <input
@@ -106,7 +106,7 @@ const PasswordChanger = ({modifiedAccount}) => {
                     Changer le mot de passe
                 </button>
             </form>
-        </>
+        </div>
     );
 };
 

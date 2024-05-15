@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import registerAction from "./registerAction";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter/PasswordStrengthMeter";
-import ReturnArrowButton from "../components/Button/ReturnArrowButton/ReturnArrowButton";
+import ReturnArrowButton from "../components/Button/returnArrowButton/ReturnArrowButton";
 import isValidPhoneNumber from "../helpers/validatePhoneNumber";
 import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
 import { formatPhoneNumber } from "../helpers/formatPhoneNumber";

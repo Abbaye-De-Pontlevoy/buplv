@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./styles.css";
 
 export const ArticleDisplay = ({
+  className,
   article,
   callAfterDelete,
   enabledRemoveButton=false,
@@ -19,7 +20,7 @@ export const ArticleDisplay = ({
   };
 
   return (
-    <tr className="articleLine">
+    <tr className={"articleLine " + className}>
       <td>{article.name}</td>
       <td>{article.brand}</td>
       <td>{article.size}</td>

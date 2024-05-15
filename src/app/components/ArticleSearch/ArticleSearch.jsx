@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getArticleByID } from "../../helpers/getArticleByID";
 
 const ArticleSearch = ({
+    className,
     onArticleSearch,
     placeholder = "Rechercher par ID",
     buttonText = "Rechercher",
@@ -36,7 +37,7 @@ const ArticleSearch = ({
     };
 
     return (
-        <form onSubmit={handleSearch} id="articleSearchForm">
+        <form onSubmit={handleSearch} id="articleSearchForm" className={className}>
             <span id="articleSearchSpan">
                 <input
                     type="number"

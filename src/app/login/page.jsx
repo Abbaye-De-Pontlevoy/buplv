@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import loginAction, { removeCookie } from "./loginAction";
-import ReturnArrowButton from "../components/Button/ReturnArrowButton/ReturnArrowButton";
+import ReturnArrowButton from "../components/Button/returnArrowButton/ReturnArrowButton";
 import Header from "../components/Header/Header";
 import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider";
 import { useRouter } from "next/navigation";

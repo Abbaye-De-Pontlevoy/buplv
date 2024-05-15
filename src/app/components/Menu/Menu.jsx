@@ -5,7 +5,7 @@ import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
-const Menu = ({ current }) => {
+const Menu = ({ className, current }) => {
   // Get user information
   const { userInfo } = useContext(UserInfoContext);
 
@@ -34,7 +34,7 @@ const Menu = ({ current }) => {
   ];
 
   return (
-    <span className="menuSpan">
+    <span className={"menuSpan " + className}>
       {/* Display the menu items according to the user's role */}
       {menuContent.map((item, index) => {
         if (!userInfo.isAdmin) {

@@ -6,7 +6,7 @@ import { clothesJSON } from "@/app/data/clothesJSON";
 
 import "./styles.css";
 
-const ArticleForm = ({ callAfterSubmit, title }) => {
+const ArticleForm = ({ className, callAfterSubmit, title }) => {
   // Initialize state variables
   const articleData = clothesJSON;
   const [grade, setGrade] = useState("");
@@ -70,7 +70,7 @@ const ArticleForm = ({ callAfterSubmit, title }) => {
   };
 
   return (
-    <div className="addArticleContainer">
+    <div className={"addArticleContainer " + className}>
       <h3 id="articleFormTitle">{title}</h3>
       <form onSubmit={handleSubmit} id="addArticleForm">
         <table>

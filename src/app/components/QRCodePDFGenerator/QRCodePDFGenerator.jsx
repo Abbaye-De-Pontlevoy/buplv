@@ -3,7 +3,7 @@ import { useState } from "react";
 import { generatePDF } from "./generatePDF";
 import { getUserInfos } from "@/app/helpers/getUserInfos";
 
-const QRCodePDFGenerator = ({ data }) => {
+const QRCodePDFGenerator = ({ className, data }) => {
   // Initialize state variables
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -15,7 +15,7 @@ const QRCodePDFGenerator = ({ data }) => {
     setIsDisabled(false);
   };
 
-  return <button onClick={handleClick} disabled={isDisabled}>Télécharger les QRCodes</button>;
+  return <button className={className} onClick={handleClick} disabled={isDisabled}>Télécharger les QRCodes</button>;
 };
 
 export default QRCodePDFGenerator;

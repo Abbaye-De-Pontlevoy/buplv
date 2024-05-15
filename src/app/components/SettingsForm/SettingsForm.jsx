@@ -8,7 +8,7 @@ import { updateClothesJSON } from "@/app/data/clothesJSONActions";
 import "./styles.css";
 import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 
-const SettingsForm = () => {
+const SettingsForm = ({className}) => {
     // Initialize state variables
     const [formState, setFormState] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -105,7 +105,7 @@ const SettingsForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} id="paramForm">
+        <form onSubmit={handleSubmit} id="paramForm" className={className}>
             {isLoading ? (
                 <p>Chargement...</p>
             ) : (

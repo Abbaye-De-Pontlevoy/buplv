@@ -1,6 +1,7 @@
 import { ArticleDisplay } from "./ArticleDisplay";
 
 const ArticleList = ({
+  className,
   articleList,
   enabledRemoveButton,
   callAfterDelete,
@@ -8,7 +9,7 @@ const ArticleList = ({
   priceFactor = 1,
 }) => {
   return (
-    <div className="overFlowSlider">
+    <div className={"overFlowSlider " + className}>
       <table id="articleTable">
         <thead>
           <tr>

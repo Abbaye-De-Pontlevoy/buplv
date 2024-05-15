@@ -15,7 +15,7 @@ import "./styles.css";
 // Set the root element for the modal
 Modal.setAppElement("#root");
 
-const ArticleScanner = () => {
+const ArticleScanner = ({className}) => {
   // Initialize state variables
   const [showModal, setShowModal] = useState(false);
   const [qrCodeData, setQRCodeData] = useState({});
@@ -49,7 +49,7 @@ const ArticleScanner = () => {
   };
 
   return (
-    <div>
+    <div className={className}>
       {/* Display the QR code reader */}
       {!showModal && <QRCodeReader onQRCodeRead={displayModal} />}
 

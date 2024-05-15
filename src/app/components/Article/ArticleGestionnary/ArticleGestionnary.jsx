@@ -8,7 +8,7 @@ import removeArticleAction, { getArticleList } from "./removeArticleAction";
 import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
-const ArticleGestionnary = ({ articleList, setArticleList, isLoading }) => {
+const ArticleGestionnary = ({ className, articleList, setArticleList, isLoading }) => {
   // Initialize state variables
   const [settings, setSettings] = useState({});
   const { userInfo } = useContext(UserInfoContext);
@@ -33,11 +33,11 @@ const ArticleGestionnary = ({ articleList, setArticleList, isLoading }) => {
   };
 
   return (
-    <>
+    <div className={className}>
       {isLoading ? (
         "Chargement..."
       ) : (
-        <>
+        <div className={className}>
           {/* Display the article list */}
           <ArticleList
             articleList={articleList}
@@ -65,9 +65,9 @@ const ArticleGestionnary = ({ articleList, setArticleList, isLoading }) => {
           )}
 
           {articleList.length != 0 && <QRCodePDFGenerator data={articleList} />}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

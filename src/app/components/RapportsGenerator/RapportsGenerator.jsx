@@ -11,7 +11,7 @@ import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 
 import "./styles.css";
 
-const RapportsGenerator = () => {
+const RapportsGenerator = ({className}) => {
   // Initialize state variables
   const [rapportTreso, setRapportTreso] = useState(<></>);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,7 @@ const RapportsGenerator = () => {
   }, []);
 
   return (
-    <>
+    <div className={className}>
       {isLoading ? (
         <p>Chargement...</p>
       ) : (
@@ -102,7 +102,7 @@ const RapportsGenerator = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

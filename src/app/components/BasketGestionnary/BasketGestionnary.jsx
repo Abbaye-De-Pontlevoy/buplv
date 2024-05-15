@@ -10,7 +10,7 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 import "./styles.css";
 
-const BasketGestionnary = () => {
+const BasketGestionnary = ({className}) => {
   // Initialize state variables
   const [basket, setBasket] = useState([]);
   const [validatingBasket, setValidatingBasket] = useState(false);
@@ -119,7 +119,7 @@ const BasketGestionnary = () => {
   };
 
   return (
-    <>
+    <div className={className}>
       {/* Display the basket content */}
       <div className="overFlowSlider">
         <ArticleList
@@ -191,7 +191,7 @@ const BasketGestionnary = () => {
           </form>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 

@@ -5,9 +5,9 @@ import logo_plv from "../../assets/logo_plv_reduced.webp";
 
 import "./styles.css";
 
-const Footer = () => {
+const Footer = ({className}) => {
   return (
-    <footer>
+    <footer className={className}>
       <div id="footerContent">
         <div className="footerColumn desktopOnly" id="column1">
           <a href="/">Accueil</a>

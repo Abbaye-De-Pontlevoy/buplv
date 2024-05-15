@@ -5,9 +5,9 @@ import AccountButton from "../Button/AccountButton/AccountButton";
 import "./styles.css";
 
 // Header component
-const Header = ({displayAccountButton = true}) => {
+const Header = ({className, displayAccountButton = true}) => {
   return (
-    <div className="header">
+    <div className={"header " + className}>
       { displayAccountButton && <AccountButton className="accountButton"/>}
       <a href="/" className="title">
         <div id="logoDiv">
