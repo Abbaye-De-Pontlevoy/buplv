@@ -33,7 +33,7 @@ export const ArticleDisplay = ({
           ? "Vendu"
           : "Enregistré"}
       </td>
-      <td>{article.price * priceFactor} €</td>
+      <td className="text-center">{article.price * priceFactor} €</td>
       <td className="flex-column flex-center">
         {/* Display the delete button if the user is allowed to remove articles */}
         {/* Else, display a dash */}
