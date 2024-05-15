@@ -148,7 +148,7 @@ const BasketGestionnary = ({className}) => {
       <p className="error">{error}</p>
 
       {/* Display the validate and scan buttons */}
-      <span className="margin-top-10">
+      <span className="margin-top-10 sideToSideButton">
         {/* QR code reader button*/}
         <QRCodeReaderModal onQRCodeRead={checkArticle} className="sideToSideButton" />
 
@@ -175,7 +175,7 @@ const BasketGestionnary = ({className}) => {
               <h2 className="text-center">Encaissement</h2>
               <p className="error margin-top-20 text-center"> {"L'encaissement de " + basket.reduce((acc, article) => acc + article.price, 0) + " € a t'il bien été effectué ?"}</p>
               <span className="margin-top-20 sideToSideButton">
-                <button onClick={() => setIsModalOpen(false)} className="width-full redButton">Non</button>
+                <button onClick={() => {setPaymentMethods(0); setIsModalOpen(false)}} className="width-full redButton">Non</button>
                 <button onClick={() => setPaymentModalStep(1)} className="width-full greenButton">Oui</button>
               </span>
             </>

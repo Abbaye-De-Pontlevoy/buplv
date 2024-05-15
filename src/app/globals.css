@@ -391,6 +391,7 @@ button:disabled {
 .sideToSideButton {
     flex: 1;
     width: 100%;
+    align-items: unset !important;
 }
 
 .sideToSideButton button {
