@@ -1,9 +1,19 @@
 "use server";
 
 import { promises as fs } from 'fs';
-import { clothesJSON } from "./clothesJSON";
+import path from 'path';
+
+export async function getClothesJSON() {
+  // read file using fs module
+  const data = await fs.readFile(path.resolve(process.cwd(), 'src/app/data/clothesJSON.json'), 'utf8');
+  // parse JSON string to JSON object
+  const clothesJSON = await JSON.parse(data);
+  return clothesJSON;
+}
 
 export async function getAllClothesInfo() {
+  const clothesJSON = await getClothesJSON();
+
   let brand = new Set();
   let name = new Set();
   let size = new Set();
@@ -35,14 +45,14 @@ export async function getAllClothesInfo() {
 }
 
 export async function updateClothesJSON(newClothesJSONString) {
-  const data = "export let clothesJSON = " + newClothesJSONString + ";";
+  const data = newClothesJSONString; // newClothesJSONString already contains the JSON.stringify() result
 
   try {
-    await fs.writeFile(process.cwd() + '/src/app/data/clothesJSON.js', data, 'utf8');
+    await fs.writeFile(path.resolve(process.cwd(), 'src/app/data/clothesJSON.json'), data, 'utf8');
 
     return {
       success: true,
-      msg: "Les données ont été mises à jour.",
+      msg: "Les données des vêtements ont été mises à jour.",
     };
   } catch (e) {
     console.log(e.message);

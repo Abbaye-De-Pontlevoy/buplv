@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { addArticle } from "./articleFormAction";
-import { clothesJSON } from "@/app/data/clothesJSON";
+import { getClothesJSON } from "@/app/data/clothesJSONActions";
 
 import "./styles.css";
 
@@ -10,7 +10,7 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
   const formRef = useRef(null);
 
   // Initialize state variables
-  const articleData = clothesJSON;
+  const [articleData, setArticleData] = useState({});
   const [grade, setGrade] = useState("");
   const [sex, setSex] = useState("");
   const [name, setName] = useState({
@@ -20,6 +20,15 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Load the article data from the server
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getClothesJSON();
+      setArticleData(data);
+    };
+    fetchData();
+  }, []);
 
   // Reset the 'sex' state when 'grade' changes
   useEffect(() => {

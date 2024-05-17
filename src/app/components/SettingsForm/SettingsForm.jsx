@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getSettings, updateSettings } from "../../config/settings";
-import { clothesJSON } from "@/app/data/clothesJSON";
-import { updateClothesJSON } from "@/app/data/clothesJSONActions";
+import { getSettings, updateSettings } from "../../config/settingsActions";
+import { getClothesJSON, updateClothesJSON } from "@/app/data/clothesJSONActions";
 
 import "./styles.css";
-import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 
 const SettingsForm = ({ className }) => {
     // Initialize state variables
@@ -26,7 +24,8 @@ const SettingsForm = ({ className }) => {
             settingsData.APELPart *= 100;
 
             // Fetch clothesJSON data
-            settingsData.clothesJSON = JSON.stringify(clothesJSON, null, 4);
+            const jsonData = await getClothesJSON();
+            settingsData.clothesJSON = JSON.stringify(jsonData, null, 4);
 
             setFormState(settingsData);
 

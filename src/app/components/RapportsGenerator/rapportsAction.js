@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/app/lib/prisma";
-import { getSettings } from "@/app/config/settings";
+import { getSettings } from "@/app/config/settingsActions";
 
 // Function to get the basic data for the treso report
 export async function getRapportTreso() {
