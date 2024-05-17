@@ -10,6 +10,7 @@ const SettingsForm = ({ className }) => {
     // Initialize state variables
     const [formState, setFormState] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [updatingSettings, setUpdatingSettings] = useState(false);
     const [error, setError] = useState("");
 
     // Fetch settings data when component mounts
@@ -80,6 +81,8 @@ const SettingsForm = ({ className }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        setUpdatingSettings(true);
+
         // Check if the JSON is valid (its the only field that can raise an error)
         if (error)
             return alert(
@@ -91,6 +94,7 @@ const SettingsForm = ({ className }) => {
             await updateClothesJSON(formState.clothesJSON);
 
         // Remove the clothesJSON from the form state
+        const clothesJSONBackup = formState.clothesJSON;
         formState.clothesInputCheckbox = undefined;
         formState.clothesJSON = undefined;
 
@@ -100,7 +104,14 @@ const SettingsForm = ({ className }) => {
         // format the APEL part to be displayed as a percentage
         formState.APELPart *= 100;
 
+        // Restore the clothesJSON to the form state
+        formState.clothesInputCheckbox = false;
+        formState.clothesJSON = clothesJSONBackup;
+
+
         alert("Paramètres enregistrés avec succès!");
+
+        setUpdatingSettings(false);
     };
 
     return (
@@ -246,7 +257,7 @@ const SettingsForm = ({ className }) => {
 
                         <button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isLoading || updatingSettings}
                         >
                             Enregistrer
                         </button>
