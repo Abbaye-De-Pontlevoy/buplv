@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getSettings, updateSettings } from "../../helpers/settingsActions";
-import { getClothesJSON, updateClothesJSON } from "@/app/helpers/clothesJSONActions";
+import { getSettings, updateSettings } from "../../config/settingsActions";
+import { getClothesJSON, updateClothesJSON } from "@/app/data/clothesJSONActions";
 
 import "./styles.css";
 

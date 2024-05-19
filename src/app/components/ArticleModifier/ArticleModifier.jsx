@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ArticleSearch from "../ArticleSearch/ArticleSearch";
-import { getAllClothesInfo } from "@/app/helpers/clothesJSONActions";
+import { getAllClothesInfo } from "@/app/data/clothesJSONActions";
 import { updateArticle } from "./modifierAction";
 
 const ArticleModifier = ({className}) => {

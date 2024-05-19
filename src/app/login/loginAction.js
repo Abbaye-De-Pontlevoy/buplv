@@ -5,7 +5,7 @@ import validateEmail from "@/app/helpers/validateEmail";
 import bcrypt from "bcryptjs";
 import * as jose from "jose";
 import prisma from "@/app/lib/prisma";
-import { getSettings } from "../helpers/settingsActions";
+import { getSettings } from "../config/settingsActions";
 
 export const removeCookie = () => {
   cookies().delete("buConnectedToken");
