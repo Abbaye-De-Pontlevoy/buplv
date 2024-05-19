@@ -55,7 +55,7 @@ export async function updateClothesJSON(newClothesJSONString) {
       msg: "Les données des vêtements ont été mises à jour.",
     };
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
     return {
       success: false,
       msg: e.message,

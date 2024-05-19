@@ -31,7 +31,7 @@ export async function resetBDD(id, password) {
       msg: "La base de données a été réinitialisée.",
     };
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
     return {
       success: false,
       msg: e.message,

@@ -36,7 +36,7 @@ export default async function updateAction({ password, data }) {
 
     return true;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return "Erreur lors de la mise à jour de vos données.";
   }
 }

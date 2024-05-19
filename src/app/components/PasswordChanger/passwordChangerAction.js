@@ -80,7 +80,7 @@ export default async function changePassword(formData) {
         };
 
     } catch (e) {
-        console.log(e);
+        console.error(e);
         return {
 			success: false,
 			message: "User " + userID + ": Erreur lors de la modification du mot de passe.",

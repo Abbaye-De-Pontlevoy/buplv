@@ -21,7 +21,7 @@ export const updateSettings = async (newSettings) => {
       msg: "Les paramètres du site ont été mises à jour.",
     };
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
     return {
       success: false,
       msg: e.message,

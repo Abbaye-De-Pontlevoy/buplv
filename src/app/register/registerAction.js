@@ -37,7 +37,7 @@ export default async function registerAction(formData) {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return "Email déjà associé à un compte. Veuillez utiliser un autre email ou vous connecter.";
   }
 
