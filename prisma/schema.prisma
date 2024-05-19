@@ -41,4 +41,10 @@ model Transaction {
   payment_amount  Float  
 }
 
+model Config {
+  id               Int    @id @default(autoincrement())
+  key              String @unique
+  value            Json
+}
+
 // 123 hash = $2a$08$YD44SouaLEXujaNSa1NfJeKy9FaR5Z3qTz57WyPdntvLZelHbcFwW

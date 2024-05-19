@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import ArticleList from "../Article/ArticleList/ArticleList";
 import QRCodeReaderModal from "../QRCodeReader/QRCodeModal";
 import { getArticleData, validateBasket } from "./basketAction";
-import { getSettings } from "@/app/config/settingsActions";
+import { getSettings } from "@/app/helpers/settingsActions";
 import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 import "./styles.css";

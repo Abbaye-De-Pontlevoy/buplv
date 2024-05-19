@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { getSettings } from "@/app/config/settingsActions";
+import { getSettings } from "@/app/helpers/settingsActions";
 import ArticleForm from "../ArticleForm/ArticleForm";
 import ArticleList from "../ArticleList/ArticleList";
 import removeArticleAction, { getArticleList } from "./removeArticleAction";

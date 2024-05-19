@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getSettings, updateSettings } from "../../config/settingsActions";
-import { getClothesJSON, updateClothesJSON } from "@/app/data/clothesJSONActions";
+import { getSettings, updateSettings } from "../../helpers/settingsActions";
+import { getClothesJSON, updateClothesJSON } from "@/app/helpers/clothesJSONActions";
 
 import "./styles.css";
 
@@ -90,24 +90,22 @@ const SettingsForm = ({ className }) => {
             );
 
         // Update the clothesJSON if the checkbox is checked
-        if (formState.clothesInputCheckbox)
-            await updateClothesJSON(formState.clothesJSON);
+        if (formState.clothesInputCheckbox){
+            const clothesJSON = await JSON.parse(formState.clothesJSON);
+            await updateClothesJSON(clothesJSON);
+        }
 
-        // Remove the clothesJSON from the form state
+        // Prepare the data to be pushed
+        const toPushSettings = { ...formState };
+        // Remove the clothesJSON from the toPushSettings
         const clothesJSONBackup = formState.clothesJSON;
-        formState.clothesInputCheckbox = undefined;
-        formState.clothesJSON = undefined;
+        toPushSettings.clothesInputCheckbox = undefined;
+        toPushSettings.clothesJSON = undefined;
 
         // format the APEL part to be stored as a decimal
-        formState.APELPart = formState.APELPart / 100;
-        await updateSettings(formState);
-        // format the APEL part to be displayed as a percentage
-        formState.APELPart *= 100;
-
-        // Restore the clothesJSON to the form state
-        formState.clothesInputCheckbox = false;
-        formState.clothesJSON = clothesJSONBackup;
-
+        toPushSettings.APELPart = parseFloat(toPushSettings.APELPart) / 100;
+        toPushSettings.returnFees = parseFloat(toPushSettings.returnFees);
+        await updateSettings(toPushSettings);
 
         alert("Paramètres enregistrés avec succès!");
 

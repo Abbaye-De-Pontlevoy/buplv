@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { addArticle } from "./articleFormAction";
-import { getClothesJSON } from "@/app/data/clothesJSONActions";
+import { getClothesJSON } from "@/app/helpers/clothesJSONActions";
 
 import "./styles.css";
 
@@ -24,8 +24,10 @@ const ArticleForm = ({ className, callAfterSubmit, title }) => {
   // Load the article data from the server
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const data = await getClothesJSON();
       setArticleData(data);
+      setIsLoading(false);
     };
     fetchData();
   }, []);
