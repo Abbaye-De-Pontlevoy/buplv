@@ -45,7 +45,11 @@ const ArticleGestionnary = ({ className, articleList, setArticleList, isLoading 
               settings.allowArticleRegistration || userInfo.isAdmin
             }
             callAfterDelete={async (articleId) => {
+              // Remove the article from the database
               await removeArticleAction({ id: articleId });
+              // Remove the article from the list (improve UX by removing the article before the server response)
+              setArticleList(articleList.filter((article) => article.id !== articleId));
+              // Update the article list
               updateArticleList();
             }}
             priceFactor={userInfo.isBenevole ? 1 : 1 - settings.APELPart}
