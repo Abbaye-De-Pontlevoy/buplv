@@ -15,6 +15,7 @@ const ArticleSearch = ({
     const handleSearch = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        setError("");
 
         // Get the article ID from the form
         const articleID = e.target.articleId.value;
