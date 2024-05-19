@@ -31,6 +31,7 @@ export const updateSettings = async (newSettings) => {
 
 export const verifySettings = async () => {
   // read file using fs module
+  console.log(path.resolve(process.cwd(), 'src/app/config/settings.json'));
   const data = await fs.readFile(path.resolve(process.cwd(), 'src/app/config/settings.json'), 'utf8');
   // parse JSON string to JSON object
   const settingsJSON = await JSON.parse(data);
