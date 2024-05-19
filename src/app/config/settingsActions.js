@@ -3,6 +3,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
+const settingsPath = process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? 'src/app/config/settings.json' : 'src/app/config/settingsDev.json';
+
 export const getSettings = async () => {
   const settingsJSON = await verifySettings();
   return settingsJSON;
@@ -14,7 +16,7 @@ export const updateSettings = async (newSettings) => {
   const data = JSON.stringify(newSettings, null, 4);
 
   try {
-    await fs.writeFile(path.resolve(process.cwd(), 'src/app/config/settings.json'), data, 'utf8');
+    await fs.writeFile('src/app/config/settings.json', data, 'utf8');
 
     return {
       success: true,
@@ -31,8 +33,7 @@ export const updateSettings = async (newSettings) => {
 
 export const verifySettings = async () => {
   // read file using fs module
-  console.log(path.resolve(process.cwd(), 'src/app/config/settings.json'));
-  const data = await fs.readFile(path.resolve(process.cwd(), 'src/app/config/settings.json'), 'utf8');
+  const data = await fs.readFile('src/app/config/settings.json', 'utf8');
   // parse JSON string to JSON object
   const settingsJSON = await JSON.parse(data);
 

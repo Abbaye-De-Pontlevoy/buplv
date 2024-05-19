@@ -5,7 +5,7 @@ import path from 'path';
 
 export async function getClothesJSON() {
   // read file using fs module
-  const data = await fs.readFile(path.resolve(process.cwd(), 'src/app/data/clothesJSON.json'), 'utf8');
+  const data = await fs.readFile('src/app/data/clothesJSON.json', 'utf8');
   // parse JSON string to JSON object
   const clothesJSON = await JSON.parse(data);
   return clothesJSON;
@@ -48,7 +48,7 @@ export async function updateClothesJSON(newClothesJSONString) {
   const data = newClothesJSONString; // newClothesJSONString already contains the JSON.stringify() result
 
   try {
-    await fs.writeFile(path.resolve(process.cwd(), 'src/app/data/clothesJSON.json'), data, 'utf8');
+    await fs.writeFile('src/app/data/clothesJSON.json', data, 'utf8');
 
     return {
       success: true,
