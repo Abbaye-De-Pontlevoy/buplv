@@ -141,7 +141,10 @@ const BasketGestionnary = ({ className }) => {
                     placeholder="Ajouter par ID"
                     buttonText="Ajouter"
                     onArticleSearch={(e) => {
-                        if (e) checkArticle(JSON.stringify(e));
+                        if (e){
+                            setError("");
+                            checkArticle(JSON.stringify(e));
+                        }
                     }}
                 />
             </div>
