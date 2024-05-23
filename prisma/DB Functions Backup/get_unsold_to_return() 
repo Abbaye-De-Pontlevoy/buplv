@@ -1,5 +1,6 @@
 -- DROP FUNCTION public.get_unsold_to_return();
 
+-- This function returns a JSON object containing unsold articles that are eligible for return.
 CREATE OR REPLACE FUNCTION public.get_unsold_to_return()
  RETURNS json
  LANGUAGE plpgsql
@@ -7,11 +8,12 @@ AS $function$
 DECLARE
     results_json json;
 BEGIN
+    -- Select and aggregate the desired data into a JSON object
     SELECT json_agg(json_build_object(
-        'ID Vendeur', s.id,
-        'Nom', CONCAT(s.firstname, ' ', s.name),
-        'ID Article', a.id,
-        'Article', a.name
+        'ID Vendeur', s.id, -- Seller ID
+        'Nom', CONCAT(s.firstname, ' ', s.name), -- Seller name
+        'ID Article', a.id, -- Article ID
+        'Article', a.name -- Article name
     ))
     INTO results_json
     FROM
@@ -19,10 +21,10 @@ BEGIN
     JOIN
         "Article" a ON s.id = a.seller_id
     WHERE
-        a.state = 2
-        AND s.return_articles = true; -- Ajout de la condition sur return_articles
+        a.state IN (2, -1) -- Article state is 2 (unsold) or -1 (unsellable)
+        AND s.return_articles = true; -- Seller allows article returns
 
-    RETURN results_json;
+    RETURN results_json; -- Return the JSON object
 END;
 $function$
 ;
