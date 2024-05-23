@@ -1,4 +1,6 @@
-CREATE OR REPLACE FUNCTION public.get_total_gain_per_seller(apelpart numeric, fraisRenvois numeric)
+-- DROP FUNCTION public.get_total_gain_per_seller(numeric, numeric);
+
+CREATE OR REPLACE FUNCTION public.get_total_gain_per_seller(apelpart numeric, fraisrenvois numeric)
  RETURNS json
  LANGUAGE plpgsql
 AS $function$
@@ -7,7 +9,11 @@ DECLARE
     frais_renvois_total numeric; -- Variable to store the total return fees
 BEGIN
     -- Calculate the total return fees for each seller
-    SELECT COALESCE(SUM(CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) THEN fraisRenvois ELSE 0 END), 0)
+    SELECT COALESCE(SUM(CASE 
+        WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) 
+        THEN fraisrenvois 
+        ELSE 0 
+    END), 0)
     INTO frais_renvois_total
     FROM "Seller" s;
 
@@ -21,15 +27,33 @@ BEGIN
             ELSE 
                 0 
             END, -- Number of articles to return
-        'Frais renvoi', fraisRenvois, -- Return fees
+        'Frais renvoi',  
+            CASE WHEN s.return_articles THEN 
+                CASE 
+                    WHEN (SELECT COUNT(*) FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) > 0 THEN
+                        fraisrenvois
+                    ELSE
+                        0 
+                END
+            ELSE 
+                0 
+            END, -- Return fees
         'Gains totaux', COALESCE(total.total_price, 0), -- Total earnings
         'Part vendeur', 
             ROUND((COALESCE(total.total_price, 0) - ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) - 
-                (CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) THEN fraisRenvois ELSE 0 END))
+                CASE 
+                    WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) 
+                    THEN fraisrenvois 
+                    ELSE 0 
+                END)
             ::numeric, 2), -- Seller's share
         'Part APEL', 
             ROUND((COALESCE(total.total_price, 0) * apelpart)::numeric, 2) +
-            (CASE WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) THEN fraisRenvois ELSE 0 END) -- APEL's share
+            CASE 
+                WHEN s.return_articles AND EXISTS (SELECT 1 FROM "Article" a WHERE a.seller_id = s.id AND a.state IN (2, -1)) 
+                THEN fraisrenvois 
+                ELSE 0 
+            END -- APEL's share
     ))
     INTO results_json
     FROM
