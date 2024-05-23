@@ -26,6 +26,7 @@ export async function getUserInfos(request) {
       select: {
         firstname: true,
         name: true,
+        id: true,
         email: true,
         phone: true,
         address: true,

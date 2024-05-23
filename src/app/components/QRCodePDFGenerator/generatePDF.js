@@ -19,9 +19,10 @@ export async function generatePDF(data, sellerInfos) {
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
   doc.text(`Vendeur : ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
-  doc.text(`Mail : ${sellerInfos.email}`, margin, 55, null, null);
-  doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 60, null, null);
-  doc.text(`Adresse : ${sellerInfos.address}`, margin, 65, null, null);
+  doc.text('ID Vendeur : ' + sellerInfos.id, margin, 55, null, null);
+  doc.text(`Mail : ${sellerInfos.email}`, margin, 60, null, null);
+  doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 65, null, null);
+  doc.text(`Adresse : ${sellerInfos.address}`, margin, 70, null, null);
 
   // Display data as a table
   const columns = ["Article", "Marque", "Taille", "Prix", "Ref Article"];
@@ -86,18 +87,18 @@ export async function generatePDF(data, sellerInfos) {
 
     // Draw a line over the QR code
     doc.setLineWidth(0.3);
-    doc.line(margin-5, y, margin+70, y);
+    doc.line(margin-5, y, margin+72, y);
 
     // Draw a line at left and right of the QR code
     doc.setLineWidth(0.3);
     doc.line(margin-5, y, margin-5, y+27);
-    doc.line(margin+70, y, margin+70, y+27);
+    doc.line(margin+72, y, margin+72, y+27);
 
     y += 27;
 
     // Draw a line under the QR code
     doc.setLineWidth(0.3);
-    doc.line(margin-5, y, margin+70, y);
+    doc.line(margin-5, y, margin+72, y);
 
     // if we are on the bottom of the page, use the next side
     // if we are already on the next side, add a new page
