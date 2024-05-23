@@ -17,7 +17,7 @@ const ArticleList = ({
             <th>Marque</th>
             <th>Taille</th>
             <th>État</th>
-            <th>{priceFactor === 1 ? "Prix" : "Prix Vendeur"}</th>
+            <th>{priceFactor === 1 ? "Prix" : "Gain Vendeur"}</th>
             <th className="flex-column flex-center">Supprimer</th>
           </tr>
         </thead>
