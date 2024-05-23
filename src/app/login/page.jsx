@@ -25,6 +25,7 @@ export default function Login() {
         password: "",
     });
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -40,12 +41,14 @@ export default function Login() {
         // Call loginAction function to validate user login
         const result = await loginAction(formData);
         if (result.access) {
+            setSuccess(result.msg);
             router.push("/dashboard");
             login(result);
         }
-
-        setError(result.msg);
-        setIsLoading(false);
+        else{
+            setError(result.msg);
+            setIsLoading(false);
+        }
     };
 
     // Function to handle form input changes
@@ -91,7 +94,10 @@ export default function Login() {
                         </button>
                     </form>
 
-                    <p className="error margin-top-10">{error}</p>
+                    {success === ""
+                        ? <p className="error margin-top-10">{error}</p>
+                        : <p className="success margin-top-10">{success}</p>
+                    }
                     <a href="/register" className="margin-top-10">
                         Pas encore inscrit ?
                     </a>
