@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 export default async function registerAction(formData) {
   // Get the data off the form
-  const {
+  let {
     firstname,
     name,
     email,
@@ -19,6 +19,19 @@ export default async function registerAction(formData) {
   } = formData;
   
   try {
+    // Prepare Datas
+    // Format Name and Firstname
+    name = name.trim().toUpperCase();
+    firstname = firstname.trim().charAt(0).toUpperCase() + firstname.trim().slice(1);
+
+    // Format Email
+    email = email.trim().toLowerCase();
+
+    // Remove spaces from the iban
+    iban = iban.replace(/ /g, "");
+    // Add spaces every 4 characters
+    iban = iban.match(/.{1,4}/g).join(" ");
+
     // Hash the password
     const hash = bcrypt.hashSync(password, 8);
 
