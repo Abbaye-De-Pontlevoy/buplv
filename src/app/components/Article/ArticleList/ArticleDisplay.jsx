@@ -2,16 +2,32 @@ import { useState } from "react";
 
 import "./styles.css";
 
+/**
+ * Renders a single article in a table row.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The additional CSS class for the table row.
+ * @param {Object} props.article - The article object to display.
+ * @param {Function} props.callAfterDelete - The callback function to be called after deleting the article.
+ * @param {boolean} [props.enabledRemoveButton=false] - Whether the remove button should be enabled.
+ * @param {number} [props.priceFactor=1] - The factor to multiply the article price by.
+ * @returns {JSX.Element} The rendered article table row.
+ */
 export const ArticleDisplay = ({
   className,
   article,
   callAfterDelete,
-  enabledRemoveButton=false,
+  enabledRemoveButton = false,
   priceFactor = 1,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
-  // Function to handle the deletion of an article
+  /**
+   * Handles the deletion of an article.
+   *
+   * @param {Event} e - The event object.
+   * @returns {Promise<void>} A promise that resolves after the article is deleted.
+   */
   const deleteHandler = async (e) => {
     e.preventDefault();
     setIsDisabled(true);
@@ -20,7 +36,7 @@ export const ArticleDisplay = ({
   };
 
   return (
-    <tr className={"articleLine "+ className}>
+    <tr className={"articleLine " + className}>
       <td>{article.name}</td>
       <td>{article.brand}</td>
       <td>{article.size}</td>

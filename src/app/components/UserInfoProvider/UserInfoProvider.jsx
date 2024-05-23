@@ -6,6 +6,12 @@ import React, { createContext, useEffect, useState } from "react";
 // Create a context to store the user information
 export const UserInfoContext = createContext(null);
 
+/**
+ * Provides user information to the application.
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The child components.
+ * @returns {ReactNode} The rendered component.
+ */
 export const UserInfoProvider = ({ children }) => {
   // Initialize state variables
   const [userInfo, setUserInfo] = useState({
@@ -17,7 +23,9 @@ export const UserInfoProvider = ({ children }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Function to update the user information when the user logs out
+  /**
+   * Function to update the user information when the user logs out.
+   */
   const logout = () => {
     setUserInfo({
       isConnected: false,
@@ -27,7 +35,13 @@ export const UserInfoProvider = ({ children }) => {
     });
   }
 
-  // Function to update the user information when the user logs in
+  /**
+   * Function to update the user information when the user logs in.
+   * @param {Object} data - The user data.
+   * @param {boolean} data.admin - Indicates if the user is an admin.
+   * @param {boolean} data.benevole - Indicates if the user is a volunteer.
+   * @param {number} data.id - The user ID.
+   */
   const login = (data) => {
     setUserInfo({
       isConnected: true,

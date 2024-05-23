@@ -5,6 +5,10 @@ import Menu from "./components/Menu/Menu";
 import "./globals.css";
 import "./page.css";
 
+/**
+ * Renders the Page component.
+ * @returns {JSX.Element} The rendered Page component.
+ */
 export default async function Page() {
   return (
     <>

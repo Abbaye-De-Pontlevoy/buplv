@@ -1,6 +1,12 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
+/**
+ * Generates a PDF document with a summary and QR codes for the given data and seller information.
+ * @param {Array} data - The array of items to be included in the PDF.
+ * @param {Object} sellerInfos - The information of the seller.
+ * @returns {Promise<void>} - A promise that resolves when the PDF is generated and saved.
+ */
 export async function generatePDF(data, sellerInfos) {
   const doc = new jsPDF();
   let margin = 15;

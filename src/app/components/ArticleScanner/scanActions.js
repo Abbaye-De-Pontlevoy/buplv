@@ -3,6 +3,13 @@
 import prisma from "@/app/lib/prisma";
 
 // Function to cancel the sale of an article
+/**
+ * Cancels the sale of an article and performs a refund transaction.
+ * 
+ * @param {number} articleID - The ID of the article to cancel the sale for.
+ * @param {number} price - The price of the article.
+ * @returns {Promise<{ success: boolean, msg: string }>} - A promise that resolves to an object indicating the success status and a message.
+ */
 export const cancelArticleSell = async (articleID, price) => {
   try {
     // Create a transaction representing the refund

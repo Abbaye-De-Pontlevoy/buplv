@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/profil/page.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/profil/page.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use client";
+
+import { useEffect, useRef, useState } from "react";
+import LogoutButton from "../components/Button/LogoutButton/LogoutButton";
+import Menu from "../components/Menu/Menu";
+import { getUserInfos } from "../helpers/getUserInfos";
+import updateAction from "./updateAction";
+import isValidPhoneNumber from "../helpers/validatePhoneNumber";
+import areIBANandBICcorrects from "../helpers/areIBANandBICcorrects";
+import { formatPhoneNumber } from "../helpers/formatPhoneNumber";
+import Header from "../components/Header/Header";
+
+import "./styles.css";
+
+/**
+ * Represents the profile page component.
+ *
+ * @component
+ * @returns {JSX.Element} ProfilePage component
+ */
+const ProfilePage = () => {
+    // Ref for the form element
+    const formRef = useRef(null);
+
+    // State variables
+    const [isLoading, setIsLoading] = useState(true);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [userInfo, setUserInfo] = useState({
+        firstname: "",
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        iban: "",
+        bic: "",
+        return_articles: false,
+    });
+    const [password, setPassword] = useState("");
+    const [editingMode, setEditingMode] = useState(false);
+    const [error, setError] = useState("");
+    const [step, setStep] = useState(0);
+
+    // Fetch user data when component mounts
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+
+            const user = await getUserInfos();
+            setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...user }));
+
+            setIsLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    // Handle form input change
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Update userInfo state with new input value
+        const newValue =
+            name === "email"
+                ? value.toLowerCase().replace(/\s/g, "")
+                : name === "phone"
+                ? formatPhoneNumber(value)
+                : value;
+        setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [name]: newValue }));
+        // Clear validation messages
+        clearInputValidation(name);
+        setError("");
+    };
+
+    const changeStep = async (newStep, verification = true) => {
+        if (verification) {
+            const form = formRef.current;
+            const phoneNumberInput = form.querySelector('input[name="phone"]');
+            const ibanInput = form.querySelector('input[name="iban"]');
+            const bicInput = form.querySelector('input[name="bic"]');
+
+            clearInputValidation("phone");
+            clearInputValidation("iban");
+            clearInputValidation("bic");
+
+            // Phone number validation
+            if (!isValidPhoneNumber(phoneNumberInput.value)) {
+                phoneNumberInput.setCustomValidity("Invalid phone number.");
+                phoneNumberInput.reportValidity();
+                setIsUpdating(false);
+                return;
+            }
+
+            // Check form validity
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                setIsUpdating(false);
+                return;
+            }
+
+            // IBAN and BIC validation
+            const { validIban, validBic } = await areIBANandBICcorrects({
+                iban: userInfo.iban,
+                bic: userInfo.bic,
+            });
+            if (!validIban) {
+                ibanInput.setCustomValidity("Invalid IBAN.");
+                ibanInput.reportValidity();
+                setIsUpdating(false);
+                return;
+            } else if (!validBic) {
+                bicInput.setCustomValidity("Invalid BIC.");
+                bicInput.reportValidity();
+                setIsUpdating(false);
+                return;
+            }
+        }
+
+        setPassword("");
+        setStep(newStep);
+    };
+
+    // Clear input validation messages
+    const clearInputValidation = (name) => {
+        formRef.current
+            .querySelector(`input[name="${name}"]`)
+            .setCustomValidity("");
+    };
+
+    // Handle form submission
+    const handleValidateForm = async (e) => {
+        e.preventDefault();
+        setIsUpdating(true);
+
+        try {
+            // Prepare data for API call
+            const processedData = {
+                ...userInfo,
+                iban: userInfo.iban.replace(/\s/g, ""),
+                bic: userInfo.bic.replace(/\s/g, ""),
+            };
+
+            // Call update action API
+            const apiResult = await updateAction({
+                password: password,
+                data: processedData,
+            });
+
+            if (apiResult === true) {
+                setStep(0);
+                setEditingMode(false);
+            } else setError(apiResult);
+
+            setIsUpdating(false);
+        } catch (e) {
+            setError("Erreur lors de la mise à jour de vos données.");
+            setIsUpdating(false);
+        }
+    };
+
+    // JSX for the component
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;Menu current="/profil" />
+            &lt;div className="bandeau-rangement">
+                &lt;div className="main-container">
+                    &lt;h1>Mon profil&lt;/h1>
+                    {isLoading ? (
+                        &lt;p>Chargement...&lt;/p>
+                    ) : (
+                        &lt;>
+                            &lt;div>
+                                &lt;form
+                                    ref={formRef}
+                                    onSubmit={handleValidateForm}
+                                    className="formulaire"
+                                >
+                                    {step === 0 ? (
+                                        &lt;>
+                                            {/* Display user information */}
+                                            &lt;span>
+                                                &lt;label className="width-full">
+                                                    Prénom :
+                                                    &lt;input
+                                                        type="text"
+                                                        name="firstname"
+                                                        value={
+                                                            userInfo.firstname
+                                                        }
+                                                        onChange={handleChange}
+                                                        disabled={!editingMode}
+                                                        required
+                                                    />
+                                                &lt;/label>
+                                                &lt;label className="width-full">
+                                                    Nom :
+                                                    &lt;input
+                                                        type="text"
+                                                        name="name"
+                                                        value={userInfo.name}
+                                                        onChange={handleChange}
+                                                        disabled={!editingMode}
+                                                        required
+                                                    />
+                                                &lt;/label>
+                                            &lt;/span>
+
+                                            &lt;label>
+                                                Email :
+                                                &lt;input
+                                                    type="email"
+                                                    name="email"
+                                                    value={userInfo.email}
+                                                    disabled={true}
+                                                    required
+                                                />
+                                            &lt;/label>
+                                            &lt;label>
+                                                N° de téléphone :
+                                                &lt;input
+                                                    type="text"
+                                                    name="phone"
+                                                    value={userInfo.phone}
+                                                    onChange={handleChange}
+                                                    disabled={!editingMode}
+                                                    required
+                                                />
+                                            &lt;/label>
+
+                                            &lt;label>
+                                                Adresse complète :
+                                                &lt;input
+                                                    type="text"
+                                                    name="address"
+                                                    value={userInfo.address}
+                                                    onChange={handleChange}
+                                                    disabled={!editingMode}
+                                                    required
+                                                />
+                                            &lt;/label>
+
+                                            &lt;label>
+                                                IBAN :
+                                                &lt;input
+                                                    type="text"
+                                                    name="iban"
+                                                    value={userInfo.iban}
+                                                    onChange={handleChange}
+                                                    disabled={!editingMode}
+                                                    required
+                                                />
+                                            &lt;/label>
+                                            &lt;label>
+                                                Bic :
+                                                &lt;input
+                                                    type="text"
+                                                    name="bic"
+                                                    value={userInfo.bic}
+                                                    onChange={handleChange}
+                                                    disabled={!editingMode}
+                                                    required
+                                                />
+                                            &lt;/label>
+
+                                            {/* Return information */}
+                                            &lt;label>
+                                                Retours :
+                                                &lt;p>
+                                                    {(userInfo.return_articles
+                                                        ? "J'ai "
+                                                        : "Je n'ai pas ") +
+                                                        "souhaité que mes articles invendus me soient retournés par voie postale (non modifiable)."}
+                                                &lt;/p>
+                                            &lt;/label>
+
+                                            {/* Validate button to submit the form */}
+                                            {editingMode &amp;&amp; (
+                                                &lt;button
+                                                    type="button"
+                                                    disabled={
+                                                        !editingMode ||
+                                                        isUpdating
+                                                    }
+                                                    style={{
+                                                        marginTop: "20px",
+                                                    }}
+                                                    onClick={() =>
+                                                        changeStep(1)
+                                                    }
+                                                >
+                                                    Valider
+                                                &lt;/button>
+                                            )}
+                                        &lt;/>
+                                    ) : (
+                                        &lt;label>
+                                            Veuillez entrer votre mot de passe
+                                            pour enregistrer les modifications :
+                                            &lt;input
+                                                type="password"
+                                                name="password"
+                                                value={password}
+                                                onChange={(e) => {
+                                                    setPassword(e.target.value);
+                                                }}
+                                            />
+                                            {error &amp;&amp; (
+                                                &lt;p style={{ color: "red" }}>
+                                                    {error}
+                                                &lt;/p>
+                                            )}
+                                            &lt;span>
+                                                &lt;button
+                                                    type="button"
+                                                    className="sideToSideButton"
+                                                    onClick={() =>
+                                                        changeStep(0, false)
+                                                    }
+                                                >
+                                                    Retour
+                                                &lt;/button>
+                                                &lt;button
+                                                    type="submit"
+                                                    className="sideToSideButton"
+                                                    disabled={
+                                                        !editingMode ||
+                                                        isUpdating
+                                                    }
+                                                >
+                                                    {!isUpdating
+                                                        ? "Valider"
+                                                        : "Chargement..."}
+                                                &lt;/button>
+                                            &lt;/span>
+                                        &lt;/label>
+                                    )}
+                                &lt;/form>
+                            &lt;/div>
+
+                            {step === 0 &amp;&amp; (
+                                &lt;>
+                                    &lt;label>
+                                        &lt;input
+                                            type="checkbox"
+                                            className="checbox margin-right-10"
+                                            checked={editingMode}
+                                            onChange={() =>
+                                                setEditingMode(!editingMode)
+                                            }
+                                        />
+                                        Modifier mes informations
+                                    &lt;/label>
+
+                                    &lt;LogoutButton />
+                                &lt;/>
+                            )}
+                        &lt;/>
+                    )}
+                &lt;/div>
+            &lt;/div>
+        &lt;/>
+    );
+};
+
+export default ProfilePage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#ContactPage">ContactPage</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#ProfilePage">ProfilePage</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SalesPanel">SalesPanel</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#UserInfoProvider">UserInfoProvider</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#areIBANandBICcorrects">areIBANandBICcorrects</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#formatPhoneNumber">formatPhoneNumber</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getAllClothesInfo">getAllClothesInfo</a></li><li><a href="global.html#getArticleByID">getArticleByID</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getConnexionInfo">getConnexionInfo</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getUserID">getUserID</a></li><li><a href="global.html#getUserInfos">getUserInfos</a></li><li><a href="global.html#isUserAdmin">isUserAdmin</a></li><li><a href="global.html#isUserConnected">isUserConnected</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

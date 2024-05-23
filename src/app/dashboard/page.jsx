@@ -9,6 +9,10 @@ import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider
 
 import "./styles.css";
 
+/**
+ * Dashboard component.
+ * Renders the dashboard page with a list of saved articles.
+ */
 const Dashboard = () => {
   // Get user information from the context
   const { userInfo, login } = useContext(UserInfoContext);

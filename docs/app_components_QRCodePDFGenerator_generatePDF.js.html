@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/components/QRCodePDFGenerator/generatePDF.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/components/QRCodePDFGenerator/generatePDF.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import jsPDF from "jspdf";
+import "jspdf-autotable";
+
+/**
+ * Generates a PDF document with a summary and QR codes for the given data and seller information.
+ * @param {Array} data - The array of items to be included in the PDF.
+ * @param {Object} sellerInfos - The information of the seller.
+ * @returns {Promise&lt;void>} - A promise that resolves when the PDF is generated and saved.
+ */
+export async function generatePDF(data, sellerInfos) {
+  const doc = new jsPDF();
+  let margin = 15;
+
+  // TITLE
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("Récapitulatif (à imprimer)", 105, 20, null, null, "center");
+
+  // SUBTITLE
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(12);
+  doc.text("Imprimer et fixer fermement sur le sac contenant\nla TOTALITÉ des articles à vendre.", 105, 26, null, null, "center");
+
+  // Add seller information
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Vendeur : ${sellerInfos.firstname} ${sellerInfos.name}`, margin, 50, null, null);
+  doc.text('ID Vendeur : ' + sellerInfos.id, margin, 55, null, null);
+  doc.text(`Mail : ${sellerInfos.email}`, margin, 60, null, null);
+  doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 65, null, null);
+  doc.text(`Adresse : ${sellerInfos.address}`, margin, 70, null, null);
+
+  // Display data as a table
+  const columns = ["Article", "Marque", "Taille", "Prix", "Ref Article"];
+  const rows = data.map(item => [item.name, item.brand, item.size, `${item.price}€`, item.id]);
+  doc.autoTable({
+    head: [columns],
+    body: rows,
+    startY: 80,
+  });
+
+  // Display number of items in bold
+  doc.setFont("helvetica", "bold");
+  doc.text(`Nombre d'articles : ${data.length}`, 15, doc.autoTable.previous.finalY + 10, null, null);
+  doc.setFont("helvetica", "normal");
+
+  // Add a new page for the QR codes
+  doc.addPage();
+  margin = 20;
+
+  // TITLE
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("Liste des QR codes (à imprimer)", 105, 20, null, null, "center");
+
+  // SUBTITLE
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(12);
+  doc.text("QR codes et description à découper et à agrafer\nsur l'étiquette de chaque vêtement (cf. emplacement de l'agrafe)", 105, 26, null, null, "center");
+
+  doc.setFont("helvetica", "normal");
+  // Initial position for the first QR code
+  let y = 40;
+
+  // Loop through each QR code
+  for (let i = 0; i &lt; data.length; i++) {
+    // Generate the QR code as an image
+    const jsonString = JSON.stringify({
+      id: data[i].id,
+      name: data[i].name,
+      brand: data[i].brand,
+      size: data[i].size,
+      price: data[i].price,
+    });
+    const qrCodeDataURL = await generateQRCodeDataURL(jsonString);
+
+    // Add the QR code at the specified position in the PDF
+    doc.addImage(qrCodeDataURL, "PNG", margin, y + 5, 20, 20);
+
+    // Add the QR code title next to it
+    // Add staple illustration
+    doc.setLineWidth(0.5);
+    doc.line(margin+30, y+3, margin+32, y+3);
+    doc.line(margin+33, y+3, margin+32, y+3);
+
+    // QR code data
+    doc.setFontSize(8);
+    doc.text(
+      margin + 30,
+      y + 8,
+      `Article : ${data[i].name}\nMarque : ${data[i].brand}\nTaille : ${data[i].size}\nPrix : ${data[i].price}€\nRef : ${data[i].id}\nRef Vendeur: ${data[i].seller_id}`
+    );
+
+    // Draw a line over the QR code
+    doc.setLineWidth(0.3);
+    doc.line(margin-5, y, margin+72, y);
+
+    // Draw a line at left and right of the QR code
+    doc.setLineWidth(0.3);
+    doc.line(margin-5, y, margin-5, y+27);
+    doc.line(margin+72, y, margin+72, y+27);
+
+    y += 27;
+
+    // Draw a line under the QR code
+    doc.setLineWidth(0.3);
+    doc.line(margin-5, y, margin+72, y);
+
+    // if we are on the bottom of the page, use the next side
+    // if we are already on the next side, add a new page
+    if (y > 240) {
+      if(margin === 20)
+        margin = 100;
+      else{
+        doc.addPage();
+        margin = 20;
+        // add title and subtitle again
+        // TITLE
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Liste des QR codes (à imprimer)", 105, 20, null, null, "center");
+
+        // SUBTITLE
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(12);
+        doc.text("QR codes et description à découper et à agrafer\nsur l'étiquette de chaque vêtement (cf. emplacement de l'agrafe)", 105, 26, null, null, "center");
+
+        doc.setFont("helvetica", "normal");
+      }
+      y = 40;
+    }
+  }
+
+  doc.save("QRCODES_TO_PRINT.pdf");
+}
+
+const generateQRCodeDataURL = async (url) => {
+  const response = await fetch(
+    `https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=${encodeURIComponent(
+      url
+    )}`
+  );
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#ContactPage">ContactPage</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#ProfilePage">ProfilePage</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SalesPanel">SalesPanel</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#UserInfoProvider">UserInfoProvider</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#areIBANandBICcorrects">areIBANandBICcorrects</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#formatPhoneNumber">formatPhoneNumber</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getAllClothesInfo">getAllClothesInfo</a></li><li><a href="global.html#getArticleByID">getArticleByID</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getConnexionInfo">getConnexionInfo</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getUserID">getUserID</a></li><li><a href="global.html#getUserInfos">getUserInfos</a></li><li><a href="global.html#isUserAdmin">isUserAdmin</a></li><li><a href="global.html#isUserConnected">isUserConnected</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/components/ArticleScanner/scanActions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/components/ArticleScanner/scanActions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use server";
+
+import prisma from "@/app/lib/prisma";
+
+// Function to cancel the sale of an article
+/**
+ * Cancels the sale of an article and performs a refund transaction.
+ * 
+ * @param {number} articleID - The ID of the article to cancel the sale for.
+ * @param {number} price - The price of the article.
+ * @returns {Promise&lt;{ success: boolean, msg: string }>} - A promise that resolves to an object indicating the success status and a message.
+ */
+export const cancelArticleSell = async (articleID, price) => {
+  try {
+    // Create a transaction representing the refund
+    await prisma.transaction.create({
+      data: {
+        payment_method: "remboursement",
+        payment_amount: -1 * parseInt(price),
+      },
+    });
+
+    // Update the article state to inventoried
+    await prisma.article.update({
+      where: {
+        id: parseInt(articleID),
+      },
+      data: {
+        state: 2,
+      },
+    });
+  } catch (e) {
+    return {
+      success: false,
+      msg: e,
+    };
+  }
+
+  return { success: true, msg: "Article remboursé." };
+};
+
+// Function to update an article field
+export const updateArticleField = async (articleID, field, value) => {
+  try {
+    await prisma.article.update({
+      where: {
+        id: parseInt(articleID),
+      },
+      data: {
+        [field]: value,
+      },
+    });
+  } catch (e) {
+    return {
+      success: false,
+      msg: e,
+    };
+  }
+
+  return { success: true, msg: "Article mis à jour." };
+};
+
+// Function to get the state of an article
+export const getArticleState = async (articleID) => {
+  const article = await prisma.article.findUnique({
+    where: {
+      id: parseInt(articleID),
+    },
+  });
+
+  if (!article) return null;
+
+  return article.state;
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#ContactPage">ContactPage</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#ProfilePage">ProfilePage</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SalesPanel">SalesPanel</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#UserInfoProvider">UserInfoProvider</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#areIBANandBICcorrects">areIBANandBICcorrects</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#formatPhoneNumber">formatPhoneNumber</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getAllClothesInfo">getAllClothesInfo</a></li><li><a href="global.html#getArticleByID">getArticleByID</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getConnexionInfo">getConnexionInfo</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getUserID">getUserID</a></li><li><a href="global.html#getUserInfos">getUserInfos</a></li><li><a href="global.html#isUserAdmin">isUserAdmin</a></li><li><a href="global.html#isUserConnected">isUserConnected</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

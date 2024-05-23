@@ -3,6 +3,10 @@
 import prisma from "@/app/lib/prisma";
 
 // Function to export the list of sellers
+/**
+ * Export sellers with desired fields.
+ * @returns {Array} Array of sellers with formatted data.
+ */
 export async function exportSellers() {
   // get the list of sellers with disired fields
   const result = await prisma.seller.findMany({

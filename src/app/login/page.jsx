@@ -8,6 +8,10 @@ import { UserInfoContext } from "../components/UserInfoProvider/UserInfoProvider
 import { useRouter } from "next/navigation";
 import PasswordInput from "../components/PasswordInput/PasswordInput";
 
+/**
+ * Login component for user authentication.
+ * @returns {JSX.Element} The rendered login form.
+ */
 export default function Login() {
     // Get the router object
     // Used to redirect the user after login
@@ -32,7 +36,10 @@ export default function Login() {
         removeCookie();
     }, []);
 
-    // Function to handle form submission
+    /**
+     * Handles form submission and user login validation.
+     * @param {Event} e - The form submission event.
+     */
     const handleValidate = async (e) => {
         e.preventDefault();
         setError("");
@@ -51,7 +58,10 @@ export default function Login() {
         }
     };
 
-    // Function to handle form input changes
+    /**
+     * Handles form input changes and updates the form data.
+     * @param {Event} e - The input change event.
+     */
     const handleChange = (e) => {
         let { name, value } = e.target;
         if (name === "email") value = value.toLowerCase().replace(/\s/g, ""); // Normalize email input

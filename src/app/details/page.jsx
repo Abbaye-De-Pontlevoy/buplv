@@ -5,6 +5,10 @@ import Menu from "../components/Menu/Menu";
 import "../globals.css";
 import "./page.css";
 
+/**
+ * Renders the details page.
+ * @returns {JSX.Element} The details page component.
+ */
 export default async function Page() {
   return (
     <>

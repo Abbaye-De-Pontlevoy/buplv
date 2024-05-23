@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Menu/Menu.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Menu/Menu.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use client";
+
+import { useContext } from "react";
+import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
+
+import "./styles.css";
+
+/**
+ * Renders a menu component with dynamic menu items based on user information.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for the menu component.
+ * @param {string} props.current - The current path of the menu item.
+ * @returns {JSX.Element} The rendered menu component.
+ */
+const Menu = ({ className, current }) => {
+  // Get user information
+  const { userInfo } = useContext(UserInfoContext);
+
+  // Menu content
+  const menuContent = [
+    {
+      name: "Comment faire ?",
+      path: "/details",
+      accessibility: { public: true, benevole: true },
+    },
+    {
+      name: "Mes articles",
+      path: "/dashboard",
+      accessibility: { public: true, benevole: false },
+    },
+    {
+      name: "Ventes",
+      path: "/sales-panel",
+      accessibility: { public: false, benevole: true },
+    },
+    {
+      name: "Administration",
+      path: "/admin-panel",
+      accessibility: { public: false, benevole: false },
+    },
+  ];
+
+  return (
+    &lt;span className={"menuSpan width-full " + className}>
+      {/* Display the menu items according to the user's role */}
+      {menuContent.map((item, index) => {
+        if (!userInfo.isAdmin) {
+          if (userInfo.isBenevole) {
+            if (!item.accessibility.benevole) return null;
+          } else {
+            if (!item.accessibility.public) return null;
+          }
+        }
+        return (
+          &lt;a
+            key={index}
+            href={item.path}
+            className={(current === item.path ? "item active" : "item") + " decoration-none font-weight-bold"}
+          >
+            {item.name}
+          &lt;/a>
+        );
+      })}
+    &lt;/span>
+  );
+};
+
+export default Menu;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:44:27 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

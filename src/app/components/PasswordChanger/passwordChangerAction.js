@@ -4,6 +4,15 @@ import { getConnexionInfo } from "@/app/helpers/getConnexionInfo";
 import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
+/**
+ * Changes the password for a user account.
+ * @param {Object} formData - The form data containing the password and the account to modify.
+ * @param {string} formData.password - The new password.
+ * @param {string} formData.modifiedAccount - The account to modify (either "admin" or "benevole").
+ * @returns {Object} - The result of the password change operation.
+ * @returns {boolean} success - Indicates whether the password change was successful.
+ * @returns {string} message - A message describing the result of the password change operation.
+ */
 export default async function changePassword(formData) {
     // Get the data off the form
     const { password, modifiedAccount } = formData;

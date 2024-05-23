@@ -6,6 +6,15 @@ import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMete
 import changePassword from "./passwordChangerAction";
 import PasswordInput from "../PasswordInput/PasswordInput";
 
+/**
+ * Renders a form for changing the password.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @param {Object} props.modifiedAccount - The modified account object.
+ * @returns {JSX.Element} The PasswordChanger component.
+ */
 const PasswordChanger = ({ className, modifiedAccount }) => {
     const formRef = useRef(null);
     const router = useRouter();

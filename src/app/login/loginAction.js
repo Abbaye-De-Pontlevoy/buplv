@@ -11,6 +11,11 @@ export const removeCookie = () => {
   cookies().delete("buConnectedToken");
 }
 
+/**
+ * Performs the login action.
+ * @param {Object} formData - The form data containing the email and password.
+ * @returns {Object} - An object containing the login result.
+ */
 export default async function loginAction(formData) {
   // Remove the cookie
   // Will be added again if login is successful

@@ -15,6 +15,14 @@ import "./styles.css";
 // Set the root element for the modal
 Modal.setAppElement("#root");
 
+/**
+ * Renders a component for scanning and displaying article data using QR codes.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The rendered ArticleScanner component.
+ */
 const ArticleScanner = ({className}) => {
   // Initialize state variables
   const [showModal, setShowModal] = useState(false);

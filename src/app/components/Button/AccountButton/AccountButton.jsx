@@ -5,6 +5,14 @@ import { MdAccountCircle } from "react-icons/md";
 import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
 // AccountButton component
+/**
+ * Renders a button component for user account actions.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the button container.
+ * @returns {JSX.Element} The rendered AccountButton component.
+ */
 const AccountButton = ({ className }) => {
   const { userInfo } = useContext(UserInfoContext);
 

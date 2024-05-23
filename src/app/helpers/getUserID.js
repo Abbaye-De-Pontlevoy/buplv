@@ -3,6 +3,11 @@
 import { cookies } from "next/headers";
 import * as jose from "jose";
 
+/**
+ * Retrieves the user ID from the request cookie.
+ * @param {Object} request - The request object.
+ * @returns {Promise<string|null>} The user ID if found, otherwise null.
+ */
 export async function getUserID(request) {
   const cookie = cookies(request).get("buConnectedToken");
 

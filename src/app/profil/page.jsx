@@ -12,6 +12,12 @@ import Header from "../components/Header/Header";
 
 import "./styles.css";
 
+/**
+ * Represents the profile page component.
+ *
+ * @component
+ * @returns {JSX.Element} ProfilePage component
+ */
 const ProfilePage = () => {
     // Ref for the form element
     const formRef = useRef(null);

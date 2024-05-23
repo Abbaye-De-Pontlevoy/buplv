@@ -2,6 +2,11 @@
 
 import prisma from "../lib/prisma";
 
+/**
+ * Retrieves the settings from the database and verifies them.
+ * If any key-value pair is different, updates the settings.
+ * @returns {Promise<Object>} The verified settings object.
+ */
 export const getSettings = async () => {
     const settingsJSON = await prisma.config.findFirst({
         where: {

@@ -4,6 +4,11 @@ import { redirect } from "next/navigation";
 import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
+/**
+ * Registers a user by creating a new seller in the database.
+ * @param {Object} formData - The form data containing user information.
+ * @returns {Promise<string>} - A promise that resolves to a success message or an error message.
+ */
 export default async function registerAction(formData) {
   // Get the data off the form
   let {

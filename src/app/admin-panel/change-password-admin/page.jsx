@@ -2,6 +2,12 @@ import Header from "@/app/components/Header/Header";
 import PasswordChanger from "@/app/components/PasswordChanger/PasswordChanger";
 import ReturnArrowButton from "@/app/components/Button/returnArrowButton/ReturnArrowButton";
 
+/**
+ * Renders the Change Password page for the admin panel.
+ *
+ * @component
+ * @returns {JSX.Element} The Change Password page component.
+ */
 const ChangePasswordPage = () => {
     return (
         <>

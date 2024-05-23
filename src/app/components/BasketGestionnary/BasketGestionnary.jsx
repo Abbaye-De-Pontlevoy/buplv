@@ -10,6 +10,14 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 
 import "./styles.css";
 
+/**
+ * Represents a component for managing a basket.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for styling the component.
+ * @returns {JSX.Element} The rendered component.
+ */
 const BasketGestionnary = ({ className }) => {
     // Form ref
     const formRef = useRef(null);

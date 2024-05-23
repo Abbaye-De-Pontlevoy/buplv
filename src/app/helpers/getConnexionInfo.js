@@ -3,6 +3,11 @@
 import { cookies } from "next/headers";
 import * as jose from "jose";
 
+/**
+ * Retrieves the user's connection information from the request cookie.
+ * @param {Object} request - The request object.
+ * @returns {Promise<Object|boolean>} - The user's connection information or false if not found.
+ */
 export async function getConnexionInfo(request) {
   // Get the cookie
   const cookie = cookies(request).get("buConnectedToken");

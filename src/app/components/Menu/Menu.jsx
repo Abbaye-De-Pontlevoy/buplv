@@ -5,6 +5,15 @@ import { UserInfoContext } from "../UserInfoProvider/UserInfoProvider";
 
 import "./styles.css";
 
+/**
+ * Renders a menu component with dynamic menu items based on user information.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for the menu component.
+ * @param {string} props.current - The current path of the menu item.
+ * @returns {JSX.Element} The rendered menu component.
+ */
 const Menu = ({ className, current }) => {
   // Get user information
   const { userInfo } = useContext(UserInfoContext);

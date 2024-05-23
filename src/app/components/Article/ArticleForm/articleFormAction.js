@@ -3,6 +3,17 @@
 import { getConnexionInfo } from "@/app/helpers/getConnexionInfo";
 import prisma from "@/app/lib/prisma";
 
+/**
+ * Adds an article to the database.
+ * 
+ * @param {Object} e - The event object containing the article details.
+ * @param {string} e.brand - The brand of the article.
+ * @param {string} e.name - The name of the article.
+ * @param {string} e.size - The size of the article.
+ * @param {number} e.quantity - The quantity of the article.
+ * @param {number} e.price - The price of the article.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the article is added successfully, false otherwise.
+ */
 export const addArticle = async (e) => {
   // Extract data from the event
   const brand = e.brand;

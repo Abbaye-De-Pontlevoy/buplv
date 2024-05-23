@@ -3,6 +3,14 @@ import ArticleSearch from "../ArticleSearch/ArticleSearch";
 import { getAllClothesInfo } from "@/app/helpers/clothesJSONActions";
 import { updateArticle } from "./modifierAction";
 
+/**
+ * Renders a form for modifying an article.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The rendered component.
+ */
 const ArticleModifier = ({className}) => {
   // Initialize state variables
   const [articleJSONData, setArticleJSONData] = useState(null);

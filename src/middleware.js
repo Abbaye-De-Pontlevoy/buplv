@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { getConnexionInfo } from "./app/helpers/getConnexionInfo";
 
+/**
+ * Middleware function to handle authentication and redirection logic.
+ * @param {Request} request - The incoming request object.
+ * @returns {NextResponse|Response} - The response object or the next middleware function.
+ */
 export async function middleware(request) {
   const { connected, admin, benevole } = await getConnexionInfo(request);
 

@@ -4,6 +4,10 @@ import prisma from "@/app/lib/prisma";
 import { getSettings } from "@/app/helpers/settingsActions";
 
 // Function to get the basic data for the treso report
+/**
+ * Retrieves the rapport for the treasury.
+ * @returns {Promise<{nbSeller: number, nbArticle: number, gains: object}>} The rapport object containing the number of sellers, number of articles, and gains.
+ */
 export async function getRapportTreso() {
   // Get the number of sellers
   const nbSeller = await prisma.seller.count();

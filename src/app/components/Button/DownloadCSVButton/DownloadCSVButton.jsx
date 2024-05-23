@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { downloadCSV } from "./downloadcsv";
 
+/**
+ * A button component that allows downloading data as a CSV file.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the button container.
+ * @param {Function} props.dataGetterFunction - The function that retrieves the data to be downloaded.
+ * @param {string} props.filename - The name of the downloaded CSV file.
+ * @param {string} props.buttonText - The text to be displayed on the button.
+ * @returns {JSX.Element} The DownloadCSVButton component.
+ */
 const DownloadCSVButton = ({
     className,
     dataGetterFunction,

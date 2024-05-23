@@ -12,6 +12,11 @@ import PasswordInput from "../components/PasswordInput/PasswordInput";
 
 import "./styles.css";
 
+/**
+ * Register component for user registration.
+ *
+ * @returns {JSX.Element} The JSX element for the registration form.
+ */
 export default function Register() {
   const formRef = useRef(null); // Reference for the form element
   const [step, setStep] = useState(1); // Current step in the registration process

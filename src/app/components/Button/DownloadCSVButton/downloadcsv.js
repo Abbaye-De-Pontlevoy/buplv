@@ -1,3 +1,9 @@
+/**
+ * Downloads data as a CSV file.
+ * @param {Array<Object>} data - The data to be converted to CSV.
+ * @param {string} fileName - The name of the CSV file.
+ * @returns {Promise<void>} - A promise that resolves when the download is complete.
+ */
 export const downloadCSV = async (data, fileName) => {
   // Convert data to CSV
   const headers = Object.keys(data[0]).join(";");

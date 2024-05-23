@@ -6,6 +6,14 @@ import { getClothesJSON, updateClothesJSON } from "@/app/helpers/clothesJSONActi
 
 import "./styles.css";
 
+/**
+ * Represents a form for managing settings.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The rendered component.
+ */
 const SettingsForm = ({ className }) => {
     // Initialize state variables
     const [formState, setFormState] = useState({});

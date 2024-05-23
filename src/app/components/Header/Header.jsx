@@ -5,6 +5,15 @@ import AccountButton from "../Button/AccountButton/AccountButton";
 import "./styles.css";
 
 // Header component
+/**
+ * Header component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for the header container.
+ * @param {boolean} [props.displayAccountButton=true] - Whether to display the account button or not.
+ * @returns {JSX.Element} The rendered Header component.
+ */
 const Header = ({ className, displayAccountButton = true }) => {
     return (
         <div className={"header " + className}>

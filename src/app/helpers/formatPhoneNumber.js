@@ -1,3 +1,8 @@
+/**
+ * Formats a phone number by removing spaces and adding the country code.
+ * @param {string} phoneNumber - The phone number to format.
+ * @returns {string} The formatted phone number.
+ */
 export function formatPhoneNumber(phoneNumber) {
 	// Remove all space characters and keep only the first 11 digits
 	const cleanedPhoneNumber = phoneNumber.replace(/\D/g, "").slice(0, 11);

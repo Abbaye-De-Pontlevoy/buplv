@@ -6,6 +6,16 @@ import { getClothesJSON } from "@/app/helpers/clothesJSONActions";
 
 import "./styles.css";
 
+/**
+ * Renders a form for adding an article.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @param {Function} props.callAfterSubmit - The function to call after form submission.
+ * @param {string} props.title - The title of the form.
+ * @returns {JSX.Element} The rendered component.
+ */
 const ArticleForm = ({ className, callAfterSubmit, title }) => {
   const formRef = useRef(null);
 

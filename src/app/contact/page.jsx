@@ -5,6 +5,12 @@ import Menu from "../components/Menu/Menu";
 
 import "./styles.css";
 
+/**
+ * ContactPage component represents the page for contacting the website.
+ * It displays the contact information and a form to send messages.
+ *
+ * @returns {JSX.Element} The ContactPage component.
+ */
 const ContactPage = () => {
   const randomName = "John Doe";
   const randomEmail = "johndoe@example.com";

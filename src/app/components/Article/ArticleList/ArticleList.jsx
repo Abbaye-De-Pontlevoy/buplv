@@ -1,5 +1,18 @@
 import { ArticleDisplay } from "./ArticleDisplay";
 
+/**
+ * Renders a list of articles.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @param {Array} props.articleList - The list of articles to display.
+ * @param {boolean} props.enabledRemoveButton - Determines whether the remove button is enabled.
+ * @param {Function} props.callAfterDelete - The callback function to be called after an article is deleted.
+ * @param {boolean} [props.displayTotal=false] - Determines whether to display the total price.
+ * @param {number} [props.priceFactor=1] - The price factor to apply.
+ * @returns {JSX.Element} The rendered component.
+ */
 const ArticleList = ({
   className,
   articleList,

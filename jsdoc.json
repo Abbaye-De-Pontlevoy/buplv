@@ -1,0 +1,24 @@
+{
+	"tags": {
+	  "allowUnknownTags": true,
+	  "dictionaries": ["jsdoc", "closure"]
+	},
+	"source": {
+	  "include": ["src"],
+	  "includePattern": ".+\\.js(x)?$",
+	  "excludePattern": "(^|\\/|\\\\)_"
+	},
+	"plugins": [],
+	"recurseDepth": 10,
+	"opts": {
+	  "encoding": "utf8",
+	  "destination": "./docs",
+	  "recurse": true,
+	  "verbose": true
+	},
+	"templates": {
+	  "cleverLinks": false,
+	  "monospaceLinks": false
+	}
+  }
+  

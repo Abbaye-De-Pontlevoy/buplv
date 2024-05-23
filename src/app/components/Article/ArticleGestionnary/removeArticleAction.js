@@ -15,6 +15,11 @@ export default async function removeArticleAction({ id }) {
 }
 
 // Function to get the list of articles for a given user
+/**
+ * Retrieves a list of articles for a given user ID.
+ * @param {string} userID - The ID of the user.
+ * @returns {Promise<Array>} - A promise that resolves to an array of articles.
+ */
 export async function getArticleList(userID) {
   if (!userID) return [];
 

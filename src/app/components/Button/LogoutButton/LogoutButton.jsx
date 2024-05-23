@@ -3,6 +3,14 @@ import removeCookie from "./logoutAction";
 import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 import { useRouter } from "next/navigation";
 
+/**
+ * LogoutButton component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The rendered LogoutButton component.
+ */
 const LogoutButton = ({className}) => {
     const router = useRouter();
     const { logout } = useContext(UserInfoContext);

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/components/BasketGestionnary/BasketGestionnary.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/components/BasketGestionnary/BasketGestionnary.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Modal from "react-modal";
+import ArticleList from "../Article/ArticleList/ArticleList";
+import QRCodeReaderModal from "../QRCodeReader/QRCodeModal";
+import { getArticleData, validateBasket } from "./basketAction";
+import { getSettings } from "@/app/helpers/settingsActions";
+import ArticleSearch from "../ArticleSearch/ArticleSearch";
+
+import "./styles.css";
+
+/**
+ * Represents a component for managing a basket.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for styling the component.
+ * @returns {JSX.Element} The rendered component.
+ */
+const BasketGestionnary = ({ className }) => {
+    // Form ref
+    const formRef = useRef(null);
+
+    // Initialize state variables
+    const [basket, setBasket] = useState([]);
+    const [validatingBasket, setValidatingBasket] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [paymentModalStep, setPaymentModalStep] = useState(0);
+    const [paymentMethods, setPaymentMethods] = useState("");
+    const [error, setError] = useState("");
+
+    // Add sound effects used for success and error while scanning
+    const audioSuccess = new Audio(
+        "https://lasonotheque.org/UPLOAD/mp3/1417.mp3",
+    );
+    const audioError = new Audio(
+        "https://lasonotheque.org/UPLOAD/mp3/1684.mp3",
+    );
+
+    // Fetch payment methods when component mounts
+    useEffect(() => {
+        const fetchData = async () => {
+            const settings = await getSettings();
+            setPaymentMethods(settings.paymentMethods);
+        };
+        fetchData();
+    }, []);
+
+    // Function to check if the article is valid
+    // article is a JSON string received from the QR code scanner
+    const checkArticle = async (article) => {
+        // Check if the article JSON is valid
+        // if not valid, display an error message
+        try {
+            article = await JSON.parse(article);
+        } catch (e) {
+            audioError.play();
+            alert("QR code invalide.");
+            return false;
+        }
+
+        // At this point the article JSON is valid and converted to an object
+        try {
+            // if article in basket, display an error message
+            for (let i = 0; i &lt; basket.length; i++) {
+                if (basket[i].id === article.id)
+                    throw new Error("Article déjà dans le panier.");
+            }
+
+            // article is a not in basket
+            // get the article data from the database
+            const articleData = await getArticleData(article.id);
+            if (!articleData) throw new Error("Article non trouvé.");
+
+            // reassign the article object with the article data
+            // it prevents possible errors
+            // and allows to add the article to the basket using just the id (from the search bar)
+            article.name = articleData.name;
+            article.brand = articleData.brand;
+            article.price = articleData.price;
+            article.state = articleData.state;
+
+            switch (articleData.state) {
+                // if article inventoried => add to basket
+                case 2:
+                    setBasket([...basket, article]);
+                    audioSuccess.play();
+                    return true;
+                // if article sold or not inventoried => display an error message
+                case 3:
+                    throw new Error("Article déjà vendu.");
+                default:
+                    throw new Error("Article non inventorié.");
+            }
+        } catch (e) {
+            audioError.play();
+            setError(e.message);
+            return false;
+        }
+    };
+
+    // Function to remove an article from the basket
+    const removeArticle = (toremoveId) => {
+        const newBasket = basket.filter((article) => article.id !== toremoveId);
+        setBasket(newBasket);
+    };
+
+    // Function to validate the basket
+    const handleValidate = async (e) => {
+        e.preventDefault();
+
+        // Disable the validate button to prevent multiple submissions
+        e.target.disabled = true;
+
+        // Get the payment method from the form
+        const paymentMethod = e.target.paymentMethod.value;
+
+        // Validate the basket
+        // Block the UI while validating
+        // If the validation is successful, empty the basket
+        // If not, display an error message
+        setValidatingBasket(true);
+        const result = await validateBasket(basket, paymentMethod);
+        if (result.success) setBasket([]);
+        else alert(result.msg);
+        setValidatingBasket(false);
+
+        // Close the modal
+        setIsModalOpen(false);
+    };
+
+    return (
+        &lt;div className={className}>
+            {/* Display the basket content */}
+            &lt;div className="overFlowXSlider width-full">
+                &lt;ArticleList
+                    articleList={basket}
+                    callAfterDelete={removeArticle}
+                    displayTotal={true}
+                    enabledRemoveButton={true}
+                    className="padding-bottom-10"
+                />
+            &lt;/div>
+
+            {/* Display the "by ID" search bar */}
+            &lt;div style={{ width: "100%" }}>
+                &lt;ArticleSearch
+                    placeholder="Ajouter par ID"
+                    buttonText="Ajouter"
+                    onArticleSearch={(e) => {
+                        if (e){
+                            setError("");
+                            checkArticle(JSON.stringify(e));
+                        }
+                    }}
+                />
+            &lt;/div>
+
+            {/* Display the error message */}
+            &lt;p className="error">{error}&lt;/p>
+
+            {/* Display the validate and scan buttons */}
+            &lt;span className="margin-top-10 sideToSideButton">
+                {/* QR code reader button*/}
+                &lt;QRCodeReaderModal
+                    onQRCodeRead={checkArticle}
+                    className="sideToSideButton"
+                />
+
+                {/* Validate basket button */}
+                &lt;button
+                    onClick={() => setIsModalOpen(true)}
+                    disabled={basket.length === 0 || validatingBasket}
+                    className="greenButton  sideToSideButton"
+                >
+                    Valider le panier
+                &lt;/button>
+            &lt;/span>
+
+            {/* Display the modal to select the payment method */}
+            {isModalOpen &amp;&amp; (
+                &lt;Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={() => setIsModalOpen(false)}
+                    contentLabel="Valider le panier"
+                    id="validateBasketModal"
+                >
+                    {paymentModalStep === 0 ? (
+                        &lt;>
+                            &lt;h2 className="text-center">Encaissement&lt;/h2>
+                            &lt;p className="error margin-top-20 text-center">
+                                {" "}
+                                {"L'encaissement de " +
+                                    basket.reduce(
+                                        (acc, article) => acc + article.price,
+                                        0,
+                                    ) +
+                                    " € a t'il bien été effectué ?"}
+                            &lt;/p>
+                            &lt;span className="margin-top-20 sideToSideButton">
+                                &lt;button
+                                    onClick={() => {
+                                        setPaymentMethods(0);
+                                        setIsModalOpen(false);
+                                    }}
+                                    className="width-full redButton"
+                                >
+                                    Non
+                                &lt;/button>
+                                &lt;button
+                                    onClick={() => setPaymentModalStep(1)}
+                                    className="width-full"
+                                >
+                                    Oui
+                                &lt;/button>
+                            &lt;/span>
+                        &lt;/>
+                    ) : (
+                        &lt;>
+                            &lt;h2>Sélectionnez un moyen de paiement&lt;/h2>
+                            &lt;form ref={formRef} onSubmit={handleValidate}>
+                                &lt;table className="margin-top-10 margin-bottom-10">
+                                    &lt;tbody>
+                                        {paymentMethods.map((method, index) => (
+                                            &lt;tr key={index}>
+                                                &lt;td>
+                                                    &lt;label>
+                                                        {method
+                                                            .charAt(0)
+                                                            .toUpperCase() +
+                                                            method.slice(1)}
+                                                    &lt;/label>
+                                                &lt;/td>
+                                                &lt;td>
+                                                    &lt;input
+                                                        type="radio"
+                                                        name="paymentMethod"
+                                                        value={method}
+                                                        checked="checked"
+                                                        onChange={(e) => {
+                                                            if (
+                                                                e.target.checked
+                                                            )
+                                                                e.target.checked = true;
+                                                        }}
+                                                    />
+                                                &lt;/td>
+                                            &lt;/tr>
+                                        ))}
+                                    &lt;/tbody>
+                                &lt;/table>
+
+                                &lt;button
+                                    type="submit"
+                                    disabled={validatingBasket}
+                                    className="width-full"
+                                >
+                                    Valider
+                                &lt;/button>
+                            &lt;/form>
+                        &lt;/>
+                    )}
+                &lt;/Modal>
+            )}
+        &lt;/div>
+    );
+};
+
+export default BasketGestionnary;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#ContactPage">ContactPage</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#ProfilePage">ProfilePage</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SalesPanel">SalesPanel</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#UserInfoProvider">UserInfoProvider</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#areIBANandBICcorrects">areIBANandBICcorrects</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#formatPhoneNumber">formatPhoneNumber</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getAllClothesInfo">getAllClothesInfo</a></li><li><a href="global.html#getArticleByID">getArticleByID</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getConnexionInfo">getConnexionInfo</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getUserID">getUserID</a></li><li><a href="global.html#getUserInfos">getUserInfos</a></li><li><a href="global.html#isUserAdmin">isUserAdmin</a></li><li><a href="global.html#isUserConnected">isUserConnected</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

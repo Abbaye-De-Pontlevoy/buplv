@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { getArticleByID } from "../../helpers/getArticleByID";
 
+/**
+ * A component for searching articles by ID.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - The CSS class name for the component.
+ * @param {Function} props.onArticleSearch - The function to be called when an article is searched.
+ * @param {string} [props.placeholder="Rechercher par ID"] - The placeholder text for the search input.
+ * @param {string} [props.buttonText="Rechercher"] - The text for the search button.
+ * @returns {JSX.Element} The ArticleSearch component.
+ */
 const ArticleSearch = ({
     className,
     onArticleSearch,

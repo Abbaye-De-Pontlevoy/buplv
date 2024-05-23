@@ -14,6 +14,12 @@ export const getArticleData = async (productId) => {
 }
 
 // Function to validate selling of articles
+/**
+ * Validates the basket by creating a transaction representing the sale and updating the state of the articles in the basket.
+ * @param {Array} basket - The array of articles in the basket.
+ * @param {string} paymentMethod - The payment method used for the transaction.
+ * @returns {Object} - An object indicating the success of the validation and a message.
+ */
 export const validateBasket = async (basket, paymentMethod) => {
 	let transaction = null;
 

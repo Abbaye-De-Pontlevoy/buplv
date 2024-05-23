@@ -10,6 +10,10 @@ import TabsMenu from "../components/TabsMenu/TabsMenu";
 import "./styles.css";
 import ArticleModifier from "../components/ArticleModifier/ArticleModifier";
 
+/**
+ * Represents the Site Settings page in the admin panel.
+ * @component
+ */
 const SiteSettings = () => {
   // List of tabs and their contents
   const tabList = ["Paramètres", "Rapports", "Recherche d'article"];

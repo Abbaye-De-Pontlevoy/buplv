@@ -5,6 +5,13 @@ import logo_plv from "../../assets/logo_plv_reduced.webp";
 
 import "./styles.css";
 
+/**
+ * Footer component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for the footer.
+ * @returns {JSX.Element} The rendered Footer component.
+ */
 const Footer = ({ className }) => {
     return (
         <footer className={className}>

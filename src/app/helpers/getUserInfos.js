@@ -4,6 +4,11 @@ import { cookies } from "next/headers";
 import * as jose from "jose";
 import prisma from "../lib/prisma";
 
+/**
+ * Retrieves user information based on the provided request object.
+ * @param {Object} request - The request object.
+ * @returns {Promise<Object|boolean>} - A promise that resolves to the user information object if successful, or false if unsuccessful.
+ */
 export async function getUserInfos(request) {
   // Get the cookie
   const cookie = cookies(request).get("buConnectedToken");

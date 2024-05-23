@@ -11,6 +11,14 @@ import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 
 import "./styles.css";
 
+/**
+ * Renders the RapportsGenerator component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The class name for the component.
+ * @returns {JSX.Element} The rendered RapportsGenerator component.
+ */
 const RapportsGenerator = ({className}) => {
   // Initialize state variables
   const [rapportTreso, setRapportTreso] = useState(<></>);

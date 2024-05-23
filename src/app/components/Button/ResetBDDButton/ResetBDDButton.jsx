@@ -4,6 +4,14 @@ import { resetBDD } from "./resetBDD";
 
 import "./styles.css";
 
+/**
+ * A button component for resetting the database.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the button.
+ * @returns {JSX.Element} The ResetBDDButton component.
+ */
 const ResetBDDButton = ({ className }) => {
     // Get user info from the context
     const { userInfo } = useContext(UserInfoContext);

@@ -3,6 +3,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 
+/**
+ * QRCodeReader component for scanning QR codes using the device camera.
+ *
+ * @component
+ * @param {string} className - Additional CSS class name(s) for the component.
+ * @param {function} onQRCodeRead - Callback function to handle the scanned QR code data.
+ * @returns {JSX.Element} - The QRCodeReader component.
+ */
 const QRCodeReader = ({ className, onQRCodeRead }) => {
     // Initialize state variables
     const scanner = useRef(null);

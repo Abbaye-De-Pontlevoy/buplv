@@ -1,10 +1,12 @@
 "use server";
 
-import Header from "../components/Header/Header";
-import Menu from "../components/Menu/Menu";
 import "../globals.css";
 import "./page.css";
 
+/**
+ * Represents the Site CGU page.
+ * @component
+ */
 export default async function Page() {
   return (
     <>

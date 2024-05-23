@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/RapportsGenerator/rapportsAction.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/RapportsGenerator/rapportsAction.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use server";
+
+import prisma from "@/app/lib/prisma";
+import { getSettings } from "@/app/helpers/settingsActions";
+
+// Function to get the basic data for the treso report
+/**
+ * Retrieves the rapport for the treasury.
+ * @returns {Promise&lt;{nbSeller: number, nbArticle: number, gains: object}>} The rapport object containing the number of sellers, number of articles, and gains.
+ */
+export async function getRapportTreso() {
+  // Get the number of sellers
+  const nbSeller = await prisma.seller.count();
+  // Get the number of articles
+  const nbArticle = await prisma.article.count();
+  // Get the list of transactions
+  const transactions = await prisma.transaction.findMany();
+
+  // Create an object to store the gains
+  // The object will have the payment method as key
+  // and the number of transactions and the total amount as values
+  const gains = {};
+
+  // Loop through the transactions to calculate the gains
+  transactions.forEach((transaction) => {
+    // If the payment method is not in the object, add it
+    if(!gains[transaction.payment_method]) {
+      gains[transaction.payment_method] = {
+        nbTransaction: 0,
+        amount: 0,
+      };
+    }
+    // Increment the number of transactions and the total amount
+    gains[transaction.payment_method].nbTransaction += 1;
+    gains[transaction.payment_method].amount += transaction.payment_amount;
+  });
+
+  // Add the total number of transactions and the total amount
+  gains["Total"] = {
+    nbTransaction: transactions.length,
+    amount: transactions.reduce((acc, transaction) => acc + transaction.payment_amount, 0),
+  };
+
+  return {
+    nbSeller,
+    nbArticle,
+    gains
+  };
+}
+
+
+// Function to get datas for the rapport IBAN
+export async function getRapportsIBAN() {
+  const data = await prisma.seller.findMany();
+  const rapportData = data.map((seller) => {
+    return {
+      Nom: seller.name,
+      "Code Pays": seller.iban.substring(0, 2),
+      IBAN: seller.iban,
+      BIC: seller.bic,
+      "Nom Liste": seller.name + " " + seller.firstname,
+    };
+  });
+
+  return rapportData;
+}
+
+// Function to get unsold articles which are asked to be returned
+export async function getUnsoldArticlesToReturn() {
+  const queryResult =
+    await prisma.$queryRaw`SELECT public.get_unsold_to_return() as unsold_articles`;
+  if(!queryResult[0].unsold_articles){
+    return [{
+      "ID Vendeur": "Aucun article à retourner",
+      "Nom": "",
+      "ID Article": "",
+      "Article": "",
+    }];
+  }
+  return queryResult[0].unsold_articles;
+}
+
+// Function to get gains per seller
+export async function getRapportSeller() {
+  const settings = await getSettings();
+  const queryResult =
+    await prisma.$queryRaw`SELECT public.get_total_gain_per_seller(${settings.APELPart}, ${settings.returnFees}) as total_gain_per_seller`;
+
+  // Cannot be empty because of the admin and the benevole
+
+  return queryResult[0].total_gain_per_seller;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:44:27 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

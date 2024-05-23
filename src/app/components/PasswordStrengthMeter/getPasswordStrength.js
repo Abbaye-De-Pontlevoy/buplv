@@ -1,3 +1,9 @@
+/**
+ * Calculates the strength of a password based on various criteria.
+ *
+ * @param {string} password - The password to evaluate.
+ * @returns {number} The strength score of the password (between 0 and 100).
+ */
 function getPasswordStrength(password) {
   let score = 0;
 

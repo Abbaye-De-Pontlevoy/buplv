@@ -3,6 +3,12 @@
 import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
 
+/**
+ * Resets the database.
+ * @param {string} id - The user ID.
+ * @param {string} password - The user password.
+ * @returns {Promise<{ success: boolean, msg: string }>} - The result of the database reset operation.
+ */
 export async function resetBDD(id, password) {
   // Verify user id and password
   try {

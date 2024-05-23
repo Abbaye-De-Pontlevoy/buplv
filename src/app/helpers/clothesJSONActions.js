@@ -15,6 +15,10 @@ export async function getClothesJSON() {
     return data.value;
 }
 
+/**
+ * Retrieves all clothes information from the clothes JSON.
+ * @returns {Promise<{brand: string[], name: string[], size: string[]}>} An object containing arrays of brands, names, and sizes.
+ */
 export async function getAllClothesInfo() {
     const clothesJSON = await getClothesJSON();
 
@@ -36,7 +40,7 @@ export async function getAllClothesInfo() {
         }
     }
 
-    // Convertir les ensembles en tableaux et trier les résultats
+    // Convert sets to arrays and sort them
     let brandArray = Array.from(brand).sort();
     let nameArray = Array.from(name).sort();
     let sizeArray = Array.from(size).sort();

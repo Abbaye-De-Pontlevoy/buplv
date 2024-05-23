@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/SettingsForm/SettingsForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/SettingsForm/SettingsForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use client";
+
+import React, { useEffect, useState } from "react";
+import { getSettings, updateSettings } from "@/app/helpers/settingsActions";
+import { getClothesJSON, updateClothesJSON } from "@/app/helpers/clothesJSONActions";
+
+import "./styles.css";
+
+/**
+ * Represents a form for managing settings.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The rendered component.
+ */
+const SettingsForm = ({ className }) => {
+    // Initialize state variables
+    const [formState, setFormState] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [updatingSettings, setUpdatingSettings] = useState(false);
+    const [error, setError] = useState("");
+
+    // Fetch settings data when component mounts
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            // Fetch settings data
+            const settingsData = await getSettings();
+            // format the APEL part to be displayed as a percentage
+            // (it is stored as a decimal in the database)
+            // add the clothesJSON data to the form state
+            settingsData.APELPart *= 100;
+
+            // Fetch clothesJSON data
+            const jsonData = await getClothesJSON();
+            settingsData.clothesJSON = JSON.stringify(jsonData, null, 4);
+
+            setFormState(settingsData);
+
+            setIsLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    // Handle form changes
+    const handleChange = (event) => {
+        // Extract the name, value, checked and type from the event target
+        const { name, value, checked, type } = event.target;
+        const newValue = type === "checkbox" ? checked : value;
+
+        // Check if the JSON is valid
+        if (name == "clothesJSON") {
+            try {
+                JSON.parse(newValue);
+                setError("");
+            } catch (e) {
+                setError(e.message);
+            }
+        }
+
+        // Update the form state
+        if (name === "publicAccess" &amp;&amp; !newValue) {
+            setFormState((prevState) => ({
+                ...prevState,
+                allowArticleRegistration: false,
+                endRegisterDate: null,
+                publicAccess: newValue,
+            }));
+        } else if (name === "allowArticleRegistration" &amp;&amp; !newValue) {
+            setFormState((prevState) => ({
+                ...prevState,
+                endRegisterDate: null,
+                allowArticleRegistration: newValue,
+            }));
+        } else {
+            let updatedValue = newValue;
+            if (name === "endRegisterDate" &amp;&amp; new Date(newValue) &lt; new Date()) {
+                updatedValue = new Date().toISOString().split("T")[0];
+            }
+            setFormState((prevState) => ({
+                ...prevState,
+                [name]: updatedValue,
+            }));
+        }
+    };
+
+    // Handle form submission
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        setUpdatingSettings(true);
+
+        // Check if the JSON is valid (its the only field that can raise an error)
+        if (error)
+            return alert(
+                "Erreur dans le JSON des vêtements, veuillez corriger.",
+            );
+
+        // Update the clothesJSON if the checkbox is checked
+        if (formState.clothesInputCheckbox){
+            const clothesJSON = await JSON.parse(formState.clothesJSON);
+            await updateClothesJSON(clothesJSON);
+        }
+
+        // Prepare the data to be pushed
+        const toPushSettings = { ...formState };
+        // Remove the clothesJSON from the toPushSettings
+        const clothesJSONBackup = formState.clothesJSON;
+        toPushSettings.clothesInputCheckbox = undefined;
+        toPushSettings.clothesJSON = undefined;
+
+        // format the APEL part to be stored as a decimal
+        toPushSettings.APELPart = parseFloat(toPushSettings.APELPart) / 100;
+        toPushSettings.returnFees = parseFloat(toPushSettings.returnFees);
+        await updateSettings(toPushSettings);
+
+        alert("Paramètres enregistrés avec succès!");
+
+        setUpdatingSettings(false);
+    };
+
+    return (
+        &lt;div className={className}>
+            &lt;form onSubmit={handleSubmit} className="flex-column width-full">
+                {isLoading ? (
+                    &lt;p className="text-center">Chargement...&lt;/p>
+                ) : (
+                    &lt;div className="flex-column gap-30 width-full">
+                        {/* Access parameters */}
+                        &lt;div>
+                            &lt;h3>Paramètres Généraux&lt;/h3>
+                            &lt;span className="flex-justify-space-between">
+                                &lt;label>Site ouvert&lt;/label>
+                                &lt;input
+                                    type="checkbox"
+                                    name="publicAccess"
+                                    className="checkbox"
+                                    checked={formState.publicAccess}
+                                    onChange={handleChange}
+                                />
+                            &lt;/span>
+
+                            {formState.publicAccess &amp;&amp; (
+                                 &lt;span className="flex-justify-space-between">
+                                    &lt;label>
+                                        Autoriser l'ajout/modification
+                                        d'articles
+                                    &lt;/label>
+                                    &lt;input
+                                        type="checkbox"
+                                        name="allowArticleRegistration"
+                                        className="checkbox"
+                                        checked={
+                                            formState.allowArticleRegistration
+                                        }
+                                        onChange={handleChange}
+                                    />
+                                &lt;/span>
+                            )}
+
+                            {formState.allowArticleRegistration &amp;&amp; (
+                                 &lt;span className="flex-justify-space-between">
+                                    &lt;label>Fin des enregistrements&lt;/label>
+                                    &lt;input
+                                        type="date"
+                                        name="endRegisterDate"
+                                        className="checkbox"
+                                        value={
+                                            formState.endRegisterDate ||
+                                            new Date()
+                                                .toISOString()
+                                                .split("T")[0]
+                                        }
+                                        onChange={handleChange}
+                                    />
+                                &lt;/span>
+                            )}
+                        &lt;/div>
+
+                        {/* Accounting parameters */}
+                        &lt;div>
+                            &lt;h3>Comptabilité&lt;/h3>
+                             &lt;span className="flex-justify-space-between">
+                                &lt;label>Part de l'APEL&lt;/label>
+                                &lt;span style={{ width: "min-content" }}>
+                                    &lt;input
+                                        type="number"
+                                        name="APELPart"
+                                        className="checkbox"
+                                        value={formState.APELPart}
+                                        onChange={handleChange}
+                                        min="0"
+                                        max="100"
+                                        style={{
+                                            textAlign: "right",
+                                            maxWidth: "100px",
+                                        }}
+                                    />
+                                    %
+                                &lt;/span>
+                            &lt;/span>
+
+                             &lt;span className="flex-justify-space-between">
+                                &lt;label>Frais de renvoi&lt;/label>
+                                &lt;span style={{ width: "min-content" }}>
+                                    &lt;input
+                                        type="number"
+                                        name="returnFees"
+                                        className="checkbox"
+                                        value={formState.returnFees}
+                                        onChange={handleChange}
+                                        min="0"
+                                        max="100"
+                                        style={{
+                                            textAlign: "right",
+                                            maxWidth: "100px",
+                                        }}
+                                    />
+                                    €
+                                &lt;/span>
+                            &lt;/span>
+                        &lt;/div>
+
+                        {/* Clothes JSON */}
+                        &lt;div>
+                            &lt;h3>Liste des vêtements&lt;/h3>
+                             &lt;span className="flex-justify-space-between">
+                                &lt;label>
+                                    Modifier le fichier JSON des vêtements :{" "}
+                                &lt;/label>
+                                &lt;input
+                                    type="checkbox"
+                                    name="clothesInputCheckbox"
+                                    className="checkbox"
+                                    checked={
+                                        formState.clothesInputCheckbox || false
+                                    }
+                                    onChange={handleChange}
+                                />
+                            &lt;/span>
+                            &lt;textarea
+                                type="text"
+                                name="clothesJSON"
+                                value={formState.clothesJSON}
+                                onChange={handleChange}
+                                disabled={!formState.clothesInputCheckbox}
+                                className="width-full height-200"
+                            />
+                            &lt;p className="error self-center">{error}&lt;/p>
+                        &lt;/div>
+
+                        {/* Change password */}
+                        &lt;span id="changePasswordSpan">
+                            &lt;h3>Changer le mot de passe&lt;/h3>
+                            &lt;a href="/admin-panel/change-password-admin" className="margin-left-10">
+                                Aministrateur
+                            &lt;/a>
+                            &lt;a href="/admin-panel/change-password-benevole" className="margin-left-10">
+                                Bénévole
+                            &lt;/a>
+                        &lt;/span>
+
+                        &lt;button
+                            type="submit"
+                            disabled={isLoading || updatingSettings}
+                        >
+                            Enregistrer
+                        &lt;/button>
+                    &lt;/div>
+                )}
+            &lt;/form>
+        &lt;/div>
+    );
+};
+
+export default SettingsForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:44:27 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

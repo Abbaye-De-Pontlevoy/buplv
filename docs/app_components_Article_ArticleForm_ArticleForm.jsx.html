@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/components/Article/ArticleForm/ArticleForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/components/Article/ArticleForm/ArticleForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { addArticle } from "./articleFormAction";
+import { getClothesJSON } from "@/app/helpers/clothesJSONActions";
+
+import "./styles.css";
+
+/**
+ * Renders a form for adding an article.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @param {Function} props.callAfterSubmit - The function to call after form submission.
+ * @param {string} props.title - The title of the form.
+ * @returns {JSX.Element} The rendered component.
+ */
+const ArticleForm = ({ className, callAfterSubmit, title }) => {
+  const formRef = useRef(null);
+
+  // Initialize state variables
+  const [articleData, setArticleData] = useState({});
+  const [grade, setGrade] = useState("");
+  const [sex, setSex] = useState("");
+  const [name, setName] = useState({
+    brand: "",
+    name: "",
+  });
+  const [size, setSize] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load the article data from the server
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const data = await getClothesJSON();
+      setArticleData(data);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  // Reset the 'sex' state when 'grade' changes
+  useEffect(() => {
+    setSex("");
+  }, [grade]);
+
+  // Reset the 'name' state when 'sex' changes
+  useEffect(() => {
+    setName({
+      brand: "",
+      name: "",
+    });
+  }, [sex]);
+
+  // Reset the 'size' state when 'name' changes
+  useEffect(() => {
+    setSize("");
+  }, [name]);
+
+  // Reset the 'quantity' state when 'size' changes
+  useEffect(() => {
+    setQuantity(0);
+  }, [size]);
+
+  // When name options change, sort all options
+  useEffect(() => {
+    const nameOptions = formRef.current.querySelector("select[name=name]");
+    const options = Array.from(nameOptions.options);
+
+    // Sort options alphabetically by their text content
+    options.sort((a, b) => a.text.localeCompare(b.text));
+
+    // Remove existing options from select
+    while (nameOptions.firstChild) {
+        nameOptions.removeChild(nameOptions.firstChild);
+    }
+
+    // Append sorted options to select
+    options.forEach((option) => nameOptions.appendChild(option));
+
+    // Set the first option as selected
+    nameOptions.selectedIndex = 0;
+  }, [name]);
+
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    // Prepare data to be submitted
+    const submitData = {
+      name: name.name,
+      brand: name.brand,
+      size: size,
+      quantity: quantity,
+      price: articleData[grade][sex][name.brand][name.name]["price"],
+    };
+
+    // Call the 'addArticle' function to add the article to the server
+    const result = await addArticle(submitData);
+
+    // Call the parent function if provided
+    if (callAfterSubmit) await callAfterSubmit();
+
+    // Reset the 'grade' state
+    setGrade("");
+
+    setIsLoading(false);
+  };
+
+  return (
+    &lt;div className={className}>
+      &lt;h3>{title}&lt;/h3>
+      &lt;form ref={formRef} onSubmit={handleSubmit}>
+        &lt;table>
+          &lt;tbody>
+            &lt;tr className="flex-row flex-center">
+              &lt;td className="width-full">
+                {/* Select the 'grade' */}
+                &lt;select
+                  name="grade"
+                  key="grade"
+                  className="width-full"
+                  value={grade}
+                  onChange={(e) => setGrade(e.target.value)}
+                  disabled={!articleData || isLoading}
+                >
+                  &lt;option key="default" value="">
+                    Niveau
+                  &lt;/option>
+                  {/* Render options for each grade */}
+                  {Object.keys(articleData).map((grade) => (
+                    &lt;option key={grade} value={grade}>
+                      {grade}
+                    &lt;/option>
+                  ))}
+                &lt;/select>
+              &lt;/td>
+              &lt;td  className="width-full">
+                {/* Select the 'sex' */}
+                &lt;select
+                  name="sex"
+                  key="sex"
+                  className="width-full"
+                  value={sex}
+                  onChange={(e) => setSex(e.target.value)}
+                  disabled={!grade || isLoading}
+                >
+                  &lt;option key="default" value="">
+                    Sexe
+                  &lt;/option>
+                  {/* Render options for each sex based on the selected grade */}
+                  {grade &amp;&amp;
+                    Object.keys(articleData[grade]).map((sex) => (
+                      &lt;option key={sex} value={sex}>
+                        {sex}
+                      &lt;/option>
+                    ))}
+                &lt;/select>
+              &lt;/td>
+              &lt;td  className="width-full">
+                {/* Select the 'name' */}
+                &lt;select
+                  name="name"
+                  key="name"
+                  className="width-full"
+                  value={`${name.name}-${name.brand}`}
+                  onChange={(e) => {
+                    const [articleName, brand] = e.target.value.split("-");
+                    setName({ brand, name: articleName });
+                  }}
+                  disabled={!sex || isLoading}
+                >
+                  &lt;option key="default" value="">
+                    Article
+                  &lt;/option>
+                  {/* Render options for each article name based on the selected grade, sex, and brand */}
+                  {grade &amp;&amp;
+                    sex &amp;&amp;
+                    Object.keys(articleData[grade][sex]).map((brand) =>
+                      Object.keys(articleData[grade][sex][brand]).map(
+                        (articleName) => (
+                          &lt;option
+                            key={articleName + brand}
+                            value={`${articleName}-${brand}`}
+                          >
+                            {`${articleName} (${brand})`}
+                          &lt;/option>
+                        )
+                      )
+                    )}
+                &lt;/select>
+              &lt;/td>
+              &lt;td  className="width-full">
+                {/* Select the 'size' */}
+                &lt;select
+                  name="size"
+                  key="size"
+                  className="width-full"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                  disabled={!name.brand || isLoading}
+                >
+                  &lt;option key="default" value="">
+                    Taille
+                  &lt;/option>
+                  {/* Render options for each size based on the selected grade, sex, brand, and article name */}
+                  {grade &amp;&amp;
+                    sex &amp;&amp;
+                    name.brand &amp;&amp;
+                    articleData[grade][sex][name.brand][name.name]["size"].map(
+                      (size) => (
+                        &lt;option key={size} value={size}>
+                          {size}
+                        &lt;/option>
+                      )
+                    )}
+                &lt;/select>
+              &lt;/td>
+              &lt;td  className="width-full">
+                {/* Select the 'quantity' */}
+                &lt;select
+                  name="quantity"
+                  key="quantity"
+                  className="width-full"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  disabled={!size || isLoading}
+                >
+                  &lt;option key="default" value="">
+                    Quantité
+                  &lt;/option>
+                  {/* Render options for quantity */}
+                  {grade &amp;&amp;
+                    sex &amp;&amp;
+                    name.brand &amp;&amp;
+                    size &amp;&amp;
+                    Array.from({ length: 5 }, (_, i) => (
+                      &lt;option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      &lt;/option>
+                    ))}
+                &lt;/select>
+              &lt;/td>
+              &lt;td id="tdAddButton">
+                {/* Submit button */}
+                &lt;button
+                  id="addArticleButton"
+                  className="margin-left-10"
+                  type="submit"
+                  disabled={!quantity || isLoading}
+                >
+                  ✓
+                &lt;/button>
+              &lt;/td>
+            &lt;/tr>
+          &lt;/tbody>
+        &lt;/table>
+      &lt;/form>
+    &lt;/div>
+  );
+};
+
+export default ArticleForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AccountButton">AccountButton</a></li><li><a href="global.html#ArticleDisplay">ArticleDisplay</a></li><li><a href="global.html#ArticleForm">ArticleForm</a></li><li><a href="global.html#ArticleGestionnary">ArticleGestionnary</a></li><li><a href="global.html#ArticleList">ArticleList</a></li><li><a href="global.html#ArticleModifier">ArticleModifier</a></li><li><a href="global.html#ArticleScanner">ArticleScanner</a></li><li><a href="global.html#ArticleSearch">ArticleSearch</a></li><li><a href="global.html#BasketGestionnary">BasketGestionnary</a></li><li><a href="global.html#ChangePasswordPage">ChangePasswordPage</a></li><li><a href="global.html#ContactPage">ContactPage</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DownloadCSVButton">DownloadCSVButton</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#LogoutButton">LogoutButton</a></li><li><a href="global.html#Menu">Menu</a></li><li><a href="global.html#PasswordChanger">PasswordChanger</a></li><li><a href="global.html#PasswordInput">PasswordInput</a></li><li><a href="global.html#PasswordStrengthMeter">PasswordStrengthMeter</a></li><li><a href="global.html#ProfilePage">ProfilePage</a></li><li><a href="global.html#QRCodePDFGenerator">QRCodePDFGenerator</a></li><li><a href="global.html#QRCodeReader">QRCodeReader</a></li><li><a href="global.html#QRCodeReaderModal">QRCodeReaderModal</a></li><li><a href="global.html#RapportsGenerator">RapportsGenerator</a></li><li><a href="global.html#ResetBDDButton">ResetBDDButton</a></li><li><a href="global.html#ReturnArrowButton">ReturnArrowButton</a></li><li><a href="global.html#SalesPanel">SalesPanel</a></li><li><a href="global.html#SettingsForm">SettingsForm</a></li><li><a href="global.html#SiteSettings">SiteSettings</a></li><li><a href="global.html#TabsMenu">TabsMenu</a></li><li><a href="global.html#UserInfoProvider">UserInfoProvider</a></li><li><a href="global.html#addArticle">addArticle</a></li><li><a href="global.html#areIBANandBICcorrects">areIBANandBICcorrects</a></li><li><a href="global.html#cancelArticleSell">cancelArticleSell</a></li><li><a href="global.html#downloadCSV">downloadCSV</a></li><li><a href="global.html#exportSellers">exportSellers</a></li><li><a href="global.html#formatPhoneNumber">formatPhoneNumber</a></li><li><a href="global.html#generatePDF">generatePDF</a></li><li><a href="global.html#getAllClothesInfo">getAllClothesInfo</a></li><li><a href="global.html#getArticleByID">getArticleByID</a></li><li><a href="global.html#getArticleList">getArticleList</a></li><li><a href="global.html#getConnexionInfo">getConnexionInfo</a></li><li><a href="global.html#getPasswordStrength">getPasswordStrength</a></li><li><a href="global.html#getRapportTreso">getRapportTreso</a></li><li><a href="global.html#getSettings">getSettings</a></li><li><a href="global.html#getUserID">getUserID</a></li><li><a href="global.html#getUserInfos">getUserInfos</a></li><li><a href="global.html#isUserAdmin">isUserAdmin</a></li><li><a href="global.html#isUserConnected">isUserConnected</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#resetBDD">resetBDD</a></li><li><a href="global.html#updateArticle">updateArticle</a></li><li><a href="global.html#validateBasket">validateBasket</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

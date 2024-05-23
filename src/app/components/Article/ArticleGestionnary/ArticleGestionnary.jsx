@@ -8,6 +8,17 @@ import removeArticleAction, { getArticleList } from "./removeArticleAction";
 import QRCodePDFGenerator from "../../QRCodePDFGenerator/QRCodePDFGenerator";
 import { UserInfoContext } from "../../UserInfoProvider/UserInfoProvider";
 
+/**
+ * Renders the ArticleGestionnary component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {string} props.className - The CSS class name for the component.
+ * @param {Array} props.articleList - The list of articles.
+ * @param {Function} props.setArticleList - The function to update the article list.
+ * @param {boolean} props.isLoading - Indicates if the component is in a loading state.
+ * @returns {JSX.Element} The rendered ArticleGestionnary component.
+ */
 const ArticleGestionnary = ({ className, articleList, setArticleList, isLoading }) => {
   // Initialize state variables
   const [settings, setSettings] = useState({});

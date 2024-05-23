@@ -9,6 +9,10 @@ import Header from "../components/Header/Header";
 
 import "./styles.css";
 
+/**
+ * Represents the SalesPanel component.
+ * This component displays a sales panel with tabs for "Caisse" and "Inventaire".
+ */
 const SalesPanel = () => {
     // List of tabs and their contents
     const tabList = ["Caisse", "Inventaire"];

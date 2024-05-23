@@ -9,6 +9,16 @@ import "./styles.css";
 // Set the root element for the modal
 Modal.setAppElement("#root");
 
+/**
+ * A modal component that displays a QR code reader.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Function} props.onQRCodeRead - The callback function to be called when a QR code is read.
+ * @param {boolean} props.disabled - Specifies whether the QR code reader is disabled.
+ * @param {string} props.className - The CSS class name for the component.
+ * @returns {JSX.Element} The QRCodeReaderModal component.
+ */
 const QRCodeReaderModal = ({ onQRCodeRead, disabled, className }) => {
   // Initialize state variables
   const [showModal, setShowModal] = useState(false);
