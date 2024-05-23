@@ -1,6 +1,7 @@
 "use server";
 
-import "../globals.css";
+import Header from "../components/Header/Header";
+import Menu from "../components/Menu/Menu";
 import "./page.css";
 
 /**

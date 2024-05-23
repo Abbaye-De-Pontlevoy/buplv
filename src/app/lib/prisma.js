@@ -12,12 +12,4 @@ if (process.env.NODE_ENV === "production") {
   prisma = global.prisma;
 }
 
-/**
- * Prisma client instance.
- * @typedef {import('@prisma/client').PrismaClient} PrismaClient
- */
-
-/** @type {PrismaClient} */
-const prisma = new PrismaClient();
-
 export default prisma;

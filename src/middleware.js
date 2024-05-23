@@ -9,10 +9,7 @@ import { getConnexionInfo } from "./app/helpers/getConnexionInfo";
 export async function middleware(request) {
   const { connected, admin, benevole } = await getConnexionInfo(request);
 
-  const URL =
-    process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-      ? "https://buplv.vercel.app"
-      : "http://localhost:3000";
+  const URL = process.env.DOMAIN;
 
   if (connected) {
     const restrictedPaths = ["/login", "/register"];
