@@ -347,10 +347,11 @@ export default function Register() {
                   <span>
                     <input type="checkbox" className="checkbox" required/>
                     <label>
-                      J'accepte les{" "}
+                      Je reconnais avoir lu et compris les {" "}
                       <a href="/cgu" target="_blank">
-                        conditions générales d'utilisation.
+                        conditions générales d'utilisation
                       </a>
+                      {" "} et je les accepte.
                     </label>
                   </span>
                 </div>
