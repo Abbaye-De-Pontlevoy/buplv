@@ -15,7 +15,7 @@ export default async function Page() {
             <Menu />
             <div className="bandeau-rangement">
                 <div className="main-container text-justify flex-align-left">
-                    <h1 className="width-full text-center">
+                    <h1 className="width-full text-center margin-top-20 margin-bottom-20">
                         Conditions Générales d'Utilisation
                     </h1>
 
