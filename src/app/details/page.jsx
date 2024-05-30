@@ -68,8 +68,8 @@ export default async function Page() {
                             vos invendus à l'Apel LPLCP
                         </li>
                         <li>
-                            Décochez «Je souhaite faire don de mes invendus à
-                            l'APEL.» si vous souhaitez que vous soient renvoyés
+                            Décochez «&nbsp;Je souhaite faire don de mes invendus à
+                            l'APEL.&nbsp;» si vous souhaitez que vous soient renvoyés
                             vos invendus. Des frais d’envois seront déduits du
                             produit de votre vente.
                         </li>
@@ -137,7 +137,7 @@ export default async function Page() {
 
                     <p className="error text-center width-full font-weight-bold">
                         A CETTE ÉTAPE SUR NOTRE SITE, LE STATUS DE VOS VÊTEMENTS
-                        EST «INVENTORIÉ» ou «INVENDABLE»
+                        EST «&nbsp;INVENTORIÉ&nbsp;» ou «&nbsp;INVENDABLE&nbsp;»
                     </p>
 
                     <h3>TARIFS 2024</h3>

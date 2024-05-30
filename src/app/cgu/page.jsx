@@ -25,16 +25,16 @@ export default async function Page() {
 
                     <p>
                         Les présentes conditions générales d'utilisation (dites
-                        « <b>CGU</b> ») ont pour objet l'encadrement juridique
+                        «&nbsp;<b>CGU</b>&nbsp;») ont pour objet l'encadrement juridique
                         des modalités de mise à disposition du site et des
                         services par APEL du collège/lycée catholique de
                         Pontlevoy et de définir les conditions d’accès et
-                        d’utilisation des services par «<b>l'Utilisateur</b>».
+                        d’utilisation des services par «&nbsp;<b>l'Utilisateur</b>&nbsp;».
                     </p>
 
                     <p>
                         Les présentes CGU sont accessibles sur le site à la
-                        rubrique «Conditions Générales».
+                        rubrique «&nbsp;Conditions Générales&nbsp;».
                     </p>
 
                     <p>
@@ -43,9 +43,9 @@ export default async function Page() {
                         présentes CGU par l’utilisateur. Lors de l'inscription
                         sur le site via le Formulaire d’inscription, chaque
                         utilisateur accepte expressément les présentes CGU en
-                        cochant la case précédant le texte suivant : « Je
+                        cochant la case précédant le texte suivant : «&nbsp;Je
                         reconnais avoir lu et compris les conditions générales
-                        d'utilisation et je les accepte ». En cas de
+                        d'utilisation et je les accepte&nbsp;». En cas de
                         non-acceptation des CGU stipulées dans le présent
                         contrat, l'Utilisateur se doit de renoncer à l'accès des
                         services proposés par le site.{" "}
