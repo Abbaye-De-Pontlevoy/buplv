@@ -12,25 +12,25 @@ import "./styles.css";
  * @returns {JSX.Element} The ContactPage component.
  */
 const ContactPage = () => {
-  const randomName = "John Doe";
-  const randomEmail = "johndoe@example.com";
-  const randomMessage = "This is a random message.";
+    return (
+        <>
+            <Header />
+            <Menu current="/contact" />
 
-  return (
-    <>
-      <Header />
-      <Menu current="/contact" />
-
-      <div className="bandeau-rangement">
-        <div className="main-container">
-          <h1>Page de contact</h1>
-          <p>Name: {randomName}</p>
-          <p>Email: {randomEmail}</p>
-          <p>Message: {randomMessage}</p>
-        </div>
-      </div>
-    </>
-  );
+            <div className="bandeau-rangement">
+                <div className="main-container">
+                    <h1 className="width-full text-center margin-top-20 margin-bottom-20">
+                        Page de contact
+                    </h1>
+                    <p>
+                        En cas de nécessité, vous pouvez nous contacter à
+                        l'email suivant :{" "}
+                        <a href="mailto:apel@lplcp.fr" target="_blank">apel@lplcp.fr</a>.
+                    </p>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default ContactPage;
