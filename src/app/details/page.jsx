@@ -1,89 +1,232 @@
 "use server";
 
+import Image from "next/image";
 import Header from "../components/Header/Header";
 import Menu from "../components/Menu/Menu";
-import "../globals.css";
-import "./page.css";
+
+import buProcess from "../assets/bu_process.webp";
+
+import "./styles.css";
 
 /**
  * Renders the details page.
  * @returns {JSX.Element} The details page component.
  */
 export default async function Page() {
-  return (
-    <>
-      <Header  />
-      <Menu current="/details" />
-      <div className="bandeau-rangement">
-        <div className="main-container text-justify">
-          <h1 className="margin-20">La bourse à l'uniforme</h1>
-          <p>
-            La bourse à l'uniforme est un événement organisé par l'association
-            des parents d'élèves de l'abbaye de Pontlevoy. C'est un moment de
-            partage et de solidarité où les familles peuvent donner, échanger ou
-            acheter des uniformes scolaires d'occasion.
-          </p>
-          <p>
-            L'objectif de la bourse à l'uniforme est de favoriser le recyclage
-            des vêtements et de permettre aux familles de réaliser des
-            économies. C'est aussi l'occasion de rencontrer d'autres parents et
-            de tisser des liens au sein de la communauté éducative.
-          </p>
-          <p>
-            La bourse à l'uniforme se déroule une fois par an en fin d'année
-            scolaire. Les familles peuvent déposer leurs uniformes d'occasion en
-            bon état et en bon état de propreté. Les vêtements sont ensuite
-            triés et mis en vente à des prix très avantageux.
-          </p>
-          <p>
-            Pour participer à la bourse à l'uniforme, il vous suffit de vous
-            inscrire en ligne et de déposer vos uniformes d'occasion lors de
-            l'événement. Vous pourrez ainsi faire des économies tout en
-            contribuant à une démarche éco-responsable.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>        
+    return (
+        <>
+            <Header />
+            <Menu current="/details" />
+            <div className="bandeau-rangement">
+                <div className="main-container text-justify flex-align-left">
+                    <h1 className="width-full text-center margin-top-20 margin-bottom-20">
+                        La BU : comment faire ?
+                    </h1>
+                    <h2>Informations pratiques</h2>
+                    <p>
+                        La bourse aux uniformes est une des actions menée par
+                        l'Apel LPLCP qui a lieu chaque fin d'année scolaire afin
+                        de permettre de revendre vos uniformes d’occasion.
+                        <br />
+                        <ul>
+                            <li className="li-no-puces margin-left-20">
+                                🗓 Quand ?
+                                <b>
+                                    {" "}
+                                    le 28 juin de 15h00 à 20h00
+                                    <br />
+                                </b>
+                            </li>
+                            <li className="li-no-puces margin-left-20">
+                                🗺 Où ? <b>Studium</b> à l'Abbaye de Pontlevoy
+                                entrée au{" "}
+                                <a
+                                    href="https://maps.app.goo.gl/VoT5hDzHov7Ldwja7"
+                                    target="_blank"
+                                >
+                                    35&nbsp;rue&nbsp;du&nbsp;Colonel&nbsp;FILLOUX
+                                </a>{" "}
+                                – Parking place Malingié
+                            </li>
+                        </ul>
+                    </p>
+                    <h2>Processus</h2>
+                    <Image
+                        src={buProcess}
+                        id="buProcessImage"
+                        alt="Processus de la Boure aux Uniformes"
+                    />
 
-          <form action="/dashboard" className="buttonForm">
-            <button type="submit" className="padding-20"> J'enregistre mes articles !</button>
-          </form>
+                    <h3>
+                        1 - Enregistrement en 3 étapes et saisie des article
+                    </h3>
+                    <h4>Enregistrement</h4>
+                    <ul className="margin-left-20">
+                        <li>Munissez-vous de votre IBAN et adresse mail</li>
+                        <li>
+                            Laissez coché don si invendu, si vous faites don de
+                            vos invendus à l'Apel LPLCP
+                        </li>
+                        <li>
+                            Décochez «Je souhaite faire don de mes invendus à
+                            l'APEL.» si vous souhaitez que vous soient renvoyés
+                            vos invendus. Des frais d’envois seront déduits du
+                            produit de votre vente.
+                        </li>
+                    </ul>
+                    <h4>Saisie des articles</h4>
+                    <p>
+                        Il est conseillé d’effectuer cette étape sur un
+                        ordinateur. Saisissez vos vêtements en choisissant dans
+                        les menus déroulants : niveau, sexe, Article, Taille,
+                        quantité. Puis validez au bout de la ligne ☑️.
+                    </p>
 
-        </div>
-      </div>
-    </>
-  );
+                    <p>
+                        Une fois la saisie de l’ensemble de vos articles
+                        finalisée :
+                        <ul className="margin-left-50">
+                            <li>
+                                Téléchargez le fichier des QRcodes et imprimez
+                                le
+                            </li>
+                            <li>
+                                Agrafez la page 1 du récapitulatif de vos
+                                vêtements sur le sac de vêtements
+                            </li>
+                            <li>
+                                Agrafez les QR code sur l'étiquette de CHAQUE
+                                vêtement (A l’emplacement marqué)
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p className="error text-center width-full font-weight-bold">
+                        A CETTE ÉTAPE SUR NOTRE SITE, VOS VÊTEMENTS SONT
+                        ENREGISTRÉS
+                    </p>
+
+                    <h3>2 - Déposez vos vêtements</h3>
+                    <p>
+                        Confiez votre sac à votre enfant le jour de la collecte
+                        définie pour son site. (Les dates sont communiquées par
+                        email sur lplcp.fr et sur pronote) Après contrôle du sac
+                        par les bénévoles, nous remettrons systématiquement en
+                        contrepartie à votre enfant un ticket de bonne
+                        réception.
+                    </p>
+
+                    <p>
+                        <b>NB 1 :</b> si vous avez des enfants sur différents
+                        sites et/ou différents niveaux, confiez l'intégralité de
+                        vos articles à l’un d’eux.
+                    </p>
+
+                    <p>
+                        <b>NB 2 :</b> Vous pouvez aussi apporter vos vêtements
+                        le jour de la vente à partir de 14h30. Un bénévole devra
+                        vérifier votre sac pour que les articles puissent être
+                        vendus.
+                    </p>
+
+                    <p>
+                        <b>NB 3 :</b> Lors du contrôle des vêtements, si ceux-ci
+                        sont sales ou trop abimés, ils seront déclarés
+                        invendables.
+                    </p>
+
+                    <p className="error text-center width-full font-weight-bold">
+                        A CETTE ÉTAPE SUR NOTRE SITE, LE STATUS DE VOS VÊTEMENTS
+                        EST «INVENTORIÉ» ou «INVENDABLE»
+                    </p>
+
+                    <h3>TARIFS 2024</h3>
+                    <div className="overFlowXSlider width-full">
+                        <table id="tarifsTable">
+                            <tr>
+                                <th></th>
+                                <th>Polo</th>
+                                <th>Chemise</th>
+                                <th>Pull</th>
+                                <th>Doudoune sans manche</th>
+                                <th>Cravate</th>
+                            </tr>
+                            <tr>
+                                <td className="tableTitle">Prix de vente</td>
+                                <td>7 €</td>
+                                <td>9 €</td>
+                                <td>12 €</td>
+                                <td>15 €</td>
+                                <td>5 €</td>
+                            </tr>
+                            <tr>
+                                <td className="tableTitle">
+                                    Montant reversé vendeur
+                                </td>
+                                <td>5,6 €</td>
+                                <td>6,6 €</td>
+                                <td>9,6 €</td>
+                                <td>12 €</td>
+                                <td>4 €</td>
+                            </tr>
+                            <tr>
+                                <td className="tableTitle">
+                                    Montant reversé Apel (20%)
+                                </td>
+                                <td>1,4 €</td>
+                                <td>2,4 €</td>
+                                <td>2,4 €</td>
+                                <td>3 €</td>
+                                <td>1 €</td>
+                            </tr>
+                            <tr>
+                                <td className="tableTitle">Frais de port</td>
+                                <td colspan="5">5 € par coli</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p>
+                        Suite à la BU, le bilan sera effectué entre les
+                        vêtements vendus – invendables– non vendus.
+                    </p>
+
+                    <p className="text-red font-weight-bold">
+                        Un virement sera effectué sur votre compte (IBAN fourni
+                        à l’inscription de la BU) avant la rentrée de septembre
+                        2024.
+                    </p>
+
+                    <p className="text-red font-weight-bold">
+                        Si vous avez des invendus, et vous avez choisis de vous
+                        faire renvoyer
+                        <ul className="margin-left-50">
+                            <li className="text-red font-weight-bold">
+                                L’APPEL vous fera parvenir le colis par voie
+                                postale
+                            </li>
+                            <li className="text-red font-weight-bold">
+                                Les frais de port seront déduits de la recette
+                                de votre vente
+                            </li>
+                        </ul>
+                    </p>
+
+                    <p className="text-red font-weight-bold">
+                        Les invendus que vous aurez donnés seront remis en vente
+                        l’année suivante au profit des actions de l’APEL.
+                    </p>
+
+                    <form
+                        action="/dashboard"
+                        className="buttonForm self-center"
+                    >
+                        <button type="submit" className="padding-20">
+                            J'enregistre mes articles !
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </>
+    );
 }

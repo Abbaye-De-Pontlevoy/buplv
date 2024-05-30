@@ -1,0 +1,38 @@
+.bandeau-rangement {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/BU_rangement.webp");
+    background-position: 50% 40%;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+#buProcessImage {
+    width: 100%;
+    height: 100%;
+}
+
+#tarifsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tarifsTable th, #tarifsTable  .tableTitle{
+	font-weight: bold;
+}
+
+#tarifsTable  .tableTitle{
+	text-align: left;
+}
+
+#tarifsTable th,
+#tarifsTable td {
+    border: 1px solid var(--main-blue);
+    padding: 8px;
+    text-align: center;
+}
