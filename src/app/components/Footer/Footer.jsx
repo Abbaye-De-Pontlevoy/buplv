@@ -18,7 +18,7 @@ const Footer = ({ className }) => {
             <div id="footerContent">
                 <div className="footerColumn desktop-only" id="column1">
                     <a href="/">Accueil</a>
-                    <a href="/dashboard">Tableau de bord</a>
+                    <a href="/dashboard">Mes articles</a>
                     <a href="/profil">Mon profil</a>
                     <a href="/contact">Contact</a>
                 </div>
@@ -28,7 +28,7 @@ const Footer = ({ className }) => {
                 </div>
                 <div className="footerColumn phone-only" id="column1">
                     <a href="/">Accueil</a>
-                    <a href="/dashboard">Tableau de bord</a>
+                    <a href="/dashboard">Mes articles</a>
                     <a href="/profil">Mon profil</a>
                     <a href="/contact">Contact</a>
                 </div>
