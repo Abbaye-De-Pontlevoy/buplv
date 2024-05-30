@@ -47,7 +47,7 @@ const RapportsGenerator = ({className}) => {
                 <tr key={key} className={key==="Total" ? "font-weight-bold" : ""}>
                   <td>{key}</td>
                   <td>{data.gains[key].nbTransaction}</td>
-                  <td>{data.gains[key].amount} €</td>
+                  <td>{data.gains[key].amount}&nbsp;€</td>
                 </tr>
               ))}
             </tbody>

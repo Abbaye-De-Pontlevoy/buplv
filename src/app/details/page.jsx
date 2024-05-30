@@ -153,35 +153,35 @@ export default async function Page() {
                             </tr>
                             <tr>
                                 <td className="tableTitle">Prix de vente</td>
-                                <td>7 €</td>
-                                <td>9 €</td>
-                                <td>12 €</td>
-                                <td>15 €</td>
-                                <td>5 €</td>
+                                <td>7&nbsp;€</td>
+                                <td>9&nbsp;€</td>
+                                <td>12&nbsp;€</td>
+                                <td>15&nbsp;€</td>
+                                <td>5&nbsp;€</td>
                             </tr>
                             <tr>
                                 <td className="tableTitle">
                                     Montant reversé vendeur
                                 </td>
-                                <td>5,6 €</td>
-                                <td>6,6 €</td>
-                                <td>9,6 €</td>
-                                <td>12 €</td>
-                                <td>4 €</td>
+                                <td>5,6&nbsp;€</td>
+                                <td>6,6&nbsp;€</td>
+                                <td>9,6&nbsp;€</td>
+                                <td>12&nbsp;€</td>
+                                <td>4&nbsp;€</td>
                             </tr>
                             <tr>
                                 <td className="tableTitle">
                                     Montant reversé Apel (20%)
                                 </td>
-                                <td>1,4 €</td>
-                                <td>2,4 €</td>
-                                <td>2,4 €</td>
-                                <td>3 €</td>
-                                <td>1 €</td>
+                                <td>1,4&nbsp;€</td>
+                                <td>2,4&nbsp;€</td>
+                                <td>2,4&nbsp;€</td>
+                                <td>3&nbsp;€</td>
+                                <td>1&nbsp;€</td>
                             </tr>
                             <tr>
                                 <td className="tableTitle">Frais de port</td>
-                                <td colspan="5">5 € par coli</td>
+                                <td colspan="5">5&nbsp;€ par coli</td>
                             </tr>
                         </table>
                     </div>

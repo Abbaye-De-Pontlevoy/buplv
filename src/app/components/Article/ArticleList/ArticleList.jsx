@@ -49,7 +49,7 @@ const ArticleList = ({
               <td colSpan="3"></td>
               <td colSpan="1" ><strong>Total</strong></td>
               <td colSpan="2">
-                <strong>{articleList.reduce((acc, article) => acc + article.price, 0)} €</strong>
+                <strong>{articleList.reduce((acc, article) => acc + article.price, 0)}&nbsp;€</strong>
               </td>
             </tr>
           )}

@@ -79,7 +79,7 @@ const ArticleScanner = ({className}) => {
           <li>Marque : {qrCodeData.brand || "chargement..."}</li>
           <li>
             Prix :{" "}
-            {qrCodeData.price ? qrCodeData.price + " €" : "chargement..."}
+            {qrCodeData.price ? qrCodeData.price + "&nbsp;€" : "chargement..."}
           </li>
           <li>
             Etat :{" "}

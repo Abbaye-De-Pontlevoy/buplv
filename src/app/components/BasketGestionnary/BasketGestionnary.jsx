@@ -196,7 +196,7 @@ const BasketGestionnary = ({ className }) => {
                                         (acc, article) => acc + article.price,
                                         0,
                                     ) +
-                                    " € a t'il bien été effectué ?"}
+                                    "&nbsp;€ a t'il bien été effectué ?"}
                             </p>
                             <span className="margin-top-20 sideToSideButton">
                                 <button

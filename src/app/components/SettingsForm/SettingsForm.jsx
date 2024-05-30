@@ -217,7 +217,7 @@ const SettingsForm = ({ className }) => {
                                             maxWidth: "100px",
                                         }}
                                     />
-                                    €
+                                   &nbsp;€
                                 </span>
                             </span>
                         </div>

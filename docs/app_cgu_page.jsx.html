@@ -28,7 +28,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use server";
 
-import "../globals.css";
+import Header from "../components/Header/Header";
+import Menu from "../components/Menu/Menu";
 import "./page.css";
 
 /**
@@ -36,41 +37,268 @@ import "./page.css";
  * @component
  */
 export default async function Page() {
-  return (
-    &lt;>
-      &lt;Header  />
-      &lt;Menu />
-      &lt;div className="bandeau-rangement">
-        &lt;div className="main-container text-justify">
-          &lt;h1>Conditions Générales d'Utilisation&lt;/h1>
-          &lt;p>
-            Ci-dessous beaucoup de choses pour te dire qu'en gros tu n'as pas le
-            choix d'accepter les cookies si tu veux vendre tes vêtements car le
-            développeur de ce site avait vraiment la flemme de gérer ta session
-            user depuis le serveur.
-          &lt;/p>
-          &lt;p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc, vitae
-            lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt aliquet,
-            nunc nisl tincidunt nunc, vitae lacinia nisl enim sed mauris.
-          &lt;/p>
-          &lt;p>
-            Nullam euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc,
-            vitae lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt
-            aliquet, nunc nisl tincidunt nunc, vitae lacinia nisl enim sed
-            mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          &lt;/p>
-          &lt;p>
-            Sed euismod, urna id aliquam aliquet, nunc nisl tincidunt nunc,
-            vitae lacinia nisl enim sed mauris. Sed auctor, justo a tincidunt
-            aliquet, nunc nisl tincidunt nunc, vitae lacinia nisl enim sed
-            mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          &lt;/p>
-        &lt;/div>
-      &lt;/div>
-    &lt;/>
-  );
+    return (
+        &lt;>
+            &lt;Header />
+            &lt;Menu />
+            &lt;div className="bandeau-rangement">
+                &lt;div className="main-container text-justify flex-align-left">
+                    &lt;h1 className="width-full text-center margin-top-20 margin-bottom-20">
+                        Conditions Générales d'Utilisation
+                    &lt;/h1>
+
+                    &lt;p className="width-full text-center">
+                        En vigueur au 28/05/2024
+                    &lt;/p>
+
+                    &lt;p>
+                        Les présentes conditions générales d'utilisation (dites
+                        « &lt;b>CGU&lt;/b> ») ont pour objet l'encadrement juridique
+                        des modalités de mise à disposition du site et des
+                        services par APEL du collège/lycée catholique de
+                        Pontlevoy et de définir les conditions d’accès et
+                        d’utilisation des services par «&lt;b>l'Utilisateur&lt;/b>».
+                    &lt;/p>
+
+                    &lt;p>
+                        Les présentes CGU sont accessibles sur le site à la
+                        rubrique «Conditions Générales».
+                    &lt;/p>
+
+                    &lt;p>
+                        Toute inscription ou utilisation du site implique
+                        l'acceptation sans aucune réserve ni restriction des
+                        présentes CGU par l’utilisateur. Lors de l'inscription
+                        sur le site via le Formulaire d’inscription, chaque
+                        utilisateur accepte expressément les présentes CGU en
+                        cochant la case précédant le texte suivant : « Je
+                        reconnais avoir lu et compris les conditions générales
+                        d'utilisation et je les accepte ». En cas de
+                        non-acceptation des CGU stipulées dans le présent
+                        contrat, l'Utilisateur se doit de renoncer à l'accès des
+                        services proposés par le site.{" "}
+                        &lt;a href="https://bu.apel.lplcp.fr/" target="_blank">
+                            bu.apel.lplcp.fr
+                        &lt;/a>{" "}
+                        se réserve le droit de modifier unilatéralement et à
+                        tout moment le contenu des présentes CGU.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 1 : LES MENTIONS LÉGALES&lt;/h2>
+                    &lt;p>
+                        L'édition du site Bourse à l’uniforme est assurée par
+                        l’APEL du LPLCP situé au
+                        38&amp;nbsp;Rue&amp;nbsp;de&amp;nbsp;la&amp;nbsp;Fontaine&amp;nbsp;ST&amp;nbsp;Urbain
+                        &amp;nbsp;41120&amp;nbsp;SAMBIN
+                        &lt;br />
+                        Adresse e-mail :{" "}
+                        &lt;a href="mailto:apel@lplcp.fr">apel@lplcp.fr&lt;/a>
+                        &lt;br />
+                        Le Directeur de la publication est : Aymeric&amp;nbsp;Ruyant
+                    &lt;/p>
+
+                    &lt;p>
+                        Ce site est hébergé par la société Vercel Inc., située
+                        340&amp;nbsp;S&amp;nbsp;Lemon&amp;nbsp;Ave&amp;nbsp;#4133&amp;nbsp;Walnut,&amp;nbsp;CA&amp;nbsp;91789,
+                        et joignable au (559) 288-7060.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 2 : ACCÈS AU SITE&lt;/h2>
+                    &lt;p>
+                        Le site Bourse à l’uniforme permet à l'Utilisateur un
+                        accès gratuit aux services suivants : Création d'un
+                        espace personnel; Enregistrement d'articles ; Impression
+                        de QRcodes liés aux articles ; Suivi du statut des
+                        articles.
+                        &lt;br />
+                        Le site est accessible gratuitement en tout lieu à tout
+                        Utilisateur ayant un accès à Internet. Tous les frais
+                        supportés par l'Utilisateur pour accéder au service
+                        (matériel informatique, logiciels, connexion Internet,
+                        etc.) sont à sa charge.
+                    &lt;/p>
+
+                    &lt;p>
+                        L’Utilisateur non membre n'a pas accès aux services
+                        réservés. Pour cela, il doit s’inscrire en remplissant
+                        le formulaire. En acceptant de s’inscrire aux services
+                        réservés, l’Utilisateur membre s’engage à fournir des
+                        informations sincères et exactes concernant son état
+                        civil et ses coordonnées, notamment son adresse email.
+                    &lt;/p>
+
+                    &lt;p>
+                        Pour accéder aux services, l’Utilisateur doit ensuite
+                        s'identifier à l'aide de son identifiant et de son mot
+                        de passe qu’il aura saisi à son inscription. Tout
+                        Utilisateur membre régulièrement inscrit pourra
+                        également solliciter sa désinscription en s’adressant
+                        par email à l’adresse email de l’éditeur communiqué à
+                        l’ARTICLE&amp;nbsp;1. Celle-ci sera effective dans un délai
+                        raisonnable. L’ensemble des comptes et de l’ensemble des
+                        informations personnelles des Utilisateurs seront
+                        supprimés chaque année. Tout événement dû à un cas de
+                        force majeure ayant pour conséquence un
+                        dysfonctionnement du site ou serveur et sous réserve de
+                        toute interruption ou modification en cas de
+                        maintenance, n'engage pas la responsabilité de APEL du
+                        collège/lycée catholique de Pontlevoy. Dans ces cas,
+                        l’Utilisateur accepte ainsi ne pas tenir rigueur à
+                        l’éditeur de toute interruption ou suspension de
+                        service, même sans préavis. L'Utilisateur a la
+                        possibilité de contacter le site par messagerie
+                        électronique à l’adresse email de l’éditeur communiqué à
+                        l’ARTICLE&amp;nbsp;1.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 3 : COLLECTE DES DONNÉES&lt;/h2>
+                    &lt;p>
+                        Le site assure à l'Utilisateur une collecte et un
+                        traitement d'informations personnelles dans le respect
+                        de la vie privée conformément à la loi n°78-17 du 6
+                        janvier 1978 relative à l'informatique, aux fichiers et
+                        aux libertés.
+                    &lt;/p>
+
+                    &lt;p>
+                        En vertu de la loi Informatique et Libertés, en date du
+                        6 janvier 1978, l'Utilisateur dispose d'un droit
+                        d'accès, de rectification, de suppression et
+                        d'opposition de ses données personnelles. L'Utilisateur
+                        exerce ce droit :
+                        &lt;ul className="margin-left-50">
+                            &lt;li>par mail à l'adresse email apel@lplcp.fr&lt;/li>
+                            &lt;li>via son espace personnel&lt;/li>
+                        &lt;/ul>
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 4 : PROPRIÉTÉ INTELLECTUELLE&lt;/h2>
+                    &lt;p>
+                        Les marques, logos, signes ainsi que tous les contenus
+                        du site (textes, images, son…) font l'objet d'une
+                        protection par le Code de la propriété intellectuelle et
+                        plus particulièrement par le droit d'auteur.
+                    &lt;/p>
+
+                    &lt;p>
+                        L'Utilisateur doit solliciter l'autorisation préalable
+                        du site pour toute reproduction, publication, copie des
+                        différents contenus. Il s'engage à une utilisation des
+                        contenus du site dans un cadre strictement privé, toute
+                        utilisation à des fins commerciales et publicitaires est
+                        strictement interdite.
+                    &lt;/p>
+
+                    &lt;p>
+                        Toute représentation totale ou partielle de ce site par
+                        quelque procédé que ce soit, sans l’autorisation
+                        expresse de l’exploitant du site Internet constituerait
+                        une contrefaçon sanctionnée par l’article L&amp;nbsp;335-2
+                        et suivants du Code de la propriété intellectuelle.
+                    &lt;/p>
+
+                    &lt;p>
+                        Il est rappelé conformément à l’article&amp;nbsp;L122-5 du
+                        Code de propriété intellectuelle que l’Utilisateur qui
+                        reproduit, copie ou publie le contenu protégé doit citer
+                        l’auteur et sa source.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 5 : RESPONSABILITÉ&lt;/h2>
+                    &lt;p>
+                        Les sources des informations diffusées sur le site
+                        Bourse à l’uniforme sont réputées fiables mais le site
+                        ne garantit pas qu’il soit exempt de défauts, d’erreurs
+                        ou d’omissions.
+                    &lt;/p>
+
+                    &lt;p>
+                        Les informations communiquées sont présentées à titre
+                        indicatif et général sans valeur contractuelle. Malgré
+                        des mises à jour régulières, le site Bourse à l’uniforme
+                        ne peut être tenu responsable de la modification des
+                        dispositions administratives et juridiques survenant
+                        après la publication. De même, le site ne peut être
+                        tenue responsable de l’utilisation et de
+                        l’interprétation de l’information contenue dans ce site.
+                        &lt;br />
+                        L'Utilisateur s'assure de garder son mot de passe
+                        secret. Toute divulgation du mot de passe, quelle que
+                        soit sa forme, est interdite. Il assume les risques liés
+                        à l'utilisation de son identifiant et mot de passe. Le
+                        site décline toute responsabilité.
+                        &lt;br />
+                        Le site Bourse à l’uniforme ne peut être tenu pour
+                        responsable d’éventuels virus qui pourraient infecter
+                        l’ordinateur ou tout matériel informatique de
+                        l’Internaute, suite à une utilisation, à l’accès, ou au
+                        téléchargement provenant de ce site.
+                    &lt;/p>
+
+                    &lt;p>
+                        La responsabilité du site ne peut être engagée en cas de
+                        force majeure ou du fait imprévisible et insurmontable
+                        d'un tiers.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 6 : LIENS HYPERTEXTES&lt;/h2>
+                    &lt;p>
+                        Des liens hypertextes peuvent être présents sur le site.
+                        L’Utilisateur est informé qu’en cliquant sur ces liens,
+                        il sortira du site Bourse à l’uniforme. Ce dernier n’a
+                        pas de contrôle sur les pages web sur lesquelles
+                        aboutissent ces liens et ne saurait, en aucun cas, être
+                        responsable de leur contenu.
+                    &lt;/p>
+
+                    &lt;h2>ARTICLE 7 : COOKIES&lt;/h2>
+                    &lt;p>
+                        L’Utilisateur est informé que lors de ses visites sur le
+                        site, un cookie peut s’installer automatiquement sur son
+                        logiciel de navigation.
+                    &lt;/p>
+
+                    &lt;p>
+                        Les cookies sont de petits fichiers stockés
+                        temporairement sur le disque dur de l’ordinateur de
+                        l’Utilisateur par votre navigateur et qui sont
+                        nécessaires à l’utilisation du site Bourse à l’uniforme.
+                        Les cookies ne contiennent pas d’information personnelle
+                        et ne peuvent pas être utilisés pour identifier
+                        quelqu’un. Un cookie contient un identifiant unique,
+                        généré aléatoirement et donc anonyme. Les cookies de ce
+                        site expirent 3 jours après la fin de la visite de
+                        l’Utilisateur.
+                    &lt;/p>
+
+                    &lt;p>
+                        L’information contenue dans les cookies est utilisée
+                        pour améliorer le site Bourse à l’uniforme.
+                    &lt;/p>
+
+                    &lt;p>
+                        En naviguant sur le site, L’Utilisateur les accepte.
+                        L’Utilisateur pourra désactiver ces cookies par
+                        l’intermédiaire des paramètres figurant au sein de son
+                        logiciel de navigation.
+                    &lt;/p>
+
+                    &lt;h2>
+                        ARTICLE 8 : DROIT APPLICABLE ET JURIDICTION COMPÉTENTE
+                    &lt;/h2>
+                    &lt;p>
+                        La législation française s'applique au présent contrat.
+                        En cas d'absence de résolution amiable d'un litige né
+                        entre les parties, les tribunaux français seront seuls
+                        compétents pour en connaître. Pour toute question
+                        relative à l’application des présentes CGU, vous pouvez
+                        joindre l’éditeur aux coordonnées inscrites à
+                        l’ARTICLE&amp;nbsp;1.
+                    &lt;/p>
+                &lt;/div>
+            &lt;/div>
+        &lt;/>
+    );
 }
 </code></pre>
         </article>
@@ -88,7 +316,7 @@ export default async function Page() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 23 2024 23:48:10 GMT+0900 (heure normale de la Corée)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu May 30 2024 15:05:23 GMT+0900 (heure normale de la Corée)
 </footer>
 
 <script> prettyPrint(); </script>
