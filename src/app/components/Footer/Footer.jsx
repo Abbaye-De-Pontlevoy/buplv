@@ -32,7 +32,7 @@ const Footer = ({ className }) => {
                     <a href="/profil">Mon profil</a>
                     <a href="/contact">Contact</a>
                 </div>
-                <div className="footerColumn flex-align-right text-right" id="column3">
+                <div className="footerColumn text-right" id="column3">
                     <p>APEL de l'Abbaye de Pontlevoy</p>
                     <a href="/cgu">Conditions Générales</a>
                     <a href="https://github.com/Maclow42/" target="_blank">
