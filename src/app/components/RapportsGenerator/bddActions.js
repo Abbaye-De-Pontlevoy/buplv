@@ -70,7 +70,7 @@ export async function exportArticles() {
       "ID Article": article.id,
       Article: article.name,
       Marque: article.brand,
-      Prix: article.price + "&nbsp;€",
+      Prix: article.price + " €",
       Status:
         article.state === -1
           ? "Invendable"
