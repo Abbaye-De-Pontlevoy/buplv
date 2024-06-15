@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import * as jose from "jose";
 import prisma from "../lib/prisma";
+import { isUserAdmin } from "./isUserAdmin";
 
 /**
  * Retrieves user information based on the provided request object.
@@ -45,4 +46,30 @@ export async function getUserInfos(request) {
   } catch (err) {
     return false;
   }
+}
+
+export const getUserInfosByID = async (id) => {
+  // if user is admin
+  const admin = isUserAdmin();
+
+  if (!admin) return false; 
+
+  const user = await prisma.seller.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      firstname: true,
+      name: true,
+      id: true,
+      email: true,
+      phone: true,
+      address: true,
+      iban: true,
+      bic: true,
+      return_articles: true,
+    },
+  });
+
+  return user;
 }

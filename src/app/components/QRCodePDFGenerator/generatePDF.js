@@ -1,5 +1,19 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { getUserInfosByID } from "@/app/helpers/getUserInfos";
+import { getArticleList } from "../Article/ArticleGestionnary/removeArticleAction";
+
+
+export const getPdfFromSellerID = async (sellerID) => {
+  // Get all articles from the seller
+    const articles = await getArticleList(sellerID);
+
+    // Get the seller informations
+    const sellerInfos = await getUserInfosByID(sellerID);
+
+    // Generate the PDF
+    return generatePDF(articles, sellerInfos, `QRCODES_TO_PRINT_${sellerInfos.name}_${sellerInfos.firstname}.pdf`);
+}
 
 /**
  * Generates a PDF document with a summary and QR codes for the given data and seller information.
@@ -7,7 +21,7 @@ import "jspdf-autotable";
  * @param {Object} sellerInfos - The information of the seller.
  * @returns {Promise<void>} - A promise that resolves when the PDF is generated and saved.
  */
-export async function generatePDF(data, sellerInfos) {
+export async function generatePDF(data, sellerInfos, filename="QRCODES_TO_PRINT.pdf") {
   const doc = new jsPDF();
   let margin = 15;
 
@@ -131,7 +145,7 @@ export async function generatePDF(data, sellerInfos) {
     }
   }
 
-  doc.save("QRCODES_TO_PRINT.pdf");
+  doc.save(filename);
 }
 
 const generateQRCodeDataURL = async (url) => {
