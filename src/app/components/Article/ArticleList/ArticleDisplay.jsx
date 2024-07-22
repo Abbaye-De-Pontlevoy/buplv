@@ -54,7 +54,7 @@ export const ArticleDisplay = ({
         {/* Display the delete button if the user is allowed to remove articles */}
         {/* Else, display a dash */}
         {/* The delete button is disabled while the article is being deleted */}
-        {article.state === 1 || enabledRemoveButton ? (
+        {enabledRemoveButton && article.state === 1  ? (
           <form className="deleteButtonForm" onSubmit={deleteHandler}>
             <button
               type="submit"
