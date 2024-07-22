@@ -127,6 +127,7 @@ const BasketGestionnary = ({ className }) => {
         setValidatingBasket(false);
 
         // Close the modal
+        //setPaymentModalStep = 0;
         setIsModalOpen(false);
     };
 
@@ -196,7 +197,7 @@ const BasketGestionnary = ({ className }) => {
                                         (acc, article) => acc + article.price,
                                         0,
                                     ) +
-                                    "&nbsp;€ a t'il bien été effectué ?"}
+                                    " € a t'il bien été effectué ?"}
                             </p>
                             <span className="margin-top-20 sideToSideButton">
                                 <button
