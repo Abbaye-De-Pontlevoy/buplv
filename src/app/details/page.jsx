@@ -202,7 +202,7 @@ export default async function Page() {
                         faire renvoyer
                         <ul className="margin-left-50">
                             <li className="text-red font-weight-bold">
-                                L’APPEL vous fera parvenir le colis par voie
+                                L’APEL vous fera parvenir le colis par voie
                                 postale
                             </li>
                             <li className="text-red font-weight-bold">
