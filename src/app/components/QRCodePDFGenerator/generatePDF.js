@@ -43,6 +43,7 @@ export async function generatePDF(data, sellerInfos, filename="QRCODES_TO_PRINT.
   doc.text(`Mail : ${sellerInfos.email}`, margin, 60, null, null);
   doc.text(`Téléphone : ${sellerInfos.phone}`, margin, 65, null, null);
   doc.text(`Adresse : ${sellerInfos.address}`, margin, 70, null, null);
+  doc.text('Don des invendus à l\'APEL : ' + (!sellerInfos.return_articles ? 'Oui' : 'Non'), margin, 75, null, null);
 
   // Display data as a table
   const columns = ["Article", "Marque", "Taille", "Prix", "Ref Article"];
@@ -50,7 +51,7 @@ export async function generatePDF(data, sellerInfos, filename="QRCODES_TO_PRINT.
   doc.autoTable({
     head: [columns],
     body: rows,
-    startY: 80,
+    startY: 85,
   });
 
   // Display number of items in bold
@@ -95,7 +96,7 @@ export async function generatePDF(data, sellerInfos, filename="QRCODES_TO_PRINT.
     // Add staple illustration
     doc.setLineWidth(0.5);
     doc.line(margin+30, y+3, margin+32, y+3);
-    doc.line(margin+33, y+3, margin+32, y+3);
+    doc.line(margin+33, y+3, margin+35, y+3);
 
     // QR code data
     doc.setFontSize(8);
