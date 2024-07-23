@@ -9,13 +9,13 @@ export const getCsvFromDatabase = async () => {
     const transactions = await prisma.transaction.findMany();
     const config = await prisma.config.findMany();
 
-    // Fonction pour convertir JSON en CSV
+    // Function to convert JSON to CSV
     const jsonToCsv = (data) => {
         const json2csvParser = new Parser();
         return json2csvParser.parse(data);
     };
 
-    // Convertir chaque table en CSV
+    // Convert each table to CSV
     const articlesCsv = jsonToCsv(articles);
     const sellersCsv = jsonToCsv(sellers);
     const transactionsCsv = jsonToCsv(transactions);
