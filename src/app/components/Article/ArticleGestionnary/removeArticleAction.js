@@ -32,5 +32,8 @@ export async function getArticleList(userID) {
     },
   });
 
+  // sort articles by id
+  articles.sort((a, b) => a.id - b.id);
+
   return articles;
 }
