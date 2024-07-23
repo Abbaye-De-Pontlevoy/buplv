@@ -11,6 +11,7 @@ import ResetBDDButton from "../Button/ResetBDDButton/ResetBDDButton";
 import GetPdfBySeller from "../GetPdfBySeller/GetPdfBySeller";
 
 import "./styles.css";
+import DatabaseToJsonButton from "../Button/DatabaseToJsonButton/DatabaseToJsonButton";
 
 /**
  * Renders the RapportsGenerator component.
@@ -124,6 +125,8 @@ const RapportsGenerator = ({ className }) => {
                             filename="BDD_LISTE_ARTICLES"
                             buttonText="Exporter la liste des articles"
                         />
+                        
+                        <DatabaseToJsonButton className="width-full" />
                         <ResetBDDButton className="width-full" />
                     </div>
                 </div>
